@@ -29,3 +29,9 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Working plan: kept locally, not published
+PLAN.md
+
+# Private evidence (consent chats, account pages): kept on my machine, never in the public repo
+[Ss]creenshot*
