@@ -45,9 +45,10 @@ Written when each failure happens. Template (PLAN.md §13):
 - Resolution: create a scoped **Workers AI API token** (dashboard → Workers AI → "Use REST API"
   → "Create a Workers AI API Token") and store it as `CLOUDFLARE_API_TOKEN`. `env.py` still accepts
   `CLOUDFLARE_API_KEY` as an alias for the token, and `.env.example` warns against the Global key.
-  **Status: waiting for the new token** (the rest of Step 0 continued meanwhile).
-- Time lost: 10 min. Lesson: least privilege. Every credential in `.env` should be able to do
-  only what its stage needs.
+  **Resolved 14:44 EAT:** with the scoped token, `make models` lists 6 text-to-image models and
+  every FLUX smoke check passes (run `20261125-144741-8d9d`). The Global key was removed from `.env`.
+- Time lost: 35 min of waiting (the rest of Step 0 continued meanwhile). Lesson: least privilege.
+  Every credential in `.env` should be able to do only what its stage needs.
 
 ## F03 — narration: the brief's TTS model "does not exist" (`404 NOT_FOUND`)
 - When / run_id: 2026-11-25 ~14:12 EAT, Step 0, model verification before the smoke test.
@@ -97,6 +98,42 @@ Written when each failure happens. Template (PLAN.md §13):
 - Resolution: keep the chain 3.8 Flash → 3.5 Flash-Lite (no 3.7 middle step: it fails the same
   way under the same load). Text is first needed in Step 1 (the storyboard draft); if 503s persist
   then, the draft runs on Flash-Lite and runs.jsonl shows the fallback.
-- Follow-up: a 104 s wait before a 503 is expensive. Step 1 should set a client timeout on the
-  text call (~60 s) so the fallback starts sooner.
+- Follow-up done: a 104 s wait before a 503 is expensive, so `gemini_text` now sets a 60 s client
+  timeout (`timeout_s` param). Third run `20261125-144741-8d9d` (14:47 EAT): still 503, the slow
+  attempt now ends at 57 s; Flash-Lite answered in 1.2 s.
 - Lesson: on free tiers, a 503 at the worst moment is normal; it's why every stage has a chain.
+
+## F06 — keyframes: FLUX.1 schnell rejects `seed` (HTTP 400)
+- When / run_id: 2026-11-25 14:45 EAT, run `20261125-144459-1bfd`, smoke check `flux1`.
+- Symptom: `HTTP 400: {"errors":[{"message":"AiError: Bad input: Error: Additional or unevaluated
+  properties '/seed' at '/' not allowed (…)","code":5006}],"success":false}`.
+- Cause (verified): the Workers AI input schema for `@cf/black-forest-labs/flux-1-schnell` has only
+  `prompt` (1–2048 chars) and `steps` (max 8, default 4), with `additionalProperties: false`. The
+  example on Cloudflare's own model page sends a `seed`, which the schema rejects. There is also no
+  width/height: output is always 1024×1024 JPEG.
+- Tried: 1) without `seed` → ok, 1024×1024 JPEG in 2.9 s (run `20261125-144547-072d`).
+- Resolution: the adapter sends `seed` only to models that accept it (`send_seed`, off for schnell);
+  the log records `seed: null` for schnell calls, and `tests/test_cloudflare.py` pins the request shape.
+- Consequence: schnell images can't be reproduced from a seed at all. As a fallback it is still fine
+  (the chosen file is cached), but plan B in Step 3 ("text-only + fixed seed") loses its fixed seed.
+- Time lost: 5 min. Lesson: trust the schema over the example.
+
+## F07 — keyframes: FLUX.2 klein ignores the seed for reproducibility (same seed, different image)
+- When / run_id: 2026-11-25 14:45 EAT, runs `20261125-144547-072d` and `20261125-144741-8d9d`,
+  smoke checks `flux2` vs `flux2_repeat`.
+- Symptom: same prompt, same `seed=42`, same steps (4) and size → **different images** both times
+  (mean absolute pixel difference ≈ 50/255 per channel in the first pair). Similar composition (red
+  apple, worn wooden table), but different light (a window appears) and table grain.
+- Cause (suspected): the multipart `seed` field is not honoured by the Workers AI klein endpoint, or
+  inference is not deterministic there. The model page documents no body fields, so it can't be checked.
+- Resolution: reproducibility comes from the **cache**, not from re-generation: a chosen keyframe is
+  kept by file (`keyframe_choice` → manifest → path, committed in `outputs/`). A clean clone gets
+  cache hits and the identical film; regenerating a shot produces a new variant, which is
+  expected and is how the walkthrough's "change one shot" works. ARCHITECTURE.md must say this.
+- Lesson: "fixed seed = same image" is a property of a provider, not of diffusion in general. Test it.
+
+## Positive result worth recording — FLUX.2 klein reference images work
+- Run `20261125-144547-072d`: `flux2_ref` with `input_image_0 = flux2.jpg` and the prompt "the same
+  red apple from the reference image, now on a blue ceramic plate" kept the same apple, the same
+  table and even the same knot in the wood, and added the plate. So plan **A** for Step 3
+  (reference sheets passed into every keyframe) is available, at ~22 extra neurons per 1024² reference.

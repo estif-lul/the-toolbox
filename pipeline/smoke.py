@@ -1,7 +1,7 @@
 """Smoke test: one minimal call per provider, with neutral test prompts, each logged to runs.jsonl.
 
     make smoke            # all checks
-    make smoke ONLY=tts   # one check (text, text_fallback, tts, tts_fallback, flux1, flux2,
+    make smoke ONLY=tts   # one check (text, text_fallback, tts, tts_fallback, flux1, flux2, flux2_repeat,
                           #            flux2_ref, kenburns, kaggle)
 
 Also `python -m pipeline.run models`: list the models the keys can see (to verify model ids
@@ -101,14 +101,27 @@ def check_image(model_contains: str, label: str, profile: str, refs: list[Path] 
         atomic_write_bytes(out, res.data)
         return out
 
+    seed = SEED if (p.send_seed or p.multipart) else None  # schnell takes no seed (F06)
     r = invoke(_one(p), lambda prov: prov.generate(prompt, SEED, 1024, 1024, refs=refs or ()), stage="smoke",
-               shot_id=stem, seed=SEED, max_attempts=2, save=save,
+               shot_id=stem, seed=seed, max_attempts=2, save=save,
                params={"w": 1024, "h": 1024, "steps": p.params.get("steps"), "refs": len(refs or [])})
     v = r.value
     note = f"{v.width}x{v.height} {v.mime}, {len(v.data) // 1024} KB, steps {v.meta.get('steps')}"
+    if seed is None:
+        note += ", no seed (not reproducible)"
     if refs:
         note += f"; reference input accepted ({', '.join(v.meta.get('refs', []))}), check the picture"
+    if label == "flux2_repeat":
+        first = sorted(SMOKE.glob("flux2.*"))
+        if first:
+            same = first[0].read_bytes() == v.data
+            note += f"; same seed+prompt as flux2 -> {'IDENTICAL bytes' if same else 'DIFFERENT bytes'}"
     return Row(label, p.name, p.model, True, _last_latency(), f"{note} -> {rel(r.output)}")
+
+
+def _ref_image() -> list[Path] | None:
+    found = sorted(SMOKE.glob("flux2.*")) or sorted(SMOKE.glob("flux1.*"))
+    return found[:1] or None
 
 
 def check_kenburns(profile: str) -> Row:
@@ -159,7 +172,27 @@ def check_kaggle(profile: str) -> Row:
               error=None if ok else env.redact(detail[-400:]))
     n = max(len([l for l in detail.splitlines() if l.strip()]) - 2, 0) if ok else 0
     note = (f"auth ok; {n} kernel(s) listed (no GPU used)" if ok else env.redact(detail.splitlines()[-1] if detail else "failed"))
+    if ok:
+        quota = kaggle_quota(cli)
+        if quota:
+            atomic_write_json(SMOKE / "kaggle_quota.json", quota)
+            note += "; " + "; ".join(f"{r['resource']} {r['remaining']} of {r['total']} left (refresh {r['refreshAt'][:10]})"
+                                     for r in quota)
     return Row("kaggle auth", "kaggle", "kaggle-cli " + _kaggle_version(cli), ok, latency, note)
+
+
+def kaggle_quota(cli: str) -> list[dict]:
+    """`kaggle quota`: weekly GPU/TPU hours (the $ figures in Settings are the Model Proxy, not GPU)."""
+    try:
+        out = subprocess.run([cli, "quota"], capture_output=True, text=True, encoding="utf-8",
+                             errors="replace", timeout=60).stdout
+    except Exception:  # noqa: BLE001
+        return []
+    lines = [l.split() for l in out.splitlines() if l.strip() and not l.startswith("-")]
+    if not lines or lines[0][:2] != ["resource", "used"]:
+        return []
+    header = lines[0]
+    return [dict(zip(header, row)) for row in lines[1:] if len(row) == len(header)]
 
 
 def _kaggle_version(cli: str) -> str:
@@ -190,8 +223,8 @@ CHECKS: dict[str, Callable[[str], Row]] = {
     "tts_fallback": lambda prof: check_tts(1, prof),
     "flux1": lambda prof: check_image("flux-1-schnell", "flux1", prof),
     "flux2": lambda prof: check_image("flux-2", "flux2", prof),
-    "flux2_ref": lambda prof: check_image("flux-2", "flux2_ref", prof,
-                                          refs=sorted(SMOKE.glob("flux1.*"))[:1] or None, prompt=REF_PROMPT),
+    "flux2_repeat": lambda prof: check_image("flux-2", "flux2_repeat", prof),
+    "flux2_ref": lambda prof: check_image("flux-2", "flux2_ref", prof, refs=_ref_image(), prompt=REF_PROMPT),
     "kenburns": check_kenburns,
     "kaggle": check_kaggle,
 }
@@ -207,8 +240,8 @@ def run_smoke(profile: str, only: list[str] | None = None) -> list[Row]:
     for name, fn in CHECKS.items():
         if only and name not in only:
             continue
-        if name == "flux2_ref" and not sorted(SMOKE.glob("flux1.*")):
-            rows.append(Row(name, "cloudflare_image", "flux-2", False, None, "skipped: needs the flux1 image first"))
+        if name == "flux2_ref" and not _ref_image():
+            rows.append(Row(name, "cloudflare_image", "flux-2", False, None, "skipped: needs a flux image first"))
             continue
         console.print(f"[dim]smoke: {name}...[/dim]")
         try:

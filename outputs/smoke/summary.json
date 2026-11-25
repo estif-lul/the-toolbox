@@ -3,12 +3,84 @@
   "rows": [
     {
       "check": "text",
-      "latency_s": 104.548,
+      "latency_s": 56.952,
       "model": "",
       "notes": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
       "ok": false,
       "provider": "gemini_text:gemini-3.8-flash"
+    },
+    {
+      "check": "text (fallback)",
+      "latency_s": 1.18,
+      "model": "gemini-3.5-flash-lite",
+      "notes": "returned {\"ok\": true}; tokens in/out 21/5",
+      "ok": true,
+      "provider": "gemini_text"
+    },
+    {
+      "check": "tts",
+      "latency_s": 8.879,
+      "model": "gemini-3.8-flash-tts",
+      "notes": "2.20s WAV, 24000 Hz, 1 ch, 16-bit; ffprobe 2.20s; 1.82 words/s",
+      "ok": true,
+      "provider": "gemini_tts"
+    },
+    {
+      "check": "tts (fallback)",
+      "latency_s": 4.477,
+      "model": "gemini-3.8-flash-lite-tts",
+      "notes": "2.08s WAV, 24000 Hz, 1 ch, 16-bit; ffprobe 2.08s; 1.92 words/s",
+      "ok": true,
+      "provider": "gemini_tts"
+    },
+    {
+      "check": "flux1",
+      "latency_s": 24.361,
+      "model": "@cf/black-forest-labs/flux-1-schnell",
+      "notes": "1024x1024 image/jpeg, 282 KB, steps 4, no seed (not reproducible) -> outputs/smoke/flux1.jpg",
+      "ok": true,
+      "provider": "cloudflare_image"
+    },
+    {
+      "check": "flux2",
+      "latency_s": 9.138,
+      "model": "@cf/black-forest-labs/flux-2-klein-4b",
+      "notes": "1024x1024 image/jpeg, 592 KB, steps 4 -> outputs/smoke/flux2.jpg",
+      "ok": true,
+      "provider": "cloudflare_image"
+    },
+    {
+      "check": "flux2_repeat",
+      "latency_s": 13.954,
+      "model": "@cf/black-forest-labs/flux-2-klein-4b",
+      "notes": "1024x1024 image/jpeg, 572 KB, steps 4; same seed+prompt as flux2 -> DIFFERENT bytes -> outputs/smoke/flux2_repeat.jpg",
+      "ok": true,
+      "provider": "cloudflare_image"
+    },
+    {
+      "check": "flux2_ref",
+      "latency_s": 11.202,
+      "model": "@cf/black-forest-labs/flux-2-klein-4b",
+      "notes": "1024x1024 image/jpeg, 533 KB, steps 4; reference input accepted (flux2.jpg), check the picture -> outputs/smoke/flux2_ref.jpg",
+      "ok": true,
+      "provider": "cloudflare_image"
+    },
+    {
+      "check": "kenburns",
+      "latency_s": 1.221,
+      "model": "ffmpeg-zoompan",
+      "notes": "1024x1024 @ 24.0 fps, 2.00s from flux2.jpg",
+      "ok": true,
+      "provider": "kenburns"
+    },
+    {
+      "check": "kaggle auth",
+      "latency_s": 2.588611399754882,
+      "model": "kaggle-cli 2.2.5",
+      "notes": "auth ok; 0 kernel(s) listed (no GPU used); GPU 30.00h of 30.00h left (refresh 2026-11-28); TPU 20.00h of 20.00h left (refresh 2026-11-28)",
+      "ok": true,
+      "provider": "kaggle"
     }
   ],
-  "run_id": "20261125-142645-32c4"
+  "run_id": "20261125-144741-8d9d"
 }

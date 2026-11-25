@@ -23,7 +23,12 @@ class GeminiText(BaseAdapter):
         if self._client is None:
             from google import genai
 
-            self._client = genai.Client(api_key=require("GEMINI_API_KEY", why="Gemini text stage"))
+            # A client timeout makes an overloaded model fail fast so the fallback starts sooner
+            # (a 503 once took 104 s to arrive, FAILURES.md F05). HttpOptions.timeout is in ms.
+            self._client = genai.Client(
+                api_key=require("GEMINI_API_KEY", why="Gemini text stage"),
+                http_options={"timeout": int(float(self.params.get("timeout_s", 60)) * 1000)},
+            )
         return self._client
 
     def generate_json(self, prompt: str, schema: dict | None = None) -> TextResult:

@@ -33,6 +33,30 @@ The three lines the cartoon Dad speaks (to be confirmed with him as words he wou
 2. *ቀስ በቀስ እንቁላል በእግሩ ይሄዳል* — "Slowly, slowly, the egg walks on its own legs." (a common proverb)
 3. *ጎበዝ ልጄ* — "Well done, my son."
 
+### How his agreement is asked for and recorded
+- **Informed:** I tell him what the film is, that it is AI-made, that he appears only as a cartoon
+  with a computer voice (no photo, no recording of his voice), the exact three lines the cartoon
+  says, and where it will be shown (family groups and a public post with an AI label). I also ask
+  which details are wrong, since that is the "empathise" step of the design work too.
+- **Recorded:** the date, the medium (WhatsApp text or voice message), and his answer (quoted, with
+  a translation if it is in Amharic) go in the table above. Changes he asks for go into
+  `storyboard.json` in a commit that references this section.
+- **Kept private:** the screenshot or voice note itself stays on my phone, not in this public
+  repository (it would contain his real name, number and voice). This file records that it exists.
+- **Scope:** if he agrees to family sharing but not to a public post, the film is shared only
+  privately, and the post is submitted as a screenshot instead of being published.
+- **Withdrawal:** if he changes his mind later, the public post is taken down.
+
+What I send him (English version; the message actually sent, in Amharic or English, replaces this draft):
+> I'm making a short animated film (about 75 seconds) for my course, about you and how you taught
+> me to fix things: the car, the woodwork, the electricity, the pipes. It is made with AI. The
+> characters are cartoons inspired by you and me. I won't use any photo of you or your real voice.
+> A computer voice will say three lines as you, in Amharic: "እስኪ እንየው", "ቀስ በቀስ እንቁላል በእግሩ
+> ይሄዳል" and "ጎበዝ ልጄ". It ends with me calling you to say I fixed something myself. I'd like to
+> share it with the family and post it publicly (YouTube / Instagram / TikTok) with a label that says
+> it was made with AI. Are you OK with this, and with those words? If anything is wrong (like the
+> colour of the car, or what you built), tell me and I'll change it.
+
 ## 3. Privacy rule (prompts sent to free endpoints)
 
 Several free endpoints may use what is sent to them to improve their models. Therefore prompts
@@ -68,8 +92,8 @@ rounded shapes). **No living artist or studio is named** in any prompt.
 |---|---|---|---|---|
 | Gemini 3.x Flash / Flash-Lite (Gemini API, free tier) | Script / storyboard draft | Gemini API Terms of Service; free-tier data may be used to improve Google products | Generated content may be used; Google claims no ownership | **[VERIFY]** model id + terms |
 | Gemini Flash TTS (Gemini API, free tier) | Narration and Dad's lines (stock voices) | Gemini API Terms of Service (as above) | As above; output may carry SynthID | **[VERIFY]** |
-| FLUX.2 klein 4B (Cloudflare Workers AI) | Keyframes, reference sheets | Apache 2.0 (per the brief) + Cloudflare terms | Commercial use allowed | **[VERIFY]** which klein variant (4B Apache 2.0 vs 9B non-commercial) |
-| FLUX.1 schnell (Cloudflare Workers AI) | Keyframe fallback | Apache 2.0 + Cloudflare terms | Commercial use allowed | **[VERIFY]** |
+| FLUX.2 klein 4B (`@cf/black-forest-labs/flux-2-klein-4b`, Cloudflare Workers AI) | Keyframes, reference sheets | Apache 2.0 for the 4B weights (per the brief); Cloudflare's model page links the BFL terms of service and lists **"Zero data retention: Yes"** | Commercial use allowed | Variant verified 2026-11-25: **4B** chosen on purpose (the 9B is non-commercial). **[VERIFY]** BFL terms text |
+| FLUX.1 schnell (`@cf/black-forest-labs/flux-1-schnell`, Cloudflare Workers AI) | Keyframe fallback | Apache 2.0 + BFL terms (linked from the model page) | Commercial use allowed | **[VERIFY]** BFL terms text |
 | Wan 2.2 TI2V-5B (Kaggle) | Moving shots | Apache 2.0 (per the brief) | Allowed | **[VERIFY]** model card |
 | ACE-Step 1.5 (Kaggle) | Score | MIT; trained on licensed, royalty-free and synthetic data (per the brief) | Commercial use allowed (per the brief) | **[VERIFY]** repo licence |
 | FFmpeg | Assembly, Ken Burns, mixing | LGPL/GPL (the gyan.dev full build is GPL) | Tool only; no licence on outputs | **[VERIFY]** |

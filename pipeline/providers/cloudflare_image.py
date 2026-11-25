@@ -40,6 +40,9 @@ class CloudflareImage(BaseAdapter):
         self.max_steps = int(params.get("max_steps", 8 if "schnell" in model else 50))
         self.max_refs = int(params.get("max_refs", 4 if self.multipart else 0))
         self.timeout = float(params.get("timeout_s", 120))
+        # FLUX.1 schnell's input schema has no `seed` and rejects unknown properties (HTTP 400,
+        # FAILURES.md F06), so its images cannot be reproduced from a seed.
+        self.send_seed = bool(params.get("send_seed", "schnell" not in model))
 
     def _url_headers(self) -> tuple[str, dict]:
         account = require("CLOUDFLARE_ACCOUNT_ID", why="keyframes stage (Cloudflare Workers AI)")
@@ -65,7 +68,9 @@ class CloudflareImage(BaseAdapter):
         else:
             if refs:
                 raise FatalError(f"{self.model} does not take reference images")
-            body = {"prompt": prompt, "seed": seed, "steps": steps}
+            body: dict[str, Any] = {"prompt": prompt, "steps": steps}
+            if self.send_seed:
+                body["seed"] = seed
             if self.params.get("send_size"):
                 body.update(width=w, height=h)
             resp = httpx.post(url, headers=headers, json=body, timeout=self.timeout)
@@ -84,5 +89,5 @@ class CloudflareImage(BaseAdapter):
             data = base64.b64decode(image)
         width, height, mime = _image_size(data)
         meta = {"steps": steps, "refs": [Path(p).name for p in refs], "requested": [w, h],
-                "cf_ray": resp.headers.get("cf-ray")}
-        return ImageResult(data, mime, width, height, seed, meta)
+                "seed_sent": self.send_seed or self.multipart, "cf_ray": resp.headers.get("cf-ray")}
+        return ImageResult(data, mime, width, height, seed if meta["seed_sent"] else None, meta)

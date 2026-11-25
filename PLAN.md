@@ -448,6 +448,21 @@ are on record before any generation, and the paid lane is pluggable.
   text-only consistency strategy (fixed seed + identical character text). Record it.
 - Kaggle phone verification is delayed → it does not block Steps 1–3; Kaggle is first needed in Step 4.
 
+### Step 0 findings that change later steps (2026-11-25; details in FAILURES.md / COSTS.md)
+- **Models (verified):** text `gemini-3.8-flash` → `gemini-3.5-flash-lite` (no 3.8 Flash-Lite text
+  model; 3.8 Flash was 503 all afternoon). TTS `gemini-3.8-flash-tts` → `gemini-3.8-flash-lite-tts`
+  via the **Interactions API**, not generate_content (style = a `speech_metadata` annotation; output
+  is a complete 24 kHz mono 16-bit WAV). Image `@cf/black-forest-labs/flux-2-klein-4b` →
+  `flux-1-schnell`.
+- **Step 3:** klein **reference images work** (plan A is on). The klein **seed does not reproduce**
+  an image, and schnell accepts **no seed** at all → seeds pick candidates but don't guarantee
+  re-creation; reproducibility = committed cached files. Budget ≈ 104 neurons per klein image
+  (+22 per reference) out of 10,000/day (reset 03:00 EAT).
+- **Step 4:** Kaggle GPU quota is **30 h, refreshing 28 Nov** (after the deadline). P100 is retired;
+  choose the T4 with `--accelerator NvidiaTeslaT4` / `machine_shape`. The $10/$100 shown in Kaggle
+  settings is the Model Proxy (AI inference) quota, not GPU time.
+- **Smoke:** `make smoke` now also records `kaggle quota`; `make models` lists what the keys can see.
+
 ---
 
 ## 5. Step 1: Story, schema, storyboard

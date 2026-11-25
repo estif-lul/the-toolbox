@@ -1,0 +1,16 @@
+[
+  {
+    "refreshAt": "2026-11-28T00:00:00+00:00",
+    "remaining": "30.00h",
+    "resource": "GPU",
+    "total": "30.00h",
+    "used": "0.00h"
+  },
+  {
+    "refreshAt": "2026-11-28T00:00:00+00:00",
+    "remaining": "20.00h",
+    "resource": "TPU",
+    "total": "20.00h",
+    "used": "0.00h"
+  }
+]
