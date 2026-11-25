@@ -1,9 +1,9 @@
 """Load and validate storyboard.json, and compute the timeline from it.
 
-`validate(sb)` = JSON Schema (Draft 2020-12, schema/storyboard.schema.json, written in Step 1)
-+ semantic checks (ids, references, reasons, narration length, duration, music coverage,
-privacy lint, motion prompts). It returns a `Report` with errors and warnings; any error
-stops a run before a single model call is made.
+`validate(sb)` = JSON Schema (Draft 2020-12, schema/storyboard.schema.json) + semantic checks
+that a schema cannot express (unique ids, references between objects, reasons, narration length,
+measured duration, music coverage, privacy lint, motion prompts). It returns a `Report` with
+errors and warnings; any error stops a run before a single model call is made.
 
 `timeline(sb, timing)` turns measured narration durations (outputs/narration/timing.json, written
 in Step 2) into shot starts and durations. Before timing exists, durations are estimated from word
@@ -101,11 +101,25 @@ def validate(sb: dict, *, schema_path: Path | None = SCHEMA, timing: dict | None
     if schema_path is not None and Path(schema_path).exists():
         rep.errors.extend(_schema_errors(sb, Path(schema_path)))
     elif schema_path is not None:
-        rep.warn(f"no schema at {Path(schema_path).name}; only semantic checks ran (schema is written in Step 1)")
+        rep.warn(f"no schema at {Path(schema_path).name}; only semantic checks ran")
 
     shots = sb.get("shots") or []
-    char_ids = {c.get("id") for c in sb.get("characters") or []}
+    characters = sb.get("characters") or []
+    props = sb.get("props") or []
+    char_ids = {c.get("id") for c in characters}
+    prop_ids = {p.get("id") for p in props}
     voices = set((sb.get("voices") or {}).keys())
+
+    # 0. character / prop ids unique, `derived_from` points at an existing entry of the same kind
+    for kind, items, known in (("character", characters, char_ids), ("prop", props, prop_ids)):
+        seen_ids: set = set()
+        for item in items:
+            if item.get("id") in seen_ids:
+                rep.error(f"duplicate {kind} id {item.get('id')!r}")
+            seen_ids.add(item.get("id"))
+            src = item.get("derived_from")
+            if src is not None and (src not in known or src == item.get("id")):
+                rep.error(f"{kind} {item.get('id')!r}: derived_from {src!r} is not another {kind}")
 
     # 1. ids unique, well formed, 8-12 shots
     ids = [s.get("id") for s in shots]
@@ -119,28 +133,48 @@ def validate(sb: dict, *, schema_path: Path | None = SCHEMA, timing: dict | None
             rep.error(f"duplicate shot id {sid}")
         seen.add(sid)
 
-    line_ref = {(s.get("id"), i) for s in shots for i, _ in enumerate(narration_lines(s))}
+    lines_by_ref = {(s.get("id"), i): line for s in shots for i, line in enumerate(narration_lines(s))}
     total_words = 0
     prev_move = None
+    priorities: dict = {}
     for shot in shots:
         sid = shot.get("id")
-        # 2. character references (shot level and per layer)
+        # 2. character and prop references (shot level and per layer)
+        layers = shot.get("layers") or []
         refs = list(shot.get("characters") or [])
-        for layer in shot.get("layers") or []:
+        prop_refs = list(shot.get("props") or [])
+        for layer in layers:
             refs += list(layer.get("characters") or [])
+            prop_refs += list(layer.get("props") or [])
         for ch in refs:
             if ch not in char_ids:
                 rep.error(f"{sid}: unknown character {ch!r} (known: {sorted(char_ids)})")
-        # 3. narration voices and echo references
+        for pr in prop_refs:
+            if pr not in prop_ids:
+                rep.error(f"{sid}: unknown prop {pr!r} (known: {sorted(prop_ids)})")
+        layer_ids = [layer.get("id") for layer in layers]
+        if len(layer_ids) != len(set(layer_ids)):
+            rep.error(f"{sid}: layer ids must be unique, found {layer_ids}")
+        # 3. narration voices, echo references, translations for non-English lines
         for i, line in enumerate(narration_lines(shot)):
             if "echo_of" in line:
                 target = str(line["echo_of"]).split(":")
-                if len(target) != 2 or (target[0], int(target[1]) if target[1].isdigit() else -1) not in line_ref:
+                ref = (target[0], int(target[1])) if len(target) == 2 and target[1].isdigit() else None
+                if ref not in lines_by_ref:
                     rep.error(f"{sid}: narration[{i}] echo_of {line['echo_of']!r} does not point at an existing line")
+                elif "echo_of" in lines_by_ref[ref]:
+                    rep.error(f"{sid}: narration[{i}] echoes {line['echo_of']!r}, which is itself an echo")
                 continue
             if line.get("voice") not in voices:
                 rep.error(f"{sid}: narration[{i}] uses unknown voice {line.get('voice')!r}")
+            if line.get("lang", "en") != "en" and not str(line.get("subtitle") or "").strip():
+                rep.error(f"{sid}: narration[{i}] is in {line.get('lang')!r} but has no English 'subtitle'")
             total_words += _words(line.get("text", ""))
+        prio = shot.get("priority")
+        if prio is not None:
+            if prio in priorities:
+                rep.warn(f"{sid}: priority {prio} is also used by {priorities[prio]} (GPU job order is ambiguous)")
+            priorities.setdefault(prio, sid)
         # 4. every shot has a reason
         if not str(shot.get("reason") or "").strip():
             rep.error(f"{sid}: missing 'reason' (every shot needs one)")
@@ -187,6 +221,10 @@ def validate(sb: dict, *, schema_path: Path | None = SCHEMA, timing: dict | None
         missing = [ids[i] for i in range(len(ids)) if i not in covered]
         if missing:
             rep.error(f"music cues do not cover shots: {', '.join(map(str, missing))}")
+        cue_ids = {c.get("id") for c in sb["music"]["cues"]}
+        for cid in (sb["music"].get("chosen") or {}):
+            if cid not in cue_ids:
+                rep.error(f"music.chosen has {cid!r}, which is not a cue id (cues: {sorted(cue_ids)})")
 
     # 8. soft privacy lint
     for where, text in _iter_strings({k: v for k, v in sb.items() if k != "end_card"}):

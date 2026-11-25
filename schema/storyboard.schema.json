@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "The Toolbox storyboard",
+  "description": "The contract between every pipeline stage. Stages read only the fields they use, so editing one field regenerates only the stages (and shots) that depend on it. Semantic checks that JSON Schema cannot express (unique shot ids, references between objects, word counts, measured duration, music coverage, privacy lint) live in pipeline/common/storyboard.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "title", "logline", "format", "style", "characters", "voices", "music", "shots", "end_card"],
+  "properties": {
+    "$schema": {"type": "string", "description": "Optional pointer to this file, for editor completion."},
+    "schema_version": {"const": 1},
+    "title": {"$ref": "#/$defs/text"},
+    "logline": {"$ref": "#/$defs/text"},
+
+    "format": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fps", "master_aspect", "master_px", "exports", "target_duration_s"],
+      "properties": {
+        "fps": {"type": "integer", "enum": [24, 25, 30]},
+        "master_aspect": {"const": "1:1", "description": "Keyframes are square masters, cropped to each export at assembly."},
+        "master_px": {"type": "integer", "minimum": 512, "maximum": 2048},
+        "exports": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "w", "h"],
+            "properties": {
+              "name": {"type": "string", "pattern": "^[0-9]+x[0-9]+$"},
+              "w": {"type": "integer", "minimum": 16},
+              "h": {"type": "integer", "minimum": 16}
+            }
+          }
+        },
+        "target_duration_s": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["min", "max"],
+          "properties": {
+            "min": {"type": "number", "exclusiveMinimum": 0},
+            "max": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        "line_gap_s": {"type": "number", "minimum": 0, "maximum": 3, "description": "Silence between two narration lines in the same shot (default 0.35)."}
+      }
+    },
+
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["block", "negative", "composition"],
+      "properties": {
+        "block": {"$ref": "#/$defs/text", "description": "Appended to every image prompt as 'Style: <block>'. Describes qualities, never a named artist or studio."},
+        "negative": {"$ref": "#/$defs/text", "description": "What must not appear (used as a negative prompt where the model supports one)."},
+        "composition": {"$ref": "#/$defs/text", "description": "Appended to every image prompt: keeps the subject inside the area that survives both crops of the square master."},
+        "reference_choice": {"$ref": "#/$defs/choice"}
+      }
+    },
+
+    "characters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "seed"],
+        "properties": {
+          "id": {"$ref": "#/$defs/ident"},
+          "description": {"$ref": "#/$defs/text", "description": "One fixed sentence, attached word for word to every prompt that features the character."},
+          "seed": {"$ref": "#/$defs/seed"},
+          "derived_from": {"$ref": "#/$defs/ident", "description": "Generated from this character's chosen reference (image edit)."},
+          "reference_choice": {"$ref": "#/$defs/choice"}
+        }
+      }
+    },
+
+    "props": {
+      "type": "array",
+      "description": "Recurring objects and places (the toolbox, the car, the home), described once and attached word for word like characters.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": {"$ref": "#/$defs/ident"},
+          "description": {"$ref": "#/$defs/text"},
+          "derived_from": {"$ref": "#/$defs/ident"},
+          "reference_choice": {"$ref": "#/$defs/choice"}
+        }
+      }
+    },
+
+    "voices": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"$ref": "#/$defs/ident"},
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["voice", "style"],
+        "properties": {
+          "voice": {"type": "string", "minLength": 1, "description": "A stock TTS voice name (no cloning)."},
+          "style": {"$ref": "#/$defs/text", "description": "Speaking-style instruction sent with every line in this voice."},
+          "candidates": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "description": "Stock voices to audition before the choice is final."}
+        }
+      }
+    },
+
+    "music": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cues", "chosen", "duck"],
+      "properties": {
+        "cues": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "from_shot", "to_shot", "intent", "caption", "instrumental", "seeds"],
+            "properties": {
+              "id": {"$ref": "#/$defs/ident"},
+              "from_shot": {"$ref": "#/$defs/shot_id"},
+              "to_shot": {"$ref": "#/$defs/shot_id"},
+              "intent": {"$ref": "#/$defs/text", "description": "What the music must do for the story (for people)."},
+              "caption": {"$ref": "#/$defs/text", "description": "The prompt sent to the music model."},
+              "bpm": {"type": "integer", "minimum": 40, "maximum": 200},
+              "key": {"type": "string", "pattern": "^[A-G][#b]? (major|minor)$"},
+              "instrumental": {"type": "boolean"},
+              "seeds": {"type": "array", "minItems": 1, "maxItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/seed"}}
+            }
+          }
+        },
+        "chosen": {
+          "type": "object",
+          "description": "cue id -> index of the chosen candidate (null until one is chosen).",
+          "propertyNames": {"$ref": "#/$defs/ident"},
+          "additionalProperties": {"$ref": "#/$defs/choice"}
+        },
+        "duck": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["threshold", "ratio", "attack_ms", "release_ms"],
+          "properties": {
+            "threshold": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+            "ratio": {"type": "number", "minimum": 1, "maximum": 20},
+            "attack_ms": {"type": "number", "minimum": 0.01, "maximum": 2000},
+            "release_ms": {"type": "number", "minimum": 0.01, "maximum": 9000}
+          }
+        }
+      }
+    },
+
+    "shots": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 12,
+      "items": {"$ref": "#/$defs/shot"}
+    },
+
+    "end_card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duration_s", "lines"],
+      "properties": {
+        "duration_s": {"type": "number", "minimum": 2, "maximum": 8},
+        "lines": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/text"}}
+      }
+    }
+  },
+
+  "$defs": {
+    "text": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "ident": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "shot_id": {"type": "string", "pattern": "^s[0-9]{2}$"},
+    "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "choice": {
+      "description": "Index of the chosen candidate (resolved to a file by the stage manifest), or null while undecided. Never a file path.",
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "kenburns": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["move", "amount"],
+      "properties": {
+        "move": {"enum": ["push_in", "pull_out", "pan_left", "pan_right", "pan_up", "pan_down"]},
+        "amount": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.3, "description": "Zoom or travel as a fraction of the frame."}
+      }
+    },
+    "crop_focus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "description": "Centre of the crop in the square master (0..1). x matters for 9:16, y for 16:9.",
+      "properties": {
+        "x": {"type": "number", "minimum": 0, "maximum": 1},
+        "y": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "speech_line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["voice", "text"],
+      "properties": {
+        "voice": {"$ref": "#/$defs/ident"},
+        "text": {"$ref": "#/$defs/text", "description": "What is said, in the line's language (also the subtitle unless 'subtitle' is set)."},
+        "lang": {"enum": ["en", "am"], "default": "en"},
+        "subtitle": {"type": ["string", "null"], "minLength": 1, "description": "Subtitle text when it differs from 'text' (e.g. the English translation of an Amharic line)."},
+        "tts_text": {"type": ["string", "null"], "minLength": 1, "description": "What is sent to TTS when it differs from 'text' (phonetic re-spelling); subtitles are unaffected."},
+        "style": {"type": ["string", "null"], "minLength": 1, "description": "Overrides the voice's style for this line only."}
+      }
+    },
+    "echo_line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["echo_of"],
+      "description": "Reuses another line's audio (no model call), quieter and with reverb.",
+      "properties": {
+        "echo_of": {"type": "string", "pattern": "^s[0-9]{2}:[0-9]+$", "description": "<shot id>:<line index>"},
+        "gain_db": {"type": "number", "minimum": -30, "maximum": 0},
+        "reverb": {"type": "boolean"},
+        "subtitle": {"type": ["string", "null"], "minLength": 1}
+      }
+    },
+    "narration_line": {
+      "if": {"type": "object", "required": ["echo_of"]},
+      "then": {"$ref": "#/$defs/echo_line"},
+      "else": {"$ref": "#/$defs/speech_line"}
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "image_prompt", "characters", "seed"],
+      "description": "One panel of a composited shot (split screen): its own keyframe and clip.",
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z]$"},
+        "image_prompt": {"$ref": "#/$defs/text"},
+        "characters": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/ident"}},
+        "props": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/ident"}},
+        "seed": {"$ref": "#/$defs/seed"},
+        "keyframe_choice": {"$ref": "#/$defs/choice"},
+        "motion_prompt": {"type": ["string", "null"], "minLength": 1},
+        "crop_focus": {"$ref": "#/$defs/crop_focus"}
+      }
+    },
+    "shot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "beat", "reason", "shot_size", "camera", "characters", "image_prompt", "seed",
+                   "motion", "kenburns", "crop_focus", "narration", "min_duration_s", "pad_before_s",
+                   "pad_after_s", "transition_in", "priority"],
+      "properties": {
+        "id": {"$ref": "#/$defs/shot_id"},
+        "beat": {"$ref": "#/$defs/text"},
+        "reason": {"$ref": "#/$defs/text", "description": "Why this shot exists in the story."},
+        "shot_size": {"enum": ["extreme_close_up", "close_up", "medium_close_up", "medium", "medium_wide", "wide", "insert"]},
+        "camera": {"enum": ["static", "push_in", "pull_out", "pan_left", "pan_right", "tilt_up", "tilt_down", "tracking"]},
+        "characters": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/ident"}},
+        "props": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/ident"}},
+        "image_prompt": {"$ref": "#/$defs/text", "description": "Subject + setting + shot size only. Character, prop, composition and style text are appended in code."},
+        "seed": {"$ref": "#/$defs/seed"},
+        "keyframe_choice": {"$ref": "#/$defs/choice"},
+        "motion": {"enum": ["wan", "kenburns"]},
+        "motion_prompt": {"type": ["string", "null"], "minLength": 1, "description": "Motion + camera only; never re-describes the subject."},
+        "kenburns": {"$ref": "#/$defs/kenburns"},
+        "crop_focus": {"$ref": "#/$defs/crop_focus"},
+        "narration": {"type": "array", "items": {"$ref": "#/$defs/narration_line"}},
+        "layers": {"type": ["array", "null"], "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/layer"}},
+        "min_duration_s": {"type": "number", "exclusiveMinimum": 0, "maximum": 20},
+        "pad_before_s": {"type": "number", "minimum": 0, "maximum": 5},
+        "pad_after_s": {"type": "number", "minimum": 0, "maximum": 5},
+        "duration_override_s": {"type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 30},
+        "transition_in": {"enum": ["cut", "fade_from_black", "crossfade", "dip_to_black"]},
+        "priority": {"type": "integer", "minimum": 1, "maximum": 99, "description": "Order of the GPU jobs: 1 runs first."}
+      }
+    }
+  }
+}

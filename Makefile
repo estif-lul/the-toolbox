@@ -39,7 +39,7 @@ test:                         ## unit tests (no network, no keys needed)
 secrets:                      ## scan tracked files for API keys and tokens
 	uv run python scripts/check_secrets.py
 
-check: secrets test           ## secrets scan + tests + validate (validate skips until Step 1)
+check: secrets test           ## secrets scan + tests + storyboard validation
 	$(RUN) validate --if-present
 
 script:                       ## [Step 1] Gemini draft of the storyboard -> storyboard.draft.json

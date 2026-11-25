@@ -65,9 +65,9 @@ def cmd_validate(args) -> int:
     path = args.path or sbm.STORYBOARD
     if not os.path.exists(path):
         if args.if_present:
-            console.print("[dim]validate: no storyboard.json yet (written in Step 1), skipping[/dim]")
+            console.print("[dim]validate: no storyboard.json yet, skipping[/dim]")
             return 0
-        console.print(f"[red]validate: {path} not found[/red] (it is written in Step 1)")
+        console.print(f"[red]validate: {path} not found[/red]")
         return 1
     sb = sbm.load_storyboard(path)
     report = sbm.validate(sb, timing=sbm.load_timing())
