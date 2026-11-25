@@ -1,0 +1,64 @@
+{
+  "batch_key": "ed5368731daf14852b07bdad2281bc169b0dd6c7ca56af22f59077ec93f31976",
+  "created_at": "2026-11-25T21:13:46+03:00",
+  "duration_s": 7.78,
+  "lines": [
+    {
+      "ref": "s01:0",
+      "style": null,
+      "text": "My dad never called anyone to fix anything."
+    },
+    {
+      "ref": "s10:1",
+      "style": null,
+      "text": "Dad, I fixed it myself."
+    }
+  ],
+  "model": "gemini-3.8-flash-lite-tts",
+  "provider": "gemini_tts",
+  "run_id": "20261125-211339-5ae8",
+  "silences": [
+    [
+      2.72,
+      5.02
+    ],
+    [
+      5.48,
+      6.19
+    ],
+    [
+      7.21,
+      7.78
+    ]
+  ],
+  "speech_bounds": [
+    0.0,
+    7.21
+  ],
+  "split": {
+    "boundary_pauses": [
+      2.3
+    ],
+    "cuts": [
+      3.87
+    ],
+    "longest_unused_pause": 0.71,
+    "ok": true,
+    "problems": [],
+    "ratios": [
+      0.909,
+      1.142
+    ],
+    "segments": [
+      [
+        0.0,
+        2.72
+      ],
+      [
+        5.02,
+        7.21
+      ]
+    ]
+  },
+  "voice": "Umbriel"
+}

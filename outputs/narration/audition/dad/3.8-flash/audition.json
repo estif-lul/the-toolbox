@@ -1,0 +1,120 @@
+{
+  "created_at": "2026-11-25T21:10:08+03:00",
+  "model": "gemini-3.8-flash-tts",
+  "no_style": false,
+  "order": [
+    "Algenib",
+    "Charon",
+    "Orus"
+  ],
+  "role": "dad",
+  "run_id": "20261125-211008-6657",
+  "sheet": "outputs/narration/audition/dad/3.8-flash/sheet.wav",
+  "voices": [
+    {
+      "english_wps": null,
+      "lines": [
+        {
+          "cache_key": "d1d8a93dbd216a466bc876eaf0e27953fff1772d9f03313e2489722e6a8a6fd2",
+          "duration_s": 0.72,
+          "lang": "am",
+          "path": "outputs/narration/s05/d1d8a93dbd216a46.wav",
+          "ref": "s05:1",
+          "style": "Speak in Amharic: calm and unhurried, almost to himself, a father reassuring his son",
+          "words": 2
+        },
+        {
+          "cache_key": "3dc66e0ac16dbba3a7c265f582ff7c583cdd6d36750e02d23f900f19714abec3",
+          "duration_s": 2.21,
+          "lang": "am",
+          "path": "outputs/narration/s08/3dc66e0ac16dbba3.wav",
+          "ref": "s08:1",
+          "style": "Speak in Amharic: warm and proud, a gentle smile in the voice, quoting an old proverb",
+          "words": 5
+        },
+        {
+          "cache_key": "a1de3b7a371bcf39cee32f5ff53f4ebab56765e26984d81249fae80d6d0b5de2",
+          "duration_s": 2.0,
+          "lang": "am",
+          "path": "outputs/narration/s10/a1de3b7a371bcf39.wav",
+          "ref": "s10:2",
+          "style": "Speak in Amharic: warm and proud, softly laughing, on the phone to his grown son",
+          "words": 2
+        }
+      ],
+      "path": "outputs/narration/audition/dad/3.8-flash/Algenib.wav",
+      "speech_s": 4.93,
+      "voice": "Algenib"
+    },
+    {
+      "english_wps": null,
+      "lines": [
+        {
+          "cache_key": "91c114267dd2c7101f92cd13c1493648fdada1f9f972f1cd2b14cfe11e726ed3",
+          "duration_s": 0.76,
+          "lang": "am",
+          "path": "outputs/narration/s05/91c114267dd2c710.wav",
+          "ref": "s05:1",
+          "style": "Speak in Amharic: calm and unhurried, almost to himself, a father reassuring his son",
+          "words": 2
+        },
+        {
+          "cache_key": "cf82b21bb0f283c20d9799e4f2a9ed4d9786d8903d7506325016ef8b3559b4fe",
+          "duration_s": 2.8,
+          "lang": "am",
+          "path": "outputs/narration/s08/cf82b21bb0f283c2.wav",
+          "ref": "s08:1",
+          "style": "Speak in Amharic: warm and proud, a gentle smile in the voice, quoting an old proverb",
+          "words": 5
+        },
+        {
+          "cache_key": "d65e2a73c2ae772e6f3f3735c560318f184e82c02458b4bd0981ebddb4585bec",
+          "duration_s": 1.94,
+          "lang": "am",
+          "path": "outputs/narration/s10/d65e2a73c2ae772e.wav",
+          "ref": "s10:2",
+          "style": "Speak in Amharic: warm and proud, softly laughing, on the phone to his grown son",
+          "words": 2
+        }
+      ],
+      "path": "outputs/narration/audition/dad/3.8-flash/Charon.wav",
+      "speech_s": 5.5,
+      "voice": "Charon"
+    },
+    {
+      "english_wps": null,
+      "lines": [
+        {
+          "cache_key": "25c3201f56def31a57a62720c3aefbabae3534f37e0aaa67723fe4d290045acc",
+          "duration_s": 1.88,
+          "lang": "am",
+          "path": "outputs/narration/s05/25c3201f56def31a.wav",
+          "ref": "s05:1",
+          "style": "Speak in Amharic: calm and unhurried, almost to himself, a father reassuring his son",
+          "words": 2
+        },
+        {
+          "cache_key": "360bf89ec8bdd84dc32c6ec521fcb3351a0235bfe029eccbf002c66570a7d6db",
+          "duration_s": 3.63,
+          "lang": "am",
+          "path": "outputs/narration/s08/360bf89ec8bdd84d.wav",
+          "ref": "s08:1",
+          "style": "Speak in Amharic: warm and proud, a gentle smile in the voice, quoting an old proverb",
+          "words": 5
+        },
+        {
+          "cache_key": "cf86fd7caac64e095f34bff4a4785c2714892368b931ba8392eea7038a0aace3",
+          "duration_s": 2.07,
+          "lang": "am",
+          "path": "outputs/narration/s10/cf86fd7caac64e09.wav",
+          "ref": "s10:2",
+          "style": "Speak in Amharic: warm and proud, softly laughing, on the phone to his grown son",
+          "words": 2
+        }
+      ],
+      "path": "outputs/narration/audition/dad/3.8-flash/Orus.wav",
+      "speech_s": 7.58,
+      "voice": "Orus"
+    }
+  ]
+}

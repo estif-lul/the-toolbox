@@ -1,0 +1,250 @@
+{
+  "shots": {
+    "s01": [
+      {
+        "cache_key": "b9e00707137fa0ee57ea7c60413a2be354254494182332f9077f62372fa41adb",
+        "duration_s": 3.38,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s01/b9e00707137fa0ee.wav",
+        "raw_path": "outputs/narration/s01/b9e00707137fa0ee.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 8,
+        "wps": 2.367
+      }
+    ],
+    "s02": [
+      {
+        "cache_key": "eeb585d34aef073a2c5fbeedac900fbbe2963f938b8c1d8df73bb2b6b82b7510",
+        "duration_s": 5.4,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s02/eeb585d34aef073a.wav",
+        "raw_path": "outputs/narration/s02/eeb585d34aef073a.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 19,
+        "wps": 3.519
+      }
+    ],
+    "s03": [
+      {
+        "cache_key": "d56354f78b4fea6432d20638b84d5c7397675367a03e2f7e848ddd912cff5f0b",
+        "duration_s": 6.47,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s03/d56354f78b4fea64.wav",
+        "raw_path": "outputs/narration/s03/d56354f78b4fea64.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 17,
+        "wps": 2.628
+      }
+    ],
+    "s04": [
+      {
+        "cache_key": "dbdf2a5436695efbbd5c834abec0474a880092296b1bc9dccf33505827df265f",
+        "duration_s": 3.86,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s04/dbdf2a5436695efb.wav",
+        "raw_path": "outputs/narration/s04/dbdf2a5436695efb.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 13,
+        "wps": 3.368
+      }
+    ],
+    "s05": [
+      {
+        "cache_key": "3d1f9ef207e44bf6d87db7c4a946d5698d0621d5d111ccd40987e970a90589b4",
+        "duration_s": 5.62,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s05/3d1f9ef207e44bf6.wav",
+        "raw_path": "outputs/narration/s05/3d1f9ef207e44bf6.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 15,
+        "wps": 2.669
+      },
+      {
+        "cache_key": "d1d8a93dbd216a466bc876eaf0e27953fff1772d9f03313e2489722e6a8a6fd2",
+        "duration_s": 0.72,
+        "lang": "am",
+        "line_idx": 1,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s05/d1d8a93dbd216a46.wav",
+        "raw_path": "outputs/narration/s05/d1d8a93dbd216a46.raw.wav",
+        "voice": "dad",
+        "voice_name": "Algenib",
+        "words": 2,
+        "wps": 2.778
+      }
+    ],
+    "s06": [
+      {
+        "cache_key": "25c0eed4f260a9264b2c7b9e291953320818627b7397595ed994574e5e1ec741",
+        "duration_s": 1.84,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s06/25c0eed4f260a926.wav",
+        "raw_path": "outputs/narration/s06/25c0eed4f260a926.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 7,
+        "wps": 3.804
+      }
+    ],
+    "s07": [
+      {
+        "cache_key": "c68fd3015b5f693db7ace36cbbbc9a61f39b7011f0a348b99cfe765a772ff18b",
+        "duration_s": 6.69,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s07/c68fd3015b5f693d.wav",
+        "raw_path": "outputs/narration/s07/c68fd3015b5f693d.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 8,
+        "wps": 1.196
+      }
+    ],
+    "s08": [
+      {
+        "cache_key": "d1a2207fe742849d85c1c945f8d495013132425e052befc9cb5f1c6ff6916460",
+        "duration_s": 5.61,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s08/d1a2207fe742849d.wav",
+        "raw_path": "outputs/narration/s08/d1a2207fe742849d.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 14,
+        "wps": 2.496
+      },
+      {
+        "cache_key": "3dc66e0ac16dbba3a7c265f582ff7c583cdd6d36750e02d23f900f19714abec3",
+        "duration_s": 2.21,
+        "lang": "am",
+        "line_idx": 1,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s08/3dc66e0ac16dbba3.wav",
+        "raw_path": "outputs/narration/s08/3dc66e0ac16dbba3.raw.wav",
+        "voice": "dad",
+        "voice_name": "Algenib",
+        "words": 5,
+        "wps": 2.262
+      }
+    ],
+    "s09": [
+      {
+        "cache_key": "8fbf2d1ec341b0297b2ddcfb82ca48c253df06e1b64e0a39a56cb5119bc8f523",
+        "duration_s": 2.92,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s09/8fbf2d1ec341b029.wav",
+        "raw_path": "outputs/narration/s09/8fbf2d1ec341b029.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 10,
+        "wps": 3.425
+      },
+      {
+        "cache_key": "e6522ace8e5dac16717b14f656eb0d806c1f3bd9fd6e48e96d9c61e3e0dbe38c",
+        "duration_s": 5.38,
+        "lang": "en",
+        "line_idx": 1,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s09/e6522ace8e5dac16.wav",
+        "raw_path": "outputs/narration/s09/e6522ace8e5dac16.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 11,
+        "wps": 2.045
+      },
+      {
+        "duration_s": 0.72,
+        "echo_of": "s05:1",
+        "gain_db": -8,
+        "line_idx": 2,
+        "path": "outputs/narration/s05/d1d8a93dbd216a46.wav",
+        "reverb": true,
+        "voice": "dad"
+      }
+    ],
+    "s10": [
+      {
+        "cache_key": "6406c3d696ffa0e0a8e8785c8628fc06c47cb791b93551b1841bebc0937f31f2",
+        "duration_s": 0.78,
+        "lang": "en",
+        "line_idx": 0,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s10/6406c3d696ffa0e0.wav",
+        "raw_path": "outputs/narration/s10/6406c3d696ffa0e0.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 4,
+        "wps": 5.128
+      },
+      {
+        "cache_key": "4c2be5b367044386d7c102342040d59daa45542f1c978ee04a882e346008d56f",
+        "duration_s": 1.88,
+        "lang": "en",
+        "line_idx": 1,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s10/4c2be5b367044386.wav",
+        "raw_path": "outputs/narration/s10/4c2be5b367044386.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 5,
+        "wps": 2.66
+      },
+      {
+        "cache_key": "a1de3b7a371bcf39cee32f5ff53f4ebab56765e26984d81249fae80d6d0b5de2",
+        "duration_s": 2.0,
+        "lang": "am",
+        "line_idx": 2,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s10/a1de3b7a371bcf39.wav",
+        "raw_path": "outputs/narration/s10/a1de3b7a371bcf39.raw.wav",
+        "voice": "dad",
+        "voice_name": "Algenib",
+        "words": 2,
+        "wps": 1.0
+      },
+      {
+        "cache_key": "cd67d6a725c32158a4dcdd2ea2426de0d7380855b6307b3d2b2067e9f1e5f06a",
+        "duration_s": 1.78,
+        "lang": "en",
+        "line_idx": 3,
+        "model": "gemini-3.8-flash-tts",
+        "path": "outputs/narration/s10/cd67d6a725c32158.wav",
+        "raw_path": "outputs/narration/s10/cd67d6a725c32158.raw.wav",
+        "voice": "narrator",
+        "voice_name": "Umbriel",
+        "words": 6,
+        "wps": 3.371
+      }
+    ]
+  },
+  "stage_version": 1,
+  "totals": {
+    "amharic_s": 4.93,
+    "english_s": 51.61,
+    "english_words": 137,
+    "english_wps": 2.655,
+    "lines": 16,
+    "speech_s": 56.54
+  }
+}

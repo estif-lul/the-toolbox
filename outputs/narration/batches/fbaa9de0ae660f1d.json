@@ -1,0 +1,223 @@
+{
+  "batch_key": "fbaa9de0ae660f1db2a26faf6b886922d1580de640d880622186594100cc686a",
+  "created_at": "2026-11-25T21:14:17+03:00",
+  "duration_s": 50.94,
+  "lines": [
+    {
+      "ref": "s01:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "My dad never called anyone to fix anything."
+    },
+    {
+      "ref": "s02:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "If it could be done at home, he did it himself. And I was always one step behind him."
+    },
+    {
+      "ref": "s03:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "Under our old white car, I held the torch. He held the wrench, and explained every bolt."
+    },
+    {
+      "ref": "s04:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "From a few planks, he built the rekebot we still serve coffee on."
+    },
+    {
+      "ref": "s05:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "When the power went out, everyone said: call someone. Dad just picked up his tester."
+    },
+    {
+      "ref": "s06:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "And the whole house lit up again."
+    },
+    {
+      "ref": "s07:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "A leaking pipe. A wrench. Patience. Then… silence."
+    },
+    {
+      "ref": "s08:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "Years later, he stopped fixing things for me, and started fixing them with me."
+    }
+  ],
+  "model": "gemini-3.8-flash-tts",
+  "provider": "gemini_tts",
+  "repairs": [
+    {
+      "at": "2026-11-25T21:23:13+03:00",
+      "between": [
+        "s07:0",
+        "s08:0"
+      ],
+      "from_s": 41.99,
+      "scores_after": {
+        "s07:0": 1.0,
+        "s08:0": 1.0
+      },
+      "scores_before": {
+        "s07:0": 0.857,
+        "s08:0": 0.933
+      },
+      "to_s": 44.795
+    }
+  ],
+  "run_id": "20261125-211359-ae9a",
+  "silences": [
+    [
+      0.85,
+      1.1
+    ],
+    [
+      3.26,
+      4.3
+    ],
+    [
+      5.41,
+      5.78
+    ],
+    [
+      6.64,
+      7.55
+    ],
+    [
+      9.53,
+      11.36
+    ],
+    [
+      14.17,
+      14.82
+    ],
+    [
+      15.62,
+      16.11
+    ],
+    [
+      17.67,
+      19.77
+    ],
+    [
+      23.46,
+      25.68
+    ],
+    [
+      28.74,
+      29.72
+    ],
+    [
+      31.13,
+      33.69
+    ],
+    [
+      35.36,
+      37.92
+    ],
+    [
+      38.67,
+      39.35
+    ],
+    [
+      39.86,
+      40.83
+    ],
+    [
+      41.38,
+      42.6
+    ],
+    [
+      42.94,
+      43.88
+    ],
+    [
+      44.44,
+      45.15
+    ],
+    [
+      46.01,
+      46.39
+    ],
+    [
+      48.12,
+      48.57
+    ],
+    [
+      50.59,
+      50.94
+    ]
+  ],
+  "speech_bounds": [
+    0.0,
+    50.59
+  ],
+  "split": {
+    "boundary_pauses": [
+      1.04,
+      1.83,
+      2.1,
+      2.22,
+      2.56,
+      2.56,
+      1.22
+    ],
+    "cuts": [
+      3.78,
+      10.445,
+      18.72,
+      24.57,
+      32.41,
+      36.64,
+      44.795
+    ],
+    "longest_unused_pause": 0.98,
+    "ok": true,
+    "problems": [],
+    "ratios": [
+      1.132,
+      0.932,
+      1.018,
+      0.847,
+      0.9,
+      0.754,
+      0.808,
+      1.463
+    ],
+    "segments": [
+      [
+        0.0,
+        3.26
+      ],
+      [
+        4.3,
+        9.53
+      ],
+      [
+        11.36,
+        17.67
+      ],
+      [
+        19.77,
+        23.46
+      ],
+      [
+        25.68,
+        31.13
+      ],
+      [
+        33.69,
+        35.36
+      ],
+      [
+        37.92,
+        41.38
+      ],
+      [
+        42.6,
+        50.59
+      ]
+    ]
+  },
+  "voice": "Umbriel"
+}

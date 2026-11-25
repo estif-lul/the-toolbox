@@ -1,0 +1,201 @@
+{
+  "checked_at": "2026-11-25T21:23:35+03:00",
+  "repairs": [
+    {
+      "at": "2026-11-25T21:23:13+03:00",
+      "between": [
+        "s07:0",
+        "s08:0"
+      ],
+      "from_s": 41.99,
+      "scores_after": {
+        "s07:0": 1.0,
+        "s08:0": 1.0
+      },
+      "scores_before": {
+        "s07:0": 0.857,
+        "s08:0": 0.933
+      },
+      "to_s": 44.795
+    }
+  ],
+  "rows": [
+    {
+      "edges_ok": true,
+      "expected": "My dad never called anyone to fix anything.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s01:0",
+      "similarity": 1.0,
+      "take": "b9e00707137fa0ee57ea7c60413a2be354254494182332f9077f62372fa41adb",
+      "transcript": "My dad never called anyone to fix anything."
+    },
+    {
+      "edges_ok": true,
+      "expected": "If it could be done at home, he did it himself. And I was always one step behind him.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s02:0",
+      "similarity": 1.0,
+      "take": "eeb585d34aef073a2c5fbeedac900fbbe2963f938b8c1d8df73bb2b6b82b7510",
+      "transcript": "if it could be done at home, he did it himself, and I was always one step behind him."
+    },
+    {
+      "edges_ok": true,
+      "expected": "Under our old white car, I held the torch. He held the wrench, and explained every bolt.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s03:0",
+      "similarity": 1.0,
+      "take": "d56354f78b4fea6432d20638b84d5c7397675367a03e2f7e848ddd912cff5f0b",
+      "transcript": "Under our old white car, I held the torch. He held the wrench and explained every bolt."
+    },
+    {
+      "edges_ok": true,
+      "expected": "From a few planks, he built the rekebot we still serve coffee on.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s04:0",
+      "similarity": 0.923,
+      "take": "dbdf2a5436695efbbd5c834abec0474a880092296b1bc9dccf33505827df265f",
+      "transcript": "From a few planks, he built the rickabaut we still serve coffee on."
+    },
+    {
+      "edges_ok": true,
+      "expected": "When the power went out, everyone said: call someone. Dad just picked up his tester.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s05:0",
+      "similarity": 1.0,
+      "take": "3d1f9ef207e44bf6d87db7c4a946d5698d0621d5d111ccd40987e970a90589b4",
+      "transcript": "When the power went out, everyone said, call someone. Dad just picked up his tester."
+    },
+    {
+      "edges_ok": null,
+      "expected": "እስኪ እንየው",
+      "informational": true,
+      "lang": "am",
+      "ok": true,
+      "ref": "s05:1",
+      "similarity": 0.5,
+      "take": "d1d8a93dbd216a466bc876eaf0e27953fff1772d9f03313e2489722e6a8a6fd2",
+      "transcript": "ስኪንew"
+    },
+    {
+      "edges_ok": true,
+      "expected": "And the whole house lit up again.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s06:0",
+      "similarity": 1.0,
+      "take": "25c0eed4f260a9264b2c7b9e291953320818627b7397595ed994574e5e1ec741",
+      "transcript": "and the whole house lit up again."
+    },
+    {
+      "edges_ok": true,
+      "expected": "A leaking pipe. A wrench. Patience. Then… silence.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s07:0",
+      "similarity": 1.0,
+      "take": "c68fd3015b5f693db7ace36cbbbc9a61f39b7011f0a348b99cfe765a772ff18b",
+      "transcript": "A leaking pipe. A wrench. Patience. Then silence."
+    },
+    {
+      "edges_ok": true,
+      "expected": "Years later, he stopped fixing things for me, and started fixing them with me.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s08:0",
+      "similarity": 1.0,
+      "take": "d1a2207fe742849d85c1c945f8d495013132425e052befc9cb5f1c6ff6916460",
+      "transcript": "Years later, he stopped fixing things for me and started fixing them with me."
+    },
+    {
+      "edges_ok": null,
+      "expected": "ቀስ በቀስ እንቁላል በእግሩ ይሄዳል",
+      "informational": true,
+      "lang": "am",
+      "ok": true,
+      "ref": "s08:1",
+      "similarity": 0.629,
+      "take": "3dc66e0ac16dbba3a7c265f582ff7c583cdd6d36750e02d23f900f19714abec3",
+      "transcript": "እሱ በቃ እሱ እንቁላል በግሮሄዳል"
+    },
+    {
+      "edges_ok": true,
+      "expected": "When I moved out, he gave me his old toolbox.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s09:0",
+      "similarity": 1.0,
+      "take": "8fbf2d1ec341b0297b2ddcfb82ca48c253df06e1b64e0a39a56cb5119bc8f523",
+      "transcript": "When I moved out, he gave me his old toolbox."
+    },
+    {
+      "edges_ok": true,
+      "expected": "Last week, my kitchen tap started leaking. And I heard him.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s09:1",
+      "similarity": 1.0,
+      "take": "e6522ace8e5dac16717b14f656eb0d806c1f3bd9fd6e48e96d9c61e3e0dbe38c",
+      "transcript": "Last week, my kitchen tap started leaking and I heard him."
+    },
+    {
+      "edges_ok": true,
+      "expected": "So I called him.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s10:0",
+      "similarity": 1.0,
+      "take": "6406c3d696ffa0e0a8e8785c8628fc06c47cb791b93551b1841bebc0937f31f2",
+      "transcript": "so I called him."
+    },
+    {
+      "edges_ok": false,
+      "expected": "Dad, I fixed it myself.",
+      "informational": false,
+      "lang": "en",
+      "ok": false,
+      "ref": "s10:1",
+      "similarity": 0.8,
+      "take": "4c2be5b367044386d7c102342040d59daa45542f1c978ee04a882e346008d56f",
+      "transcript": "That I fixed it myself."
+    },
+    {
+      "edges_ok": null,
+      "expected": "ጎበዝ ልጄ",
+      "informational": true,
+      "lang": "am",
+      "ok": true,
+      "ref": "s10:2",
+      "similarity": 0.4,
+      "take": "a1de3b7a371bcf39cee32f5ff53f4ebab56765e26984d81249fae80d6d0b5de2",
+      "transcript": "ጎቪስ ልች"
+    },
+    {
+      "edges_ok": true,
+      "expected": "And I could hear him smiling.",
+      "informational": false,
+      "lang": "en",
+      "ok": true,
+      "ref": "s10:3",
+      "similarity": 1.0,
+      "take": "cd67d6a725c32158a4dcdd2ea2426de0d7380855b6307b3d2b2067e9f1e5f06a",
+      "transcript": "and I could hear him smiling."
+    }
+  ],
+  "threshold": 0.8
+}

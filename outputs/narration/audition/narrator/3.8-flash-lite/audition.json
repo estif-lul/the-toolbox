@@ -1,0 +1,93 @@
+{
+  "created_at": "2026-11-25T21:10:08+03:00",
+  "model": "gemini-3.8-flash-lite-tts",
+  "no_style": false,
+  "order": [
+    "Achird",
+    "Umbriel",
+    "Iapetus"
+  ],
+  "role": "narrator",
+  "run_id": "20261125-211007-be20",
+  "sheet": "outputs/narration/audition/narrator/3.8-flash-lite/sheet.wav",
+  "voices": [
+    {
+      "english_wps": 2.077,
+      "lines": [
+        {
+          "cache_key": "516446bb1d3e1a6d2ce4b828a70045b20efab7af2c5ba074012701a3b5b47539",
+          "duration_s": 3.73,
+          "lang": "en",
+          "path": "outputs/narration/s01/516446bb1d3e1a6d.wav",
+          "ref": "s01:0",
+          "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+          "words": 8
+        },
+        {
+          "cache_key": "56419440cff7cce0c53c2165115b3b9c3a7b9caca2f98184efb362ee8b9825a0",
+          "duration_s": 2.53,
+          "lang": "en",
+          "path": "outputs/narration/s10/56419440cff7cce0.wav",
+          "ref": "s10:1",
+          "style": "speaking into a phone, proud and a little shy",
+          "words": 5
+        }
+      ],
+      "path": "outputs/narration/audition/narrator/3.8-flash-lite/Achird.wav",
+      "speech_s": 6.26,
+      "voice": "Achird"
+    },
+    {
+      "english_wps": 1.757,
+      "lines": [
+        {
+          "cache_key": "088a95239b4115e395c6d16d49792d8110daa633d6de9c7b3b2947a95d3f0889",
+          "duration_s": 4.02,
+          "lang": "en",
+          "path": "outputs/narration/s01/088a95239b4115e3.wav",
+          "ref": "s01:0",
+          "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+          "words": 8
+        },
+        {
+          "cache_key": "3936114cc0f616598ee0777b401afb5dd64e2062c637309769276e107eaa367f",
+          "duration_s": 3.38,
+          "lang": "en",
+          "path": "outputs/narration/s10/3936114cc0f61659.wav",
+          "ref": "s10:1",
+          "style": "speaking into a phone, proud and a little shy",
+          "words": 5
+        }
+      ],
+      "path": "outputs/narration/audition/narrator/3.8-flash-lite/Umbriel.wav",
+      "speech_s": 7.4,
+      "voice": "Umbriel"
+    },
+    {
+      "english_wps": 1.828,
+      "lines": [
+        {
+          "cache_key": "edef49be256297e4a046d003cdb6938aa4e32fa3a6b5672f94104529989108f3",
+          "duration_s": 3.73,
+          "lang": "en",
+          "path": "outputs/narration/s01/edef49be256297e4.wav",
+          "ref": "s01:0",
+          "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+          "words": 8
+        },
+        {
+          "cache_key": "55e87c83a31d9f6d2b8c1406536ef9ab781bfd5d09201cc7f3b27aa14c0ce392",
+          "duration_s": 3.38,
+          "lang": "en",
+          "path": "outputs/narration/s10/55e87c83a31d9f6d.wav",
+          "ref": "s10:1",
+          "style": "speaking into a phone, proud and a little shy",
+          "words": 5
+        }
+      ],
+      "path": "outputs/narration/audition/narrator/3.8-flash-lite/Iapetus.wav",
+      "speech_s": 7.11,
+      "voice": "Iapetus"
+    }
+  ]
+}

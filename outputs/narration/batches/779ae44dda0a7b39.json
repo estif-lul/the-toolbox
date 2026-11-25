@@ -1,0 +1,76 @@
+{
+  "batch_key": "779ae44dda0a7b3902b6cc812ee5fb6ef867dada872abf60bd45f25b746e8e71",
+  "created_at": "2026-11-25T21:07:06+03:00",
+  "duration_s": 8.58,
+  "lines": [
+    {
+      "ref": "s01:0",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "text": "My dad never called anyone to fix anything."
+    },
+    {
+      "ref": "s10:1",
+      "style": "speaking into a phone, proud and a little shy",
+      "text": "Dad, I fixed it myself."
+    }
+  ],
+  "model": "gemini-3.8-flash-lite-tts",
+  "provider": "gemini_tts",
+  "run_id": "20261125-210624-3fd2",
+  "silences": [
+    [
+      2.91,
+      3.24
+    ],
+    [
+      3.9,
+      5.08
+    ],
+    [
+      5.19,
+      6.04
+    ],
+    [
+      6.45,
+      6.67
+    ],
+    [
+      6.68,
+      7.22
+    ],
+    [
+      8.29,
+      8.58
+    ]
+  ],
+  "speech_bounds": [
+    0.0,
+    8.29
+  ],
+  "split": {
+    "boundary_pauses": [
+      1.18
+    ],
+    "cuts": [
+      4.49
+    ],
+    "longest_unused_pause": 0.85,
+    "ok": true,
+    "problems": [],
+    "ratios": [
+      0.9,
+      1.156
+    ],
+    "segments": [
+      [
+        0.0,
+        3.9
+      ],
+      [
+        5.08,
+        8.29
+      ]
+    ]
+  },
+  "voice": "Umbriel"
+}

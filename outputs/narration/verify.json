@@ -1,0 +1,394 @@
+{
+  "00947703376b394cad2703ba6e65a3db97552c89dd9bad40471aaa0508b9a008": {
+    "checked_at": "2026-11-25T21:16:38+03:00",
+    "expected": "እስኪ እንየው",
+    "lang": "am",
+    "model": "gemini-3.5-flash-lite",
+    "ok": false,
+    "ref": "s05:1",
+    "similarity": 0.545,
+    "take": "d1d8a93dbd216a466bc876eaf0e27953fff1772d9f03313e2489722e6a8a6fd2",
+    "transcript": "ስኪንዮ"
+  },
+  "015de1353d65366931de1ac368f011300229fe45bd3634964f8d290be4f7ab6b": {
+    "checked_at": "2026-11-25T21:23:34+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s10:3",
+    "transcript": "I think it's it myself. And I could hear him smiling."
+  },
+  "045020c488bff97a3d4c59e03ed9e397f9ed0c9061681240d461055cb0eb746d": {
+    "checked_at": "2026-11-25T21:16:55+03:00",
+    "expected": "ቀስ በቀስ እንቁላል በእግሩ ይሄዳል",
+    "lang": "am",
+    "model": "gemini-3.5-flash-lite",
+    "ok": false,
+    "ref": "s08:1",
+    "similarity": 0.529,
+    "take": "3dc66e0ac16dbba3a7c265f582ff7c583cdd6d36750e02d23f900f19714abec3",
+    "transcript": "እስባእ እሱም ኩላል በግሮሄዳል"
+  },
+  "0698cb80a49afc15e2ffc87ecf27a58bf476b0580c02224b507d2754a5fabc42": {
+    "checked_at": "2026-11-25T21:21:01+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s09:0",
+    "transcript": "When I moved out, he gave me his old toolbox."
+  },
+  "074c6df70c0de7dc2d235b94a65f49ae3f2d536807502ae6bef414f519f1bddd": {
+    "checked_at": "2026-11-25T21:22:41+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "A leaking pipe. A wrench. Patience. Then silence."
+  },
+  "13249469c9df3b68dffeee4b2e350c8aba9639acb38f05ced526c4107bec8275": {
+    "checked_at": "2026-11-25T21:16:59+03:00",
+    "expected": "When I moved out, he gave me his old toolbox.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s09:0",
+    "similarity": 1.0,
+    "take": "8fbf2d1ec341b0297b2ddcfb82ca48c253df06e1b64e0a39a56cb5119bc8f523",
+    "transcript": "When I moved out, he gave me his old toolbox."
+  },
+  "136e545867198c502c9a39a57cae5e35b5d81cfaa097c63b4f11461ea93a5baf": {
+    "checked_at": "2026-11-25T21:20:22+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s02:0",
+    "transcript": "if it could be done at home, he did it himself, and I was always one step behind him."
+  },
+  "1b4fc55f11967e6b4a7c11a588ec17d53adf28f0a13bd5debb5e69c99d2f75c5": {
+    "checked_at": "2026-11-25T21:23:06+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s08:0",
+    "transcript": "He stopped fixing things for me and started fixing them with me."
+  },
+  "276258a9f95f0e40a59b091d7232f0e379e88c9f2f93a932bc2c4b8177ff6d8d": {
+    "checked_at": "2026-11-25T21:23:02+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "a leaking pipe. A wrench. Patience. Then silence. Years later"
+  },
+  "291eb35b8752097e6f56571dbc35c553cacc27c0cd9faaab1b5b2079adfb165c": {
+    "checked_at": "2026-11-25T21:16:28+03:00",
+    "expected": "Under our old white car, I held the torch. He held the wrench, and explained every bolt.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s03:0",
+    "similarity": 1.0,
+    "take": "d56354f78b4fea6432d20638b84d5c7397675367a03e2f7e848ddd912cff5f0b",
+    "transcript": "Under our old white car, I held the torch. He held the wrench and explained every bolt."
+  },
+  "2e1106104e1763a6aacd46913bd7c7e7ee86e88b69b668a7c0a3e1e5116b52e9": {
+    "checked_at": "2026-11-25T21:23:13+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s08:0",
+    "transcript": "and started fixing them with me."
+  },
+  "36f95a109b403f39263eeb400515edbb801f3f29017edc602d10f4bd7d4ea715": {
+    "checked_at": "2026-11-25T21:23:11+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "a leaking pipe. A wrench. Patience. Then, silence. Years later, he stopped fixing things for me"
+  },
+  "38474d6f2c82c1de0d768bd5426cb674bad2ba47339ecd59a5b3022a1aa2edb6": {
+    "checked_at": "2026-11-25T21:22:52+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s08:0",
+    "transcript": "Years later, he stopped fixing things for me and started fixing them with me."
+  },
+  "39de2cc353c5c053df4769f3c61041dbfb40e36ac97ee5afb081613e9034ad53": {
+    "checked_at": "2026-11-25T21:23:26+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s10:1",
+    "transcript": "I think it's it myself."
+  },
+  "3d0e0b8d5cb00de23b38d00ff629b0d840d0426b39b105159044fa5dc4717964": {
+    "checked_at": "2026-11-25T21:16:47+03:00",
+    "expected": "A leaking pipe. A wrench. Patience. Then… silence.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s07:0",
+    "similarity": 0.857,
+    "take": "c68fd3015b5f693db7ace36cbbbc9a61f39b7011f0a348b99cfe765a772ff18b",
+    "transcript": "a leaking pipe a wrench patience"
+  },
+  "443349c26df4cb0a90b62fe957824f688d89c9739cd5032a7f7cd692b9f255fd": {
+    "checked_at": "2026-11-25T21:20:31+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s04:0",
+    "transcript": "From a few planks, he built the rickabaut we still serve coffee on."
+  },
+  "4bfd8c81d9ec0243a07c8c658a00e6673810d50c2a1ccd1a2cbc1ec6981b0a77": {
+    "checked_at": "2026-11-25T21:22:17+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s06:0",
+    "transcript": "And the whole house lit up again. A leaking pipe. A wrench."
+  },
+  "520f3e8609fdc166ba07af9a65e779e3392c4f8d15e2a6fbd9979954934cfb26": {
+    "checked_at": "2026-11-25T21:21:05+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s09:1",
+    "transcript": "Last week, my kitchen tap started leaking and I heard him."
+  },
+  "5d0d427962940b6f492f85e59d548cd4041826dc9529b3d89ad8d9a472827666": {
+    "checked_at": "2026-11-25T21:16:52+03:00",
+    "expected": "Years later, he stopped fixing things for me, and started fixing them with me.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s08:0",
+    "similarity": 0.933,
+    "take": "d1a2207fe742849d85c1c945f8d495013132425e052befc9cb5f1c6ff6916460",
+    "transcript": "then silence. Years later, he stopped fixing things for me and started fixing them with me."
+  },
+  "678f94b89c180e8512d3e429c747c34b67b03719750a49682f77e4685c7bd9df": {
+    "checked_at": "2026-11-25T21:22:37+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s08:0",
+    "transcript": "patience. Then silence. Years later, he stopped fixing things for me and started fixing them with me."
+  },
+  "702d0f9bd107d78c080c74d64345cdc32ef29247e10c688caef005a94d0eb28c": {
+    "checked_at": "2026-11-25T21:22:02+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s10:2",
+    "transcript": "ጎቪስ ልች"
+  },
+  "70f12644d1577b0476f816313e507a50b88e31aef3f7a10572f88eeba51c494a": {
+    "checked_at": "2026-11-25T21:21:13+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s10:1",
+    "transcript": "That I fixed it myself."
+  },
+  "751305ce2e28c53d5dadd27af02f8e44e730a5192f59faeb67b866c2fa6fef0d": {
+    "checked_at": "2026-11-25T21:22:29+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s08:0",
+    "transcript": "Silence. Years later, he stopped fixing things for me and started fixing them with me."
+  },
+  "7910700cd5d2632a7f2a069c7879aa9d7221f312a31cf84c7396c84edc57c960": {
+    "checked_at": "2026-11-25T21:20:20+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s01:0",
+    "transcript": "My dad never called anyone to fix anything."
+  },
+  "7c8a5705420b380625a989139b67af26f8e0a6849e5acc91aec4c1b1e049acd2": {
+    "checked_at": "2026-11-25T21:22:24+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "a leaking pipe a wrench patience then"
+  },
+  "849e981055315a86739f265e74630fd2a3a313b6c98052777fd0ca223e92fb8d": {
+    "checked_at": "2026-11-25T21:22:03+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s10:3",
+    "transcript": "and I could hear him smiling."
+  },
+  "8fa8eb1dedab9057fcea1be1bb96d3634ccbb2bfb325e3511d1d8bc10a6b547a": {
+    "checked_at": "2026-11-25T21:20:54+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s08:1",
+    "transcript": "እሱ በቃ እሱ እንቁላል በግሮሄዳል"
+  },
+  "93b80b08730410d9817862571e53fa8f4c139e3ee73487c2d830628108019052": {
+    "checked_at": "2026-11-25T21:22:20+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "patience"
+  },
+  "93bdaf234902357bfd1c14afd39c0181dd8f0f7be755874f55cdb7962b5efc4c": {
+    "checked_at": "2026-11-25T21:17:19+03:00",
+    "expected": "ጎበዝ ልጄ",
+    "lang": "am",
+    "model": "gemini-3.5-flash-lite",
+    "ok": false,
+    "ref": "s10:2",
+    "similarity": 0.2,
+    "take": "a1de3b7a371bcf39cee32f5ff53f4ebab56765e26984d81249fae80d6d0b5de2",
+    "transcript": "ጎቪስ ለቼ"
+  },
+  "949b77c61438325c6e894f27e40e1d37c067f6ec116eccb8d1b1571d25f598c7": {
+    "checked_at": "2026-11-25T21:22:09+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s06:0",
+    "transcript": "And the whole house lit up again. A leaking pipe."
+  },
+  "9fb2a397bd0e18c116cc6359399d138d3c381c8d357780b422d0b1d04b59a192": {
+    "checked_at": "2026-11-25T21:23:30+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s10:1",
+    "transcript": "Dad."
+  },
+  "a0bc0e4756086fc0b304003e2337abbd88dc2404f41569d4ca6607345b7ec26f": {
+    "checked_at": "2026-11-25T21:20:25+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s03:0",
+    "transcript": "Under our old white car, I held the torch. He held the wrench and explained every bolt."
+  },
+  "ac2c706d2224f806f9cc436860795ad8dcd19e30389c570836aab64dbb172350": {
+    "checked_at": "2026-11-25T21:23:00+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s08:0",
+    "transcript": "a wrench patience. Then silence. Years later, he stopped fixing things for me and started fixing them with me."
+  },
+  "afbaa1de50f8daa8f3745b0c390d57f78e026fbacd305a31ccdb7de3048ec4ec": {
+    "checked_at": "2026-11-25T21:17:14+03:00",
+    "expected": "Dad, I fixed it myself.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s10:1",
+    "similarity": 0.8,
+    "take": "4c2be5b367044386d7c102342040d59daa45542f1c978ee04a882e346008d56f",
+    "transcript": "That I fixed it myself."
+  },
+  "b2fe59c110fd162ef0cf373668c9ef00e72cd84daa01885e92457a04467d7985": {
+    "checked_at": "2026-11-25T21:16:21+03:00",
+    "expected": "My dad never called anyone to fix anything.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s01:0",
+    "similarity": 1.0,
+    "take": "b9e00707137fa0ee57ea7c60413a2be354254494182332f9077f62372fa41adb",
+    "transcript": "My dad never called anyone to fix anything."
+  },
+  "b4e9451621053f6731780e7a76821622b5578a71a9b40e4e7b85696e543855ac": {
+    "checked_at": "2026-11-25T21:20:37+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s05:1",
+    "transcript": "ስኪንew"
+  },
+  "b87bd39d1625fd68563c5794facbff2e58de072f0feea4f94660d960f00efbed": {
+    "checked_at": "2026-11-25T21:16:31+03:00",
+    "expected": "From a few planks, he built the rekebot we still serve coffee on.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s04:0",
+    "similarity": 0.923,
+    "take": "dbdf2a5436695efbbd5c834abec0474a880092296b1bc9dccf33505827df265f",
+    "transcript": "from a few planks, he built the rickabaugh we still serve coffee on"
+  },
+  "be6140360a457de11e428ea5981b5263d19deacafbbeffa3254b3c354c1c2229": {
+    "checked_at": "2026-11-25T21:21:09+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s10:0",
+    "transcript": "so I called him."
+  },
+  "c0e182e56123addb8d4d13c024a4a1127d8d3635dadf3359802dea6fc2f895d1": {
+    "checked_at": "2026-11-25T21:22:12+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "A wrench, patience."
+  },
+  "c1bdf1f1ffcecd83a5a8244fa1929a44be14e029dc911ed7e48ed6adcb86c64d": {
+    "checked_at": "2026-11-25T21:16:24+03:00",
+    "expected": "If it could be done at home, he did it himself. And I was always one step behind him.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s02:0",
+    "similarity": 1.0,
+    "take": "eeb585d34aef073a2c5fbeedac900fbbe2963f938b8c1d8df73bb2b6b82b7510",
+    "transcript": "if it could be done at home, he did it himself. And I was always one step behind him."
+  },
+  "c7f338e619bb9b75b346294d396c10bbfc09705ef655596eabb29e72054dc735": {
+    "checked_at": "2026-11-25T21:23:18+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s10:0",
+    "transcript": "so I called him. Dad"
+  },
+  "ca516a51f47c4706bfd5cbaf8f6c2581aeb12fa5c3e2bda20f4af83f70385cb3": {
+    "checked_at": "2026-11-25T21:20:33+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s05:0",
+    "transcript": "When the power went out, everyone said, call someone. Dad just picked up his tester."
+  },
+  "ce4f098ed46e58569157598d901e6c514714ee19268c2087084854b1224fac37": {
+    "checked_at": "2026-11-25T21:16:36+03:00",
+    "expected": "When the power went out, everyone said: call someone. Dad just picked up his tester.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s05:0",
+    "similarity": 1.0,
+    "take": "3d1f9ef207e44bf6d87db7c4a946d5698d0621d5d111ccd40987e970a90589b4",
+    "transcript": "When the power went out, everyone said, call someone. Dad just picked up his tester."
+  },
+  "d05384b0e42a60c470fa5cf56771ebdb6585a653eb77042e65debbdc425436ae": {
+    "checked_at": "2026-11-25T21:20:46+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "A leaking pipe. A wrench. Patience."
+  },
+  "d7fba4c26cc55b7d3766fcd47fdf4c4d7ec960ca6607631cb8754056fea0572b": {
+    "checked_at": "2026-11-25T21:22:32+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "A leaking pipe, a wrench"
+  },
+  "da736628c50493c0d86f385ed339cc1d24a34db0a813a0204a6c8f91db14c018": {
+    "checked_at": "2026-11-25T21:22:53+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s07:0",
+    "transcript": "A leaking pipe."
+  },
+  "dc3a9d8315763d8a1cd50e8f22416a0b644e902f6eb56eef6a2b72f9f188bc10": {
+    "checked_at": "2026-11-25T21:20:41+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s06:0",
+    "transcript": "and the whole house lit up again."
+  },
+  "ddd9763dfe69c0391e06c3d8d0f4ce1444a2c7730a47f8dacfbc0175b8333e9e": {
+    "checked_at": "2026-11-25T21:17:10+03:00",
+    "expected": "So I called him.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s10:0",
+    "similarity": 1.0,
+    "take": "6406c3d696ffa0e0a8e8785c8628fc06c47cb791b93551b1841bebc0937f31f2",
+    "transcript": "so I called him."
+  },
+  "e4de14e9c184c2f756ce1a0f28aa04bd792c17261ecaacfef91e4c83158cea8e": {
+    "checked_at": "2026-11-25T21:17:23+03:00",
+    "expected": "And I could hear him smiling.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s10:3",
+    "similarity": 1.0,
+    "take": "cd67d6a725c32158a4dcdd2ea2426de0d7380855b6307b3d2b2067e9f1e5f06a",
+    "transcript": "and I could hear him smiling."
+  },
+  "eac67c21ba0c09ea2dbadbbdd866932d266c9b05302881230245b93c5dda9a8b": {
+    "checked_at": "2026-11-25T21:20:49+03:00",
+    "model": "gemini-3.5-flash-lite",
+    "ref": "s08:0",
+    "transcript": "then silence. Years later, he stopped fixing things for me and started fixing them with me."
+  },
+  "f1014915e79e3be230b2abde64f6955db8c4fafa298a53d77e80e2d1bcae516e": {
+    "checked_at": "2026-11-25T21:17:07+03:00",
+    "expected": "Last week, my kitchen tap started leaking. And I heard him.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s09:1",
+    "similarity": 1.0,
+    "take": "e6522ace8e5dac16717b14f656eb0d806c1f3bd9fd6e48e96d9c61e3e0dbe38c",
+    "transcript": "Last week, my kitchen tap started leaking. And I heard him."
+  },
+  "fb7c93df1e088b2cfa2789663c41c952bbe507e33917e0023c9df2e8375e7b07": {
+    "checked_at": "2026-11-25T21:16:42+03:00",
+    "expected": "And the whole house lit up again.",
+    "lang": "en",
+    "model": "gemini-3.5-flash-lite",
+    "ok": true,
+    "ref": "s06:0",
+    "similarity": 1.0,
+    "take": "25c0eed4f260a9264b2c7b9e291953320818627b7397595ed994574e5e1ec741",
+    "transcript": "And the whole house lit up again."
+  }
+}

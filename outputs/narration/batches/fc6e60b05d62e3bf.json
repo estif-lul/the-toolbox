@@ -1,0 +1,80 @@
+{
+  "batch_key": "fc6e60b05d62e3bf51a1efe4d169002bf5c5ce1598c3b97d0facdd4688a2b652",
+  "created_at": "2026-11-25T21:08:16+03:00",
+  "duration_s": 13.1,
+  "lines": [
+    {
+      "ref": "s05:1",
+      "style": "Speak in Amharic: calm and unhurried, almost to himself, a father reassuring his son",
+      "text": "እስኪ እንየው"
+    },
+    {
+      "ref": "s08:1",
+      "style": "Speak in Amharic: warm and proud, a gentle smile in the voice, quoting an old proverb",
+      "text": "ቀስ በቀስ እንቁላል በእግሩ ይሄዳል"
+    },
+    {
+      "ref": "s10:2",
+      "style": "Speak in Amharic: warm and proud, softly laughing, on the phone to his grown son",
+      "text": "ጎበዝ ልጄ"
+    }
+  ],
+  "model": "gemini-3.8-flash-tts",
+  "provider": "gemini_tts",
+  "run_id": "20261125-210752-2005",
+  "silences": [
+    [
+      0.6,
+      1.82
+    ],
+    [
+      1.83,
+      4.04
+    ],
+    [
+      6.21,
+      10.85
+    ],
+    [
+      12.68,
+      13.1
+    ]
+  ],
+  "speech_bounds": [
+    0.0,
+    12.68
+  ],
+  "split": {
+    "boundary_pauses": [
+      2.21,
+      4.64
+    ],
+    "cuts": [
+      2.935,
+      8.53
+    ],
+    "longest_unused_pause": 1.22,
+    "ok": true,
+    "problems": [],
+    "ratios": [
+      1.345,
+      0.62,
+      1.883
+    ],
+    "segments": [
+      [
+        0.0,
+        1.83
+      ],
+      [
+        4.04,
+        6.21
+      ],
+      [
+        10.85,
+        12.68
+      ]
+    ]
+  },
+  "voice": "Algenib"
+}
