@@ -1,0 +1,13 @@
+{
+  "placeholder": {
+    "cache_key": "364b2a729da4b7ccd0edea3f197369dfa9765e6c8107dc4af4565d3e5f90b157",
+    "created_at": "2026-11-25T21:24:33+03:00",
+    "duration_s": 75.67,
+    "model": "ffmpeg-aevalsrc",
+    "note": "code-generated placeholder pad, not the film's music",
+    "path": "outputs/music/placeholder/364b2a729da4b7cc.flac",
+    "provider": "placeholder",
+    "sha256": "16d7145d347ba165e6f9ff4ad6059e49070b25934cf75ff245a850b3bc05da93",
+    "status": "ok"
+  }
+}

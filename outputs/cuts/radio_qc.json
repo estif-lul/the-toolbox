@@ -1,0 +1,35 @@
+{
+  "audio": {
+    "channels": 2,
+    "codec": "aac",
+    "rate": 48000
+  },
+  "cues": 20,
+  "duration_s": 75.7,
+  "lines": 17,
+  "loudness": {
+    "I": -14.54,
+    "LRA": 5.8,
+    "TP": -0.86
+  },
+  "music": "outputs/music/placeholder/364b2a729da4b7cc.flac",
+  "music_note": "placeholder pad (code-generated), not the film's music",
+  "ok": true,
+  "path": "outputs/cuts/radio_cut.mp4",
+  "sources": {
+    "gain_pad_db": -0.17,
+    "gain_voice_db": 3.33,
+    "narration_I": -19.33,
+    "pad_I": -27.83
+  },
+  "srt": "outputs/cuts/radio_cut.srt",
+  "stem": "outputs/cuts/narration_stem.wav",
+  "timeline_s": 75.67,
+  "video": {
+    "codec": "h264",
+    "fps": 24.0,
+    "frames": 1816,
+    "h": 720,
+    "w": 1280
+  }
+}
