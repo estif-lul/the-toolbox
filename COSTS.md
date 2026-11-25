@@ -58,8 +58,27 @@ Free tier. "Used" is the peak shown for the last 28 days, i.e. today's Step 0 sm
   https://aistudio.google.com/rate-limit (**[ME]**). Also, when a 429 arrives, its `QuotaFailure` details
   name the exact metric and limit; `retry.py` logs the full error text, so the first real limit hit
   will record the number in runs.jsonl.
-- Until the real RPM is known, the TTS adapters pace themselves at one call per 6 s
-  (`min_interval_s: 6` in config/providers.yaml). Narration is ~15 lines, so ~90 s per full pass.
+- TTS pacing is one request per 21 s (3 RPM, `min_interval_s: 21` in config/providers.yaml).
+
+- **Step 2 (21:06–21:30 EAT, narration + radio cut).** How the 10-requests-a-day TTS limit was
+  met: several lines go into **one request** (one turn per line, each with its own style, a
+  `<long pause>` between turns) and the response is cut at the pauses (EXPERIMENTS.md E20).
+  The whole film's narration (16 lines) is **3 requests**, and the Dad audition's takes were
+  reused as the final audio.
+
+  | Model | Requests in Step 2 | What for | Used today / RPD |
+  |---|---|---|---|
+  | `gemini-3.8-flash-tts` | 5 | Dad audition, 3 voices × his 3 lines (E04, E18); final narrator, 2 batches of 8 + 5 lines | 7 / 10 |
+  | `gemini-3.8-flash-lite-tts` | 4 | narrator audition, 3 voices × 2 lines (E02); no-style test (E03) | 6 / 10 |
+  | `gemini-3.5-flash-lite` | 56 (52 ok, three 503s, one per-minute 429; all retried and recovered) | hearing every take back (`narration --verify`) and repairing one cut (F09) | 56 / 500 |
+
+  - TTS latency per request: 4.2–23.5 s (median ~7 s); the 8-line batch took 17.6 s for 51 s
+    of audio. Audio is billed at **25 tokens per second** (as documented): 1,274 output tokens
+    for the 50.9 s batch. Input is tiny (21–155 text tokens).
+  - Transcription: 0.2–18.8 s per clip (mean 2.4 s).
+  - The radio cut itself is FFmpeg only (stem, placeholder pad, ducking, two-pass loudnorm,
+    subtitles): no model calls, a few seconds, so re-running it is free.
+  - A rerun of `make narration` with nothing changed: 16 cache hits, 0 requests (logged).
 
 ### Cloudflare Workers AI
 - Documented (developers.cloudflare.com/workers-ai/platform/pricing, page dated 2026-11-18):

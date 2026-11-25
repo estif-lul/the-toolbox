@@ -53,6 +53,9 @@ asking."* He also agreed verbally. He asked for no changes. The screenshot stays
 **Follow-up (Step 2):** he hears the three lines in their final spoken form when the radio cut goes
 out for user test 1; his reaction is recorded here and in DESIGN.md §4. If he wants a line changed,
 it changes in `storyboard.json` before anything else is generated.
+- 2026-11-25: the lines exist in their final form (stock voice **Algenib**, Gemini Flash TTS,
+  `outputs/narration/s05`, `s08`, `s10`); a native speaker (me) judged all three natural
+  (EXPERIMENTS.md E18). The radio cut is ready to send to him. **His reaction: pending.**
 
 What he was asked (the WhatsApp message, in English; we also talked it through):
 > I'm making a short animated film (about 75 seconds) for my course, about you and how you taught
@@ -98,7 +101,9 @@ rounded shapes). **No living artist or studio is named** in any prompt.
 | Component | Used for | Licence / terms | Output use | Status |
 |---|---|---|---|---|
 | Gemini 3.x Flash / Flash-Lite (Gemini API, free tier) | Script / storyboard draft | Gemini API Terms of Service; free-tier data may be used to improve Google products | Generated content may be used; Google claims no ownership | **[VERIFY]** model id + terms |
-| Gemini Flash TTS (Gemini API, free tier) | Narration and Dad's lines (stock voices) | Gemini API Terms of Service (as above) | As above; output may carry SynthID | **[VERIFY]** |
+| Gemini Flash TTS (Gemini API, free tier) | Narration and Dad's lines (stock voices: narrator **Umbriel**, Dad **Algenib**, chosen in E02/E04; no cloning) | Gemini API Terms of Service (as above) | As above; output may carry SynthID | **[VERIFY]** |
+| Gemini 3.5 Flash-Lite (Gemini API, free tier) | Hearing the narration back (`make narration-check`): only our own synthetic TTS audio is sent, never a real person's voice | Gemini API Terms of Service | Transcripts are a check only, never used in the film | **[VERIFY]** |
+| Placeholder pad (`pipeline/music.py`, FFmpeg `aevalsrc`) | Radio cut only (user test 1) | Code-generated sine tones: no third-party material, no licence needed | Labelled "placeholder" wherever used; replaced by the chosen score in the final | n/a |
 | FLUX.2 klein 4B (`@cf/black-forest-labs/flux-2-klein-4b`, Cloudflare Workers AI) | Keyframes, reference sheets | Apache 2.0 for the 4B weights (per the brief); Cloudflare's model page links the BFL terms of service and lists **"Zero data retention: Yes"** | Commercial use allowed | Variant verified 2026-11-25: **4B** chosen on purpose (the 9B is non-commercial). **[VERIFY]** BFL terms text |
 | FLUX.1 schnell (`@cf/black-forest-labs/flux-1-schnell`, Cloudflare Workers AI) | Keyframe fallback | Apache 2.0 + BFL terms (linked from the model page) | Commercial use allowed | **[VERIFY]** BFL terms text |
 | Wan 2.2 TI2V-5B (Kaggle) | Moving shots | Apache 2.0 (per the brief) | Allowed | **[VERIFY]** model card |

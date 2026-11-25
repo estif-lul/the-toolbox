@@ -193,7 +193,48 @@ Every shot exists for a reason; the exact text is the `reason` field of each sho
 ---
 
 ## 4. User test 1 (radio cut)
-*To be filled in Step 2.*
+
+**Why a radio cut first:** the story, the pace and Dad's lines can be tested before a single
+picture exists, when changing them costs one TTS request per line instead of new keyframes and
+GPU time.
+
+**What they get:** `outputs/cuts/radio_cut.mp4` (75.7 s, built by `make radio` on 2026-11-25):
+the full narration and Dad's three Amharic lines at their final timing, burned-in subtitles on a
+black screen, a quiet code-generated placeholder pad instead of the music, and the AI label over
+the last 3 s. Sent as a WhatsApp video (it plays inline on a phone, like the final film will).
+
+**Who:** at least 3 people from the audience (family and friends), named here by relationship or
+initials only. Dad hears it too: his reaction to his three lines is the follow-up promised in
+ETHICS.md §2.
+
+**The message sent with it:**
+> This is a rough "radio" version of the short film I'm making about Dad: just the voice and
+> subtitles for now, no pictures yet, and the music is a placeholder. It's 75 seconds. Could you
+> watch it with the sound on and answer in a few words?
+> 1. In one sentence, what is this film about?
+> 2. Which moment stayed with you?
+> 3. Was anything confusing, too slow or too fast?
+> 4. How did you feel at the end?
+> 5. Did anything sound wrong (a word, a name, a pause)? Did Dad's Amharic lines sound natural?
+> 6. Does this feel like our family and home? What detail is missing or wrong?
+
+**Status:** ready to send 2026-11-25 ~21:40 EAT. Answers are pasted below verbatim as they arrive.
+
+| Who (relationship) | Date / how | Q1 About | Q2 Moment | Q3 Confusing / pace | Q4 Feeling at the end | Q5 Sound / Amharic | Q6 Our family? |
+|---|---|---|---|---|---|---|---|
+| | | | | | | | |
+
+**Where they reacted:** *(timecodes or lines they mention)*
+
+**Insights:** *(patterns across answers, not single opinions)*
+
+**Changes decided** (each one goes into `storyboard.json` in a commit that names this test; only the
+changed lines regenerate, which runs.jsonl shows):
+- *(to fill)*
+
+Things I'm listening for in the answers, from building it: whether "Dad, I fixed it myself" reads
+clearly (the automatic check, `make narration-check`, hears "That I fixed it myself"), whether the proverb's
+subtitle is understood by the non-Amharic speakers, and whether 75 s feels long on a phone.
 
 ## 5. User test 2 (near-final cut)
 *To be filled in Step 5.*

@@ -162,6 +162,53 @@ Written when each failure happens. Template:
 - Lesson: an output constraint is a hint to the decoder, not a validator. Send the shape, check the
   details yourself.
 
+## F09 — narration: a batch was cut in the wrong pause (s07 lost "Then… silence." to s08)
+- When / run_id: 2026-11-25 21:14 EAT, run `20261125-211359-ae9a` (`make narration`, the first full
+  pass). Found by run `20261125-211616-6f20`, repaired by run `20261125-212001-8278`.
+- Symptom: no error. The 8-line batch (`outputs/narration/batches/fbaa9de0ae660f1d.{wav,json}`)
+  passed its own length check, but two lines had odd pace: s08:0 read at 1.72 words/s while the
+  other narrator lines ran at 2.0–3.8. Hearing every line back (a text model transcribes each
+  take) showed it: s07:0 = *"a leaking pipe a wrench patience"*, s08:0 = *"then silence. Years
+  later, he stopped fixing things …"*. The film would have put "silence" on the wrong picture.
+- Cause (verified): the TTS read s07 the way it is written, with dramatic pauses ("Patience. Then…
+  silence."). Those pauses (0.94 s, 0.97 s) were as long as the pause the model left between two
+  lines (1.04–2.56 s in that batch). The cutter (`common/audio.py split_points`) scores a cut by
+  pause length plus how well each piece's length matches its text, and the pause-length term won.
+  Whole-line similarity didn't catch it either: losing 2 of 8 words still scores 0.86.
+- Tried: 1) lowering the pause weight by hand: the right and wrong answers were within 0.02 of
+  each other, so any value that fixes this batch breaks another. 2) an independent check:
+  `narration --verify` transcribes each take (Gemini 3.5 Flash-Lite, audio in) and compares it
+  with the storyboard text, including the **first and last word** (what a wrong cut breaks).
+  3) a repair that needs no TTS call: for a failing line, try the other pauses around its cuts,
+  re-slice the saved response, hear both neighbours back, keep the cut that matches best.
+- Resolution: the repair moved the s07|s08 cut from 41.99 s to 44.80 s (both lines then heard back
+  at similarity 1.00), the trims and timing.json followed, the film went from 75.2 s to 75.7 s.
+  The repair is logged in the batch's `.json` ("repairs") and `outputs/narration/verify_report.json`.
+  Cost: ~30 transcription calls on a 500/day model; 0 TTS requests.
+- Time lost: 25 min. Lesson: a self-check that uses the same signal as the decision (pause lengths
+  and text lengths) can't catch that decision's errors; check with a different signal (here: hear
+  it back).
+
+## F10 — narration: a click inside a pause kept 1.2 s of dead air after Dad's first line
+- When / run_id: 2026-11-25 21:08 EAT, the Dad audition (run `20261125-210752-2005`).
+- Symptom: Algenib's *"እስኪ እንየው"* trimmed to 1.95 s although the words take 0.6 s; Charon's
+  was 0.76 s.
+- Cause (verified): a single 10 ms window at −49.7 dBFS, 1.2 s after the words, just above the
+  −50 dBFS silence threshold. The trimmer treated it as the end of the speech.
+- Resolution: `common/audio.py loud_mask()`: a sound shorter than 40 ms with at least 100 ms of
+  silence on both sides is noise. The take is re-trimmed to 0.72 s (trims are recomputed on every
+  run, so no request was needed). `tests/test_audio.py::test_an_isolated_click_is_not_speech`.
+- Time lost: 10 min. Lesson: a threshold on a level needs a minimum duration too.
+
+## F11 — radio: subtitles rendered in the top-left corner
+- When: 2026-11-25 21:26 EAT, the first radio cut.
+- Symptom: every subtitle at the top left of the black frame.
+- Cause (verified by the fix): `force_style='…Alignment=5'` was meant as ASS "middle centre"
+  (numpad layout), but libass applies the legacy SSA numbering to an SRT converted by FFmpeg, in
+  which 5 is top-left.
+- Resolution: `Alignment=2` (bottom centre in both numberings) with `MarginV=100`.
+- Time lost: 5 min. Lesson: look at a frame, not just the exit code.
+
 ## Positive result worth recording — FLUX.2 klein reference images work
 - Run `20261125-144547-072d`: `flux2_ref` with `input_image_0 = flux2.jpg` and the prompt "the same
   red apple from the reference image, now on a blue ceramic plate" kept the same apple, the same

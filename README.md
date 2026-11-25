@@ -6,9 +6,10 @@ made by a small code pipeline: `storyboard.json` is the contract, and each stage
 moving shots, music, narration, assembly) reads it and writes its outputs. Only what changed
 gets regenerated.
 
-> **Status: Step 1 (story + storyboard contract).** `storyboard.json` (10 shots) validates
-> against `schema/storyboard.schema.json`; the stages that turn it into a film are added one at a
-> time. This README is completed in Step 6.
+> **Status: Step 2 (narration + radio cut).** `storyboard.json` (10 shots) validates against
+> `schema/storyboard.schema.json`. The narration is generated and measured (75.7 s with the end
+> card), and `outputs/cuts/radio_cut.mp4` (sound + subtitles on black) is ready for the first
+> user test. The picture stages are added next. This README is completed in Step 6.
 
 ## Quickstart
 
@@ -22,8 +23,17 @@ make smoke                # one call per provider, latency logged to runs.jsonl
 make check                # secrets scan + tests + storyboard validation
 make validate             # just the storyboard: JSON Schema + semantic checks + estimated length
 make script               # an AI draft of the storyboard -> storyboard.draft.json (never storyboard.json)
+make audition ROLE=dad    # the role's candidate stock voices, one TTS request per voice
+make narration            # every narration line -> WAV (cached per line) + outputs/narration/timing.json
+make narration-check      # hear each line back (transcribe), repair a batch cut in the wrong pause
+make radio                # radio cut: narration + placeholder pad + subtitles on black -> outputs/cuts/
 make help                 # every target
 ```
+
+Narration and the free tier: Gemini TTS allows 10 requests a day per model, so lines that miss the
+cache are sent several to a request and cut apart at the pauses; the whole film is 3 requests.
+Editing one line costs one request for that line. `make narration DRY_RUN=1` shows what a run would
+send and how much of today's quota runs.jsonl says is left.
 
 `make film` (Step 5) runs the whole pipeline end to end.
 
