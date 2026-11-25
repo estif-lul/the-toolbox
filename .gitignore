@@ -1,0 +1,31 @@
+# Secrets: never committed (scripts/check_secrets.py also guards tracked files)
+.env
+.env.*
+!.env.example
+kaggle.json
+
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Pipeline scratch (outputs/ itself IS tracked so a run can be inspected)
+outputs/**/tmp/
+outputs/.kaggle_staging/
+*.log
+
+# Course brief: not ours to redistribute
+AI-Content Generation.pdf
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
