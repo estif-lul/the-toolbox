@@ -57,7 +57,7 @@ def env_secret_values() -> list[tuple[str, str]]:
 
 
 def mask(s: str) -> str:
-    return s[:4] + "…" + s[-2:] if len(s) > 8 else "***"
+    return s[:4] + "..." + s[-2:] if len(s) > 8 else "***"
 
 
 def files_to_scan(staged_only: bool) -> dict[str, bytes]:
