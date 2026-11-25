@@ -24,7 +24,7 @@ being told and posted publicly.
 
 | Person | Role in the film | Shown / voiced? | What they agreed to | Status | Date | Medium |
 |---|---|---|---|---|---|---|
-| My father ("Dad") | Inspiration for the cartoon Dad; his phrases are spoken by a stock voice | Cartoon only; stock voice; no likeness or voice used | The story, the three Amharic lines put in the cartoon's mouth, and public posting | **Pending** | — | WhatsApp / voice message |
+| My father ("Dad") | Inspiration for the cartoon Dad; his phrases are spoken by a stock voice | Cartoon only; stock voice; no likeness or voice used | The story, the three Amharic lines put in the cartoon's mouth, sharing with family, and public posting with an AI label | **Agreed** | 2026-11-25 | Verbally, and in writing on WhatsApp (asked 15:03, replied 15:08 EAT) |
 | Me | Narrator (cartoon at three ages) | Cartoon only; stock voice | — (author) | n/a | — | — |
 | Other family members | Unnamed background silhouettes | No (not recognisable) | — | n/a | — | — |
 
@@ -47,7 +47,14 @@ The three lines the cartoon Dad speaks (to be confirmed with him as words he wou
   privately, and the post is submitted as a screenshot instead of being published.
 - **Withdrawal:** if he changes his mind later, the public post is taken down.
 
-What I send him (English version; the message actually sent, in Amharic or English, replaces this draft):
+**His answer** (WhatsApp, 2026-11-25 15:08 EAT, in English): *"Yes I am ok with that. Thank you for
+asking."* He also agreed verbally. He asked for no changes. The screenshot stays on my phone (see above).
+
+**Follow-up (Step 2):** he hears the three lines in their final spoken form when the radio cut goes
+out for user test 1; his reaction is recorded here and in DESIGN.md §3. If he wants a line changed,
+it changes in `storyboard.json` before anything else is generated.
+
+What he was asked (the WhatsApp message, in English; we also talked it through):
 > I'm making a short animated film (about 75 seconds) for my course, about you and how you taught
 > me to fix things: the car, the woodwork, the electricity, the pipes. It is made with AI. The
 > characters are cartoons inspired by you and me. I won't use any photo of you or your real voice.
