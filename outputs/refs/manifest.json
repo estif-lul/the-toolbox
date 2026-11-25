@@ -1,0 +1,422 @@
+{
+  "dad#0": {
+    "cache_key": "435fa1cc3267bcaee89fd9461ddca9469d46146376a2f20b2afebd8be7da73b3",
+    "created_at": "2026-11-25T22:01:10+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad/435fa1cc3267bcae.jpg",
+    "prompt_sha": "6a3f93dbc09a4159523a1417ba9f0338bdc4dfb1c39a11abd2cc57cf83e58065",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/style/c5385dcb40cf6ad4.jpg"
+    ],
+    "seed": 1101,
+    "sha256": "bb36583bcc018a9667d405548d218770aea0189efc6a4f75eac8b8a77c6ea57d",
+    "status": "ok"
+  },
+  "dad#1": {
+    "cache_key": "7ba3900b6d43e62f38c0cb5b1375c6b6466fb98c827cd383efd1750966615f78",
+    "created_at": "2026-11-25T22:01:10+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad/7ba3900b6d43e62f.jpg",
+    "prompt_sha": "6a3f93dbc09a4159523a1417ba9f0338bdc4dfb1c39a11abd2cc57cf83e58065",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/style/c5385dcb40cf6ad4.jpg"
+    ],
+    "seed": 1102,
+    "sha256": "b025bf07182a55d2400bbfb152ad8f1ab05650a622c26d59fd3d31bfa07eb394",
+    "status": "ok"
+  },
+  "dad#2": {
+    "cache_key": "d2dca6fb5d2bdcaf4ca8c16c535078be5916d87fac4e98cbfc6f7b29b7db7177",
+    "created_at": "2026-11-25T22:01:10+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad/d2dca6fb5d2bdcaf.jpg",
+    "prompt_sha": "6a3f93dbc09a4159523a1417ba9f0338bdc4dfb1c39a11abd2cc57cf83e58065",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/style/c5385dcb40cf6ad4.jpg"
+    ],
+    "seed": 1103,
+    "sha256": "2fe4e18e587beb73556056464e02c119d24717c2defe8b0631b8ef3627b24410",
+    "status": "ok"
+  },
+  "dad#3": {
+    "cache_key": "20120b4dd67e4c8ba7810421adf5c96f0f58fe69ad5827857a73a39d0c521a5e",
+    "created_at": "2026-11-25T22:01:10+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad/20120b4dd67e4c8b.jpg",
+    "prompt_sha": "6a3f93dbc09a4159523a1417ba9f0338bdc4dfb1c39a11abd2cc57cf83e58065",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/style/c5385dcb40cf6ad4.jpg"
+    ],
+    "seed": 1104,
+    "sha256": "141b17701dfd5e15a3ddfc3bd6efd8f24fa624b3b12300e4a681e4cb06374161",
+    "status": "ok"
+  },
+  "dad#4": {
+    "cache_key": "d5acd64b4af690b2b5c06cb57cba4463aaf429d4faf21228edcfd947dd64e7c5",
+    "created_at": "2026-11-25T22:07:08+03:00",
+    "fell_back": false,
+    "instruction": "remove the yellow pencil from behind his ear",
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad/d5acd64b4af690b2.jpg",
+    "prompt_sha": "5b0fa5cc1a59a30b50b2f06d2e283867bd7d719d5ff77feabb399594184e06cc",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/dad/435fa1cc3267bcae.jpg"
+    ],
+    "revised_from": "dad#0",
+    "seed": 1201,
+    "sha256": "41f1a3845e0ea8f7aa9849930d056eb0f3c84093d916c47fbb4c671192d0c163",
+    "status": "ok"
+  },
+  "dad#5": {
+    "cache_key": "db04b2a6ba5366a664b8f097f9d2ee3a8061be7bf5bcc9642326b95dbf83658e",
+    "created_at": "2026-11-25T22:07:08+03:00",
+    "fell_back": false,
+    "instruction": "remove the yellow pencil from behind his ear",
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad/db04b2a6ba5366a6.jpg",
+    "prompt_sha": "5b0fa5cc1a59a30b50b2f06d2e283867bd7d719d5ff77feabb399594184e06cc",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/dad/435fa1cc3267bcae.jpg"
+    ],
+    "revised_from": "dad#0",
+    "seed": 1202,
+    "sha256": "849fe092763b008b8a8053e731c587b8bdd8943f33afa23e194b02545352967a",
+    "status": "ok"
+  },
+  "dad_now#0": {
+    "cache_key": "4971f4e2a724ed7f77171bddae64e5546c18eded899ef930c190a08b472889bd",
+    "created_at": "2026-11-25T22:04:06+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad_now/4971f4e2a724ed7f.jpg",
+    "prompt_sha": "e04e928b03c157f6899e2fdefa5d39b3eb5ae523fdbf6d29a0a8d94e18aea8ff",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/dad/435fa1cc3267bcae.jpg"
+    ],
+    "seed": 1102,
+    "sha256": "c1f89fc3dca9a69e3cd049980dc795f83a05dde6ae9d858835c89457ced3ddf6",
+    "status": "ok"
+  },
+  "dad_now#1": {
+    "cache_key": "e4dfca77603893fde9aa93b0ecee4fb3b58d9c736362976bc8beb2d45a974a68",
+    "created_at": "2026-11-25T22:04:06+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad_now/e4dfca77603893fd.jpg",
+    "prompt_sha": "e04e928b03c157f6899e2fdefa5d39b3eb5ae523fdbf6d29a0a8d94e18aea8ff",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/dad/435fa1cc3267bcae.jpg"
+    ],
+    "seed": 1103,
+    "sha256": "5237bf99224ba41c54a0fa332816e42ab7bc55df5d2b71070fe3788ca7aeae74",
+    "status": "ok"
+  },
+  "dad_now#2": {
+    "cache_key": "3a59744051a36293eac929568b6b2a8929bbcb2660af3e9497a5d886d11b9300",
+    "created_at": "2026-11-25T22:04:06+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad_now/3a59744051a36293.jpg",
+    "prompt_sha": "e04e928b03c157f6899e2fdefa5d39b3eb5ae523fdbf6d29a0a8d94e18aea8ff",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/dad/435fa1cc3267bcae.jpg"
+    ],
+    "seed": 1104,
+    "sha256": "8f8b5b2ba85fd521efa7ebc06b53449e008450bb3bb4d959c6840aaaaa573a46",
+    "status": "ok"
+  },
+  "dad_now#3": {
+    "cache_key": "5fa6ba9729ed679b06e850c69bea912f7c0e9d6eeba6473a5eea697a75d7c53f",
+    "created_at": "2026-11-25T22:04:06+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad_now/5fa6ba9729ed679b.jpg",
+    "prompt_sha": "e04e928b03c157f6899e2fdefa5d39b3eb5ae523fdbf6d29a0a8d94e18aea8ff",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/dad/435fa1cc3267bcae.jpg"
+    ],
+    "seed": 1105,
+    "sha256": "45a83587055d38f04e612871c56e6289292a834281dc27034d011d8098348bfd",
+    "status": "ok"
+  },
+  "dad_now#4": {
+    "cache_key": "f5f5b763b8c7617d7bf6d0d64f87c49b44eb54f8e061ccc71e3e812e65220c89",
+    "created_at": "2026-11-25T22:07:17+03:00",
+    "fell_back": false,
+    "instruction": "remove the yellow pencil from behind his ear",
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad_now/f5f5b763b8c7617d.jpg",
+    "prompt_sha": "5b0fa5cc1a59a30b50b2f06d2e283867bd7d719d5ff77feabb399594184e06cc",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/dad_now/3a59744051a36293.jpg"
+    ],
+    "revised_from": "dad_now#2",
+    "seed": 1202,
+    "sha256": "769f94e6a1879f33eceeec082be187650207f5c8b823fef1d0a04204cd0a927b",
+    "status": "ok"
+  },
+  "dad_now#5": {
+    "cache_key": "9d15cd80725989f4d288aa1458f3b48221bf0046445b95a60784557307af6b69",
+    "created_at": "2026-11-25T22:07:17+03:00",
+    "fell_back": false,
+    "instruction": "remove the yellow pencil from behind his ear",
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/dad_now/9d15cd80725989f4.jpg",
+    "prompt_sha": "5b0fa5cc1a59a30b50b2f06d2e283867bd7d719d5ff77feabb399594184e06cc",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/dad_now/3a59744051a36293.jpg"
+    ],
+    "revised_from": "dad_now#2",
+    "seed": 1203,
+    "sha256": "ba340351f33b2e3147900a9459c18011b4407aa67c053222ea692b5d9703eeeb",
+    "status": "ok"
+  },
+  "me_adult#0": {
+    "cache_key": "fa01beef9d8fe25f55edb041973ac5bf10bb3d161c3886aa73bad954c9595b3b",
+    "created_at": "2026-11-25T22:08:42+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_adult/fa01beef9d8fe25f.jpg",
+    "prompt_sha": "bee672060da067791c3a292a31a062f2cb47880a3024656e34428ed974967d81",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/me_child/20c509ebfa07510f.jpg"
+    ],
+    "seed": 1203,
+    "sha256": "2c03af5adc74af64649ad1f1328d3509b4b3c51ed9bce525037482b38fbf7872",
+    "status": "ok"
+  },
+  "me_adult#1": {
+    "cache_key": "dbdd0a2b47ff0a4faa93454d27e05c0281dfbe8301873e644a06875bf7d1abc1",
+    "created_at": "2026-11-25T22:08:42+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_adult/dbdd0a2b47ff0a4f.jpg",
+    "prompt_sha": "bee672060da067791c3a292a31a062f2cb47880a3024656e34428ed974967d81",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/me_child/20c509ebfa07510f.jpg"
+    ],
+    "seed": 1204,
+    "sha256": "667f28f4d86ab2cf0083e40e77b44ed6c957c1679439a20d8a9da8449002af50",
+    "status": "ok"
+  },
+  "me_adult#2": {
+    "cache_key": "272b1164ec3744a306fd8f49177b9258a7f40b6fee6b2d808233b1e333008d8d",
+    "created_at": "2026-11-25T22:08:42+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_adult/272b1164ec3744a3.jpg",
+    "prompt_sha": "bee672060da067791c3a292a31a062f2cb47880a3024656e34428ed974967d81",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/me_child/20c509ebfa07510f.jpg"
+    ],
+    "seed": 1205,
+    "sha256": "cc95f273bd3b153f2c227b0b87d8e6119d6a0338afa2e6da6b50c2cc7b951c77",
+    "status": "ok"
+  },
+  "me_adult#3": {
+    "cache_key": "8bf41bc2acea5fdab67a14440a67dd79bb17d1037631c159217e91c24fbd02f4",
+    "created_at": "2026-11-25T22:08:42+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_adult/8bf41bc2acea5fda.jpg",
+    "prompt_sha": "bee672060da067791c3a292a31a062f2cb47880a3024656e34428ed974967d81",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/me_child/20c509ebfa07510f.jpg"
+    ],
+    "seed": 1206,
+    "sha256": "f76618438c47e8518122ebee44bb82af311bf5af787986b9f8698439f1bd8805",
+    "status": "ok"
+  },
+  "me_child#0": {
+    "cache_key": "114c7254050550e62658d814cf3b7404023239d10989198993ffde6feff4490a",
+    "created_at": "2026-11-25T22:04:06+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_child/114c7254050550e6.jpg",
+    "prompt_sha": "76ca01a5f3766b63ea461fc15c0c60878a157bb46fcedb80b2e3d13edef12117",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/style/c5385dcb40cf6ad4.jpg"
+    ],
+    "seed": 1201,
+    "sha256": "50dab47833fb5595a78836d6a1362b3776e54e8d99318d078923427c37ad0bff",
+    "status": "ok"
+  },
+  "me_child#1": {
+    "cache_key": "20c509ebfa07510f1ebd3f93da566e3e157b6dc0560501f393599ad9d70ea13a",
+    "created_at": "2026-11-25T22:04:06+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_child/20c509ebfa07510f.jpg",
+    "prompt_sha": "76ca01a5f3766b63ea461fc15c0c60878a157bb46fcedb80b2e3d13edef12117",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/style/c5385dcb40cf6ad4.jpg"
+    ],
+    "seed": 1202,
+    "sha256": "db41496dd59cd68f8a43317440c3786c6f5c32ea5b8149add17586644eeac6bf",
+    "status": "ok"
+  },
+  "me_child#2": {
+    "cache_key": "7b87ed7a1691a1988e85e41154fe58a413afbb3d17f79e55aede187e3af98230",
+    "created_at": "2026-11-25T22:04:06+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_child/7b87ed7a1691a198.jpg",
+    "prompt_sha": "76ca01a5f3766b63ea461fc15c0c60878a157bb46fcedb80b2e3d13edef12117",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/style/c5385dcb40cf6ad4.jpg"
+    ],
+    "seed": 1203,
+    "sha256": "18d465fdc14234726d48bcf5fc7d462682d0e726cc0785ea1cd34b0cf1c71df0",
+    "status": "ok"
+  },
+  "me_child#3": {
+    "cache_key": "b8a10812669cb338941e0c26bc624c0bb52ffdd7edc4bdd843cae4ef96ecdf66",
+    "created_at": "2026-11-25T22:04:06+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_child/b8a10812669cb338.jpg",
+    "prompt_sha": "76ca01a5f3766b63ea461fc15c0c60878a157bb46fcedb80b2e3d13edef12117",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/style/c5385dcb40cf6ad4.jpg"
+    ],
+    "seed": 1204,
+    "sha256": "52895aaeea29b81fa8f92509ba1de3aeefdab43d278842108f924691c43f7626",
+    "status": "ok"
+  },
+  "me_teen#0": {
+    "cache_key": "3f427f26b00df8ddf9cada82d2eb90630d20523c22b530e8bb78baa0f01c5cce",
+    "created_at": "2026-11-25T22:08:42+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_teen/3f427f26b00df8dd.jpg",
+    "prompt_sha": "16f0b86967e174a22373680bf55f369a558b50f7a75b8f98a8291deb5f929e20",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/me_child/20c509ebfa07510f.jpg"
+    ],
+    "seed": 1202,
+    "sha256": "c9552b14dcdb7fc43149dbdef92594d97f42732dfff0e7c9f48488b21d11bf61",
+    "status": "ok"
+  },
+  "me_teen#1": {
+    "cache_key": "6adbef31c554f3a43c7e6d1c7ca560fd90c12f034f88dc14a37ab66dcb4b23a7",
+    "created_at": "2026-11-25T22:08:42+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_teen/6adbef31c554f3a4.jpg",
+    "prompt_sha": "16f0b86967e174a22373680bf55f369a558b50f7a75b8f98a8291deb5f929e20",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/me_child/20c509ebfa07510f.jpg"
+    ],
+    "seed": 1203,
+    "sha256": "435b954443c26352b94e4393e6ed5f71ffe4577f25f879e4714c3cfa9249be21",
+    "status": "ok"
+  },
+  "me_teen#2": {
+    "cache_key": "29562f49e738de8998783044dc5634b845e441f11fb8af1a5fafc48acfbf1ded",
+    "created_at": "2026-11-25T22:08:42+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_teen/29562f49e738de89.jpg",
+    "prompt_sha": "16f0b86967e174a22373680bf55f369a558b50f7a75b8f98a8291deb5f929e20",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/me_child/20c509ebfa07510f.jpg"
+    ],
+    "seed": 1204,
+    "sha256": "9192f8f74e2177de0d6df98b742856f45614dfcee13e72775a6f08294af40f9d",
+    "status": "ok"
+  },
+  "me_teen#3": {
+    "cache_key": "8cc23063de4437f6739a04dd632740fd5266f80dd25ee014c175a39997fcba65",
+    "created_at": "2026-11-25T22:08:42+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/me_teen/8cc23063de4437f6.jpg",
+    "prompt_sha": "16f0b86967e174a22373680bf55f369a558b50f7a75b8f98a8291deb5f929e20",
+    "provider": "cloudflare_image",
+    "refs": [
+      "outputs/refs/me_child/20c509ebfa07510f.jpg"
+    ],
+    "seed": 1205,
+    "sha256": "aa677fb68e52042c37a26b72e10f675784e1a4e6cb33eab5f14e473440a3036d",
+    "status": "ok"
+  },
+  "style#0": {
+    "cache_key": "c5385dcb40cf6ad42c85573e512d123196118e466935c123017ae79816609eec",
+    "created_at": "2026-11-25T21:59:11+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/style/c5385dcb40cf6ad4.jpg",
+    "prompt_sha": "58b7055de7379ea129324fb90ba3a419bdefc7446c243a0d1b7c2f6ff0f2f339",
+    "provider": "cloudflare_image",
+    "refs": [],
+    "seed": 1001,
+    "sha256": "3c111fe600e17ff36a6d826dcc46ae96ddcb4e37ee96be4fd5124ce20dcd2e1a",
+    "status": "ok"
+  },
+  "style#1": {
+    "cache_key": "5ea1f507f1740296587ac664e70df4d245ba8019ebe00dc1f1ca38cd76d4eec5",
+    "created_at": "2026-11-25T21:59:11+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/style/5ea1f507f1740296.jpg",
+    "prompt_sha": "58b7055de7379ea129324fb90ba3a419bdefc7446c243a0d1b7c2f6ff0f2f339",
+    "provider": "cloudflare_image",
+    "refs": [],
+    "seed": 1002,
+    "sha256": "0d462ec2542a4af86a903fe03f8b87db27e5438bab75b83593d08f190c9aba2e",
+    "status": "ok"
+  },
+  "style#2": {
+    "cache_key": "2db5529006df39b4590dec6512d6e41b9af33388edae7c2503f4ffdf52e9e8ab",
+    "created_at": "2026-11-25T21:59:11+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/style/2db5529006df39b4.jpg",
+    "prompt_sha": "58b7055de7379ea129324fb90ba3a419bdefc7446c243a0d1b7c2f6ff0f2f339",
+    "provider": "cloudflare_image",
+    "refs": [],
+    "seed": 1003,
+    "sha256": "0a002ec95644ce250a217a69843ad29f973c138ec022a277030ef206bb59d5ec",
+    "status": "ok"
+  },
+  "style#3": {
+    "cache_key": "9eb6c3772c3b8c3819f60461b77e5a6ae1fed3003ddb59c0564a8eb158fa86c5",
+    "created_at": "2026-11-25T21:59:11+03:00",
+    "fell_back": false,
+    "model": "@cf/black-forest-labs/flux-2-klein-4b",
+    "path": "outputs/refs/style/9eb6c3772c3b8c38.jpg",
+    "prompt_sha": "58b7055de7379ea129324fb90ba3a419bdefc7446c243a0d1b7c2f6ff0f2f339",
+    "provider": "cloudflare_image",
+    "refs": [],
+    "seed": 1004,
+    "sha256": "a41af42542cee49ea0580f62fd38ed3657f2f38b0f15892dae588e3705de410f",
+    "status": "ok"
+  }
+}

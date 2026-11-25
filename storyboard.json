@@ -18,41 +18,41 @@
     "block": "warm hand-painted 2D storybook cartoon illustration, soft golden light, gentle paper texture, rounded friendly shapes, earthy palette of ochre, terracotta and eucalyptus green with sky-blue accents, cosy and nostalgic",
     "negative": "text, letters, words, watermark, logo, signature, number plate, photorealistic, photograph, 3D render, realistic faces, extra fingers, deformed hands, distorted face",
     "composition": "square frame, the main subject centred with generous empty space above, below and on both sides, nothing important near the edges",
-    "reference_choice": null
+    "reference_choice": 0
   },
   "characters": [
     {
       "id": "dad",
-      "description": "the father: a Habesha Ethiopian man in his early forties, warm brown skin, short black curly hair greying at the temples, short neat black beard, kind eyes with laugh lines, medium build, faded navy-blue work overalls with rolled sleeves, a yellow pencil behind his right ear",
+      "description": "the father: a Habesha Ethiopian man in his early forties, warm brown skin, short black curly hair greying at the temples, short neat black beard, kind eyes with laugh lines, medium build, faded navy-blue work overalls with rolled sleeves",
       "seed": 1101,
-      "reference_choice": null
+      "reference_choice": 4
     },
     {
       "id": "dad_now",
-      "description": "the father at about fifty: the same Habesha Ethiopian man, more grey in his short curly hair and neat beard, deeper laugh lines around kind eyes, the same faded navy-blue work overalls, a yellow pencil behind his right ear",
+      "description": "the father at about fifty: the same Habesha Ethiopian man, more grey in his short curly hair and neat beard, deeper laugh lines around kind eyes, the same faded navy-blue work overalls",
       "seed": 1102,
       "derived_from": "dad",
-      "reference_choice": null
+      "reference_choice": 4
     },
     {
       "id": "me_child",
-      "description": "the boy: a Habesha Ethiopian boy about eight years old, brown skin, short curly black hair, round face, big curious eyes, an oversized mustard-yellow T-shirt, khaki shorts and plastic sandals",
+      "description": "the boy: a Habesha Ethiopian boy about eight years old with warm brown skin, the same skin tone as his father, short curly black hair, round face, big curious eyes, an oversized mustard-yellow T-shirt, khaki shorts and plastic sandals",
       "seed": 1201,
-      "reference_choice": null
+      "reference_choice": 1
     },
     {
       "id": "me_teen",
-      "description": "the teenage son: the same boy at about fifteen, tall and lanky, brown skin, short curly black hair, a faint moustache, a mustard-yellow hoodie with the sleeves pushed up, blue jeans",
+      "description": "the teenage son: the same boy at about fifteen, a tall, lanky teenager with long arms and legs and a longer, thinner face, warm brown skin, short curly black hair, a mustard-yellow hoodie with the sleeves pushed up, blue jeans",
       "seed": 1202,
       "derived_from": "me_child",
-      "reference_choice": null
+      "reference_choice": 0
     },
     {
       "id": "me_adult",
-      "description": "the grown son: the same Habesha Ethiopian man in his mid-twenties, brown skin, short neat curly hair, a short trimmed beard, a mustard-yellow overshirt over a white T-shirt, dark trousers",
+      "description": "the grown son: the same Habesha Ethiopian man in his mid-twenties, warm brown skin, short neat curly hair, a short trimmed beard, a mustard-yellow overshirt over a white T-shirt, dark trousers",
       "seed": 1203,
-      "derived_from": "me_teen",
-      "reference_choice": null
+      "derived_from": "me_child",
+      "reference_choice": 2
     }
   ],
   "props": [
@@ -118,7 +118,7 @@
       "props": ["toolbox"],
       "image_prompt": "Close-up of the red toolbox standing closed on worn wooden floorboards, early morning sunlight falling across it from a window, dust in the air, a quiet room",
       "seed": 2001,
-      "keyframe_choice": null,
+      "keyframe_choice": 1,
       "motion": "wan",
       "motion_prompt": "dust drifts slowly through the beam of sunlight, the light warms a little, the camera very slowly pushes in",
       "kenburns": {"move": "push_in", "amount": 0.08},
@@ -144,11 +144,11 @@
       "props": ["home", "toolbox"],
       "image_prompt": "Wide shot of the family home on a sunny morning; in the middle of the yard the father walks towards the viewer carrying the red toolbox, the boy following one step behind him",
       "seed": 2002,
-      "keyframe_choice": null,
+      "keyframe_choice": 0,
       "motion": "wan",
       "motion_prompt": "the man and the boy walk slowly towards the camera, eucalyptus leaves sway in a light breeze, camera static",
       "kenburns": {"move": "pull_out", "amount": 0.08},
-      "crop_focus": {"x": 0.5, "y": 0.55},
+      "crop_focus": {"x": 0.5, "y": 0.58},
       "narration": [
         {"voice": "narrator", "text": "If it could be done at home, he did it himself. And I was always one step behind him."}
       ],
@@ -168,7 +168,7 @@
       "camera": "static",
       "characters": ["dad", "me_child"],
       "props": ["car"],
-      "image_prompt": "Medium shot in the yard beside the old white sedan: the father lies on his back under the front of the car, only his legs and one arm holding a wrench visible, while the boy crouches beside the car pointing a torch underneath",
+      "image_prompt": "Medium shot in the yard, a side view of the old white sedan: the father lies on his back on a flattened cardboard sheet with his head and shoulders hidden under the front of the car, so only his legs in navy-blue overalls and one arm holding a wrench stick out; the boy crouches beside the front wheel, shining a small electric flashlight under the car",
       "seed": 2003,
       "keyframe_choice": null,
       "motion": "wan",
@@ -194,7 +194,7 @@
       "camera": "static",
       "characters": [],
       "props": [],
-      "image_prompt": "Close-up of the father's hands, navy-blue overall sleeves rolled up, pushing a hand plane along a plank on a wooden workbench, pale wood shavings curling up; beside the plank stands a finished low wooden rekebot, the Ethiopian coffee-cup stand, holding small white handleless coffee cups",
+      "image_prompt": "Close-up of the father's warm brown hands, navy-blue overall sleeves rolled up, pushing a wooden hand plane along a long plank on a workbench, pale wood shavings curling up; at the side of the bench stands a finished low wooden rekebot (a small Ethiopian coffee stand: a low wooden box-shaped table with a shallow tray on top) holding six small white coffee cups without handles",
       "seed": 2004,
       "keyframe_choice": null,
       "motion": "wan",
@@ -220,13 +220,13 @@
       "camera": "static",
       "characters": ["dad", "me_child"],
       "props": [],
-      "image_prompt": "Medium shot inside the house at night during a power cut: the father stands at an open fuse box on the wall with a torch in one hand and a screwdriver tester in the other, the boy beside him holding up a lit candle to help; in the soft dark background a clay jebena coffee pot sits on a small charcoal stove, with faint silhouettes of family sitting around it",
+      "image_prompt": "Medium shot inside the house at night during a power cut: the father stands at an open fuse box on the wall with a small electric flashlight in one hand and a screwdriver tester in the other, the boy beside him holding up a lit candle to help; in the soft dark background a clay jebena coffee pot sits on a small charcoal stove, with faint silhouettes of family sitting around it",
       "seed": 2005,
-      "keyframe_choice": null,
+      "keyframe_choice": 0,
       "motion": "wan",
       "motion_prompt": "the candle flame flickers and warm light dances on the wall, the man slowly raises the tester towards the fuse box, camera static",
       "kenburns": {"move": "pan_left", "amount": 0.05},
-      "crop_focus": {"x": 0.5, "y": 0.5},
+      "crop_focus": {"x": 0.5, "y": 0.4},
       "narration": [
         {"voice": "narrator", "text": "When the power went out, everyone said: call someone. Dad just picked up his tester."},
         {"voice": "dad", "lang": "am", "text": "እስኪ እንየው", "subtitle": "Let's look at it first.", "tts_text": null,
@@ -250,7 +250,7 @@
       "props": ["home"],
       "image_prompt": "Wide shot of the family home at night under a starry sky, every window glowing warm yellow, the boy jumping for joy in the yard with his arms in the air, soft silhouettes of family figures cheering in the lit doorway",
       "seed": 2006,
-      "keyframe_choice": null,
+      "keyframe_choice": 2,
       "motion": "wan",
       "motion_prompt": "the boy jumps up and down with joy, the figures in the doorway raise their arms, the window light glows softly, camera static",
       "kenburns": {"move": "pull_out", "amount": 0.1},
@@ -274,7 +274,7 @@
       "camera": "static",
       "characters": [],
       "props": [],
-      "image_prompt": "Close-up of a leaking pipe joint under a black plastic water tank on a metal stand, a drop of water falling; the father's hands, navy-blue overall sleeves rolled up, grip the joint with a heavy steel pipe wrench",
+      "image_prompt": "Close-up of a leaking pipe joint under a black plastic water tank on a metal stand, a drop of water falling; the father's warm brown hands, navy-blue overall sleeves rolled up, grip the joint with a heavy steel pipe wrench",
       "seed": 2007,
       "keyframe_choice": null,
       "motion": "wan",
@@ -300,7 +300,7 @@
       "camera": "push_in",
       "characters": ["dad", "me_teen"],
       "props": ["car"],
-      "image_prompt": "Medium shot in the yard: the teenage son leans over the open bonnet of the old white sedan, tightening a bolt with a spanner, while the father stands beside him with his arms folded, smiling proudly",
+      "image_prompt": "Medium shot in the yard: the teenage son leans over the open bonnet of the old white sedan, tightening a bolt with a spanner, while the father, in his faded navy-blue work overalls, stands beside him with his arms folded, smiling proudly",
       "seed": 2008,
       "keyframe_choice": null,
       "motion": "wan",
@@ -330,11 +330,11 @@
       "props": ["toolbox_old"],
       "image_prompt": "Close-up in a small, simple apartment: the grown son kneels on the floor and opens the old red toolbox, its trays unfolding to show well-used tools; a dripping kitchen tap in the soft background",
       "seed": 2009,
-      "keyframe_choice": null,
+      "keyframe_choice": 1,
       "motion": "wan",
       "motion_prompt": "the trays of the toolbox slowly unfold as the lid lifts, the camera slowly pushes in",
       "kenburns": {"move": "push_in", "amount": 0.08},
-      "crop_focus": {"x": 0.5, "y": 0.5},
+      "crop_focus": {"x": 0.5, "y": 0.45},
       "narration": [
         {"voice": "narrator", "text": "When I moved out, he gave me his old toolbox."},
         {"voice": "narrator", "text": "Last week, my kitchen tap started leaking. And I heard him."},
@@ -377,9 +377,9 @@
           "characters": ["me_adult"],
           "props": ["toolbox_old"],
           "seed": 2101,
-          "keyframe_choice": null,
+          "keyframe_choice": 2,
           "motion_prompt": "the young man smiles and nods while listening on the phone, camera static",
-          "crop_focus": {"x": 0.5, "y": 0.5}
+          "crop_focus": {"x": 0.5, "y": 0.45}
         },
         {
           "id": "b",
@@ -387,9 +387,9 @@
           "characters": ["dad_now"],
           "props": [],
           "seed": 2102,
-          "keyframe_choice": null,
+          "keyframe_choice": 0,
           "motion_prompt": "the man laughs softly and nods while listening on the phone, camera static",
-          "crop_focus": {"x": 0.5, "y": 0.5}
+          "crop_focus": {"x": 0.5, "y": 0.45}
         }
       ],
       "min_duration_s": 7.0,
