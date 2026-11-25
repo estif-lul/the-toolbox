@@ -1,0 +1,89 @@
+# Provider profiles. Each stage lists a chain: the first entry is the primary, the rest are
+# fallbacks tried in order when the primary is exhausted (retries used up, daily quota gone,
+# or the model no longer exists). Switch with `--profile paid` or PROFILE=paid.
+# storyboard.json never changes between profiles; provider + model are part of every cache key,
+# so switching regenerates only the stages whose provider changed.
+#
+# Model ids verified in Step 0 (2026-11-25) against the live APIs: see FAILURES.md F03/F04 and
+# outputs/smoke/models_*.json for what was listed.
+
+default_profile: free
+
+profiles:
+  free:
+    text:                                   # script / storyboard draft / translation
+      - provider: gemini_text
+        model: gemini-3.8-flash
+        params: {temperature: 0.7}
+      - provider: gemini_text
+        model: gemini-3.5-flash-lite        # no 3.8 Flash-Lite text model is served (F04)
+        params: {temperature: 0.7}
+
+    tts:                                    # narration; stock voices only, no silent fallback
+      - provider: gemini_tts
+        model: gemini-3.8-flash-tts         # Interactions API (F03)
+        params: {min_interval_s: 6}         # client-side pacing until the real RPM is known
+      - provider: gemini_tts
+        model: gemini-3.8-flash-lite-tts
+        params: {min_interval_s: 6}
+
+    image:                                  # keyframes and reference sheets
+      - provider: cloudflare_image
+        model: "@cf/black-forest-labs/flux-2-klein-4b"   # Apache 2.0 (the 9B is non-commercial)
+        params: {steps: 4}
+      - provider: cloudflare_image
+        model: "@cf/black-forest-labs/flux-1-schnell"
+        params: {steps: 4}
+
+    video:                                  # moving shots
+      - provider: kaggle_wan
+        model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
+        params: {width: 704, height: 704, frames: 81, steps: 30, guidance: 5.0}
+      - provider: kenburns                  # local FFmpeg, always available
+        model: ffmpeg-zoompan
+        params: {fps: 24, size: 1024}
+
+    music:                                  # score (the stage also falls back to the previous
+      - provider: kaggle_acestep            # cached candidate, then a code-generated pad: Step 2/4)
+        model: ACE-Step/ACE-Step-1.5
+        params: {candidates: 3}
+
+    kenburns:
+      - provider: kenburns
+        model: ffmpeg-zoompan
+        params: {fps: 24, size: 1024}
+
+  # The paid / frontier lane (PLAN.md §10, docs/PAID_LANE.md). Stubs until implemented; each
+  # stage keeps the free adapter as its fallback so a missing implementation never silently
+  # changes quality. Model ids are placeholders until prices and terms are checked.
+  paid:
+    text:
+      - provider: paid_text
+        model: claude-sonnet-5-5
+      - provider: gemini_text
+        model: gemini-3.8-flash
+    tts:
+      - provider: paid_tts
+        model: gemini-3.8-flash-tts-paid-tier
+      - provider: gemini_tts
+        model: gemini-3.8-flash-tts
+    image:
+      - provider: paid_image
+        model: gemini-nano-banana-2.1
+      - provider: cloudflare_image
+        model: "@cf/black-forest-labs/flux-2-klein-4b"
+    video:
+      - provider: rented_gpu_video
+        model: Wan-AI/Wan2.2-TI2V-5B-Diffusers@L40S
+      - provider: paid_video
+        model: gemini-omni-flash
+      - provider: kenburns
+        model: ffmpeg-zoompan
+    music:
+      - provider: paid_music
+        model: lyria-3.5
+      - provider: kaggle_acestep
+        model: ACE-Step/ACE-Step-1.5
+    kenburns:
+      - provider: kenburns
+        model: ffmpeg-zoompan

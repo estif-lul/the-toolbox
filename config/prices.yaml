@@ -1,0 +1,76 @@
+# List prices used for the "list-price equivalent" column in COSTS.md.
+# Every price is null until it is read from the provider's pricing page; then fill in the
+# number, the unit, source_url and checked (date). Null shows as "unknown" in COSTS.md, never 0.
+# The free lane really costs $0; these numbers answer "what would this have cost if paid?".
+
+currency: USD
+
+models:
+  gemini-3.8-flash:
+    unit: per_1m_tokens
+    input: null
+    output: null
+    source_url: https://ai.google.dev/gemini-api/docs/pricing
+    checked: null
+  gemini-3.5-flash-lite:
+    unit: per_1m_tokens
+    input: null
+    output: null
+    source_url: https://ai.google.dev/gemini-api/docs/pricing
+    checked: null
+  gemini-3.8-flash-tts:
+    unit: per_1m_tokens          # TTS is billed on text input + audio output tokens
+    input: null
+    output: null
+    source_url: https://ai.google.dev/gemini-api/docs/pricing
+    checked: null
+  gemini-3.8-flash-lite-tts:
+    unit: per_1m_tokens
+    input: null
+    output: null
+    source_url: https://ai.google.dev/gemini-api/docs/pricing
+    checked: null
+  # Workers AI bills in neurons: $0.011 per 1,000 neurons above the free 10,000 neurons/day.
+  "@cf/black-forest-labs/flux-2-klein-4b":
+    unit: per_512_tile
+    output_tile: 0.000287       # 26.05 neurons per output 512x512 tile
+    input_tile: 0.000059        # 5.37 neurons per input (reference) 512x512 tile
+    neurons: {output_tile: 26.05, input_tile: 5.37}
+    # => 1024x1024 text-only: 4 output tiles = 104.2 neurons = $0.00115; + 21.5 neurons per 1024^2 reference
+    source_url: https://developers.cloudflare.com/workers-ai/platform/pricing/
+    checked: 2026-11-25
+  "@cf/black-forest-labs/flux-1-schnell":
+    unit: per_512_tile_plus_step
+    tile: 0.0000528             # 4.80 neurons per 512x512 tile
+    step: 0.0001056             # 9.60 neurons per step
+    neurons: {tile: 4.80, step: 9.60}
+    # => 1024x1024 at 4 steps: 19.2 + 38.4 = 57.6 neurons = $0.00063
+    source_url: https://developers.cloudflare.com/workers-ai/platform/pricing/
+    checked: 2026-11-25
+  "@cf/black-forest-labs/flux-2-klein-9b":   # not used: non-commercial licence; listed for comparison
+    unit: per_megapixel
+    first_mp: 0.015
+    next_mp: 0.002
+    input_mp: 0.002
+    source_url: https://developers.cloudflare.com/workers-ai/platform/pricing/
+    checked: 2026-11-25
+  ffmpeg-zoompan:
+    unit: local
+    price: 0.0
+    source_url: null
+    checked: 2026-11-25
+
+gpu:
+  # Kaggle GPU time is priced at a public on-demand rate for a comparable GPU.
+  kaggle_t4:
+    unit: per_gpu_hour
+    price: null
+    comparable: "NVIDIA T4 16 GB, on-demand"
+    source_url: null
+    checked: null
+  kaggle_p100:
+    unit: per_gpu_hour
+    price: null
+    comparable: "NVIDIA P100 16 GB, on-demand"
+    source_url: null
+    checked: null
