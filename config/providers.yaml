@@ -13,13 +13,24 @@ profiles:
   free:
     # Free-tier limits from AI Studio (2026-11-25, COSTS.md): pacing = 60 s / RPM, rounded up.
     # Failed requests (503) count against RPD too, so the overloaded model gets fewer attempts.
-    text:                                   # script / storyboard draft / translation
+    text:                                   # short text calls (translation, checks)
       - provider: gemini_text
         model: gemini-3.8-flash             # 5 RPM, 250K TPM, 20 RPD
         params: {temperature: 0.7, min_interval_s: 13, max_attempts: 2, timeout_s: 60}
       - provider: gemini_text
         model: gemini-3.5-flash-lite        # 15 RPM, 250K TPM, 500 RPD; no 3.8 Flash-Lite text model (F04)
         params: {temperature: 0.7, min_interval_s: 4}
+
+    script:                                 # the storyboard draft: one long JSON answer, so a
+      - provider: gemini_text               # longer timeout than the short text calls
+        model: gemini-3.8-flash             # 1 attempt: 503 all day on 25 Nov (F05), and 503s use RPD
+        params: {temperature: 0.8, min_interval_s: 13, max_attempts: 1, timeout_s: 180}
+      - provider: gemini_text
+        model: gemini-3.5-flash             # older Flash, listed for this key (outputs/smoke/models_gemini.json)
+        params: {temperature: 0.8, min_interval_s: 13, max_attempts: 2, timeout_s: 180}
+      - provider: gemini_text
+        model: gemini-3.5-flash-lite
+        params: {temperature: 0.8, min_interval_s: 4, timeout_s: 180}
 
     tts:                                    # narration; stock voices only, no silent fallback
       - provider: gemini_tts
@@ -64,6 +75,12 @@ profiles:
         model: claude-sonnet-5-5
       - provider: gemini_text
         model: gemini-3.8-flash
+    script:
+      - provider: paid_text
+        model: claude-sonnet-5-5
+      - provider: gemini_text
+        model: gemini-3.8-flash
+        params: {temperature: 0.8, timeout_s: 180}
     tts:
       - provider: paid_tts
         model: gemini-3.8-flash-tts-paid-tier

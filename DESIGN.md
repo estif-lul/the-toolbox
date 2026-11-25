@@ -85,13 +85,115 @@ everything himself (car, woodwork, electricity, plumbing) and I learned it from 
 - B's best idea (the boy holding the torch) survives as shot s03; C's sense of place survives as the
   compound in s02 and the house lighting up in s06.
 
-The logline, treatment, beat list and characters are added to this file next, and every shot's
-reason lives in `storyboard.json`.
+---
+
+## 3. Story
+
+`pipeline/script.py` (`make script`) sends this section, and only this section, to the text model
+as the brief for an AI storyboard draft (see EXPERIMENTS.md E01).
+
+### Logline
+A son remembers how his Habesha father fixed everything at home himself, always starting with the
+same calm words, *"እስኪ እንየው"* ("Let's look at it first"), until the day the son fixes something
+alone and calls to tell him.
+
+### Treatment
+Morning light falls on a dented red toolbox. My dad never called anyone to fix anything: if it
+could be done at home, he did it himself, and I was always one step behind him. Four memories
+follow, each one a different kind of repair. I hold the torch while he lies under our old white
+car. Wood shavings curl as he builds the rekebot we still serve coffee on. In a power cut, with
+the jebena waiting on the charcoal stove, everyone says "call someone"; Dad picks up his tester and
+says *"እስኪ እንየው"*, and the whole house lights up again. A leaking pipe, a wrench, patience, then
+silence. Years later the roles turn: I tighten the bolt on the same car while he watches with his
+arms folded and quotes the proverb about the egg that learns to walk. When I move out, he gives me
+the toolbox. Now, when something breaks, I hear his voice. I fix the tap myself and call him. On
+the other half of the screen, spanner in hand, he answers: *"ጎበዝ ልጄ"*, well done, my son.
+
+### Beats (one picture each)
+1. **The toolbox and the man who carries it** (s01–s02): the red toolbox in morning light, then Dad
+   crossing the yard of the compound with it, the boy one step behind.
+2. **Learning by helping** (s03–s07): four repairs, four tools: the torch under the car, the hand
+   plane and the rekebot, the candle at the fuse box (*"እስኪ እንየው"*), the drip that stops.
+3. **The turn** (s08): the teenager holds the spanner; Dad's arms are folded. The proverb
+   *"ቀስ በቀስ እንቁላል በእግሩ ይሄዳል"* ("Slowly, slowly, the egg walks on its own legs") names it.
+4. **The hand-over** (s09): the grown son opens the old toolbox in his own flat and hears Dad's
+   *"እስኪ እንየው"* in his head.
+5. **The call** (s10): a split screen, two phones, two tools. "Dad, I fixed it myself." *"ጎበዝ ልጄ"*.
+
+### Characters
+One fixed description per character is attached word for word to every image prompt that features
+them (the exact text is in `storyboard.json`). Each has a **colour anchor** that survives ageing and
+model drift: Dad is always in **faded navy-blue overalls** with a pencil behind his ear, I am always
+in **mustard yellow**, and the toolbox is always **red**.
+
+| id | Who | Appears in |
+|---|---|---|
+| `dad` | Dad in the memories: early forties, short curly hair greying at the temples, neat beard, navy overalls | s02, s03, s05, s08 (his hands in s04, s07) |
+| `dad_now` | Dad today, about fifty: more grey, same overalls; generated from the `dad` reference | s10 |
+| `me_child` | me at eight: round face, big curious eyes, oversized mustard T-shirt | s02, s03, s05, s06 |
+| `me_teen` | me at fifteen: tall and lanky, mustard hoodie | s08 |
+| `me_adult` | me in my mid-twenties: trimmed beard, mustard overshirt | s09, s10 |
+
+Recurring objects and places are described once in the same way (`props`): the red toolbox (and
+the same toolbox years later), the old white sedan, and the family home (cream walls,
+corrugated-iron roof, sky-blue gate, eucalyptus trees, black water tank). Other family members are
+only soft, unnamed background silhouettes (s05, s06).
+
+### Visual approach
+- **Cartoon, not realism.** A warm, hand-painted 2D cartoon look: soft golden light, gentle paper
+  texture, rounded friendly shapes, an earthy palette of ochre, terracotta and eucalyptus green
+  with sky-blue accents. Why cartoon: no real person's likeness is used (ETHICS.md); cartoon faces
+  drift less visibly between shots than realistic ones; and a storybook look suits a memory told
+  by a son. The style is described by its qualities, never by naming an artist or studio.
+- **One prompt recipe for every image**, built in code so the wording never drifts:
+  `{image_prompt}. {character descriptions}. {prop descriptions}. {composition}. Style: {style block}`.
+  `image_prompt` holds only the subject, setting and shot size.
+- **Square masters, two crops.** Keyframes are 1024×1024 with the subject centred and room on all
+  sides, then cropped to 9:16 (phones, first) and 16:9 (YouTube, laptops) at assembly.
+- **Light tells the time.** Morning gold for the opening, candlelight and night blue for the power
+  cut, warm afternoon for the ending.
+- **Where identity is hardest, show less face.** The woodwork and plumbing memories are close-ups of
+  his hands (navy sleeves as the anchor); the car memory shows his legs under the car. Faces appear
+  in medium and wide shots, where small drift is least visible.
+- **Motion is gentle.** One small movement per shot (dust in the light, a flame, a nod) plus a slow
+  camera move; Ken Burns on the keyframe is the fallback for every shot.
+
+### Sound approach
+- **Narration-led.** An English narrator (my voice in the story, a stock TTS voice, no cloning)
+  carries the film; about 140 words over roughly 75 seconds, so there is room to breathe.
+- **Dad speaks only Amharic**, three short lines in a second, deeper stock voice, each with an
+  English subtitle. Fewer words make each one land, and the Amharic is what the family will
+  recognise as *him*.
+- **The recurring line returns as a memory.** In s09 the s05 recording of *"እስኪ እንየው"* is reused,
+  quieter and with a soft reverb, as the voice in my head (no new model call).
+- **A quiet score.** One instrumental cue in a nostalgic Ethiopian *tizita* feel (the word means
+  memory, longing) with plucked krar, guitar and a light washint flute; ducked under the voice; it
+  thins out for the silence after the leaking pipe (s07), and the theme returns warmer for the
+  hand-over and the phone call.
+- **Phone-ready mix.** Loudness normalised to −14 LUFS; subtitles burned in so the film works with
+  the sound off.
+
+### Shot reasons
+Every shot exists for a reason; the exact text is the `reason` field of each shot in
+`storyboard.json` (validation fails if one is missing). In short:
+
+| Shot | Beat | Why it exists |
+|---|---|---|
+| s01 | motif | The hook: the red toolbox is the strongest colour in the film and carries the story from the first frame to the hand-over |
+| s02 | place | Establishes the compound, Dad and the boy in one picture; the boy is literally one step behind |
+| s03 | car | Memory 1: the boy as helper with the torch; the car returns in s08 to show the turn |
+| s04 | woodwork | Memory 2: he makes, not only repairs; the rekebot ties his craft to the coffee ceremony |
+| s05 | power cut | Memory 3: everyone would call someone, Dad looks first; introduces *"እስኪ እንየው"* |
+| s06 | payoff | The lift: the house lights up and the boy's joy shows what his patience gives the family |
+| s07 | plumbing | Memory 4: patience made visible; its silence is a breath before the turn |
+| s08 | the turn | Years later the son works and Dad watches; the proverb names the growth |
+| s09 | motif returns | The toolbox has changed hands; his line now lives in my head |
+| s10 | ending | The call: we see Dad today, side by side with me; *"ጎበዝ ልጄ"* is the payoff |
 
 ---
 
-## 3. User test 1 (radio cut)
+## 4. User test 1 (radio cut)
 *To be filled in Step 2.*
 
-## 4. User test 2 (near-final cut)
+## 5. User test 2 (near-final cut)
 *To be filled in Step 5.*

@@ -83,6 +83,10 @@ def cmd_validate(args) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Windows consoles and pipes default to cp1252, which cannot print Amharic (Ge'ez script).
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
     args = _parser().parse_args(argv)
     env.load_env()
     if os.environ.get("FORCE") == "1" and args.force is None:
@@ -104,6 +108,11 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         if args.cmd == "validate":
             return cmd_validate(args)
+        if args.cmd == "script":
+            # The one stage that does not read storyboard.json (it drafts an alternative to it).
+            from .script import main as script_main
+
+            return script_main(profile, force=args.force is not None, dry_run=args.dry_run)
         step, desc = STAGES[args.cmd]
         print(f"{args.cmd}: not implemented yet ({desc}); it is built in Step {step}", file=sys.stderr)
         return 2

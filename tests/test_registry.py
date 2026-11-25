@@ -5,7 +5,7 @@ from pipeline.providers import base, registry
 from pipeline.providers.kenburns import MOVES, zoompan_filter
 
 PROTOCOL = {
-    "text": base.TextProvider, "tts": base.TTSProvider, "image": base.ImageProvider,
+    "text": base.TextProvider, "script": base.TextProvider, "tts": base.TTSProvider, "image": base.ImageProvider,
     "video": base.VideoProvider, "music": base.MusicProvider,
 }
 

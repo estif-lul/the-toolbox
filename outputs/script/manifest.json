@@ -1,0 +1,17 @@
+{
+  "draft": {
+    "cache_key": "1bcf5d4e478063af13805b76c7cde43bc7e912fed16f17f9a9c9381eaacca505",
+    "created_at": "2026-11-25T15:50:25+03:00",
+    "fell_back": true,
+    "model": "gemini-3.5-flash",
+    "path": "outputs/script/draft/1bcf5d4e478063af.json",
+    "provider": "gemini_text",
+    "sha256": "8f085e15d09413b2bc7d85fe05ff5ddf75f22199f85a0cdacc6849880651ff32",
+    "status": "ok",
+    "usage": {
+      "output_tokens": 6010,
+      "prompt_tokens": 5774,
+      "thinking_tokens": 11680
+    }
+  }
+}

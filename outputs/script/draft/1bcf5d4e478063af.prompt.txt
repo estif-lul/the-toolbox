@@ -1,0 +1,118 @@
+You are the storyboard writer for "The Toolbox", a 60-90 second animated short (a "Heritage
+Short") about a Habesha (Ethiopian) father who fixes everything at home himself, told by his son.
+It is watched on phones by family and friends, often with the sound off.
+
+Write the complete storyboard as ONE JSON object that validates against the JSON Schema below.
+The brief (from the design document) follows the rules.
+
+Rules:
+1. 10 shots, ids s01..s10 in story order. Every shot has a "reason": why it exists in the story.
+2. English narration, short lines written for the ear, 120-160 words in total (about 2.3 words per
+   second), voice "narrator". Leave room for silence.
+3. Dad speaks only Amharic, exactly these three lines, with voice "dad", "lang": "am" and the
+   English "subtitle": "እስኪ እንየው" = "Let's look at it first." (the power cut, then echoed when
+   the grown son opens the toolbox, using an echo line {"echo_of": "<shot>:<line index>"});
+   "ቀስ በቀስ እንቁላል በእግሩ ይሄዳል" = "Slowly, slowly, the egg walks on its own legs." (the turn);
+   "ጎበዝ ልጄ" = "Well done, my son." (the ending phone call).
+4. "image_prompt" is the subject + setting + shot size only. Do NOT describe what the characters
+   or recurring objects look like and do NOT describe the art style: code appends the character
+   descriptions, the prop descriptions, style.composition and style.block to every prompt.
+   Refer to characters as "the father", "the boy", "the teenage son", "the grown son".
+5. "motion_prompt" is one gentle movement + the camera only (e.g. "the candle flame flickers,
+   camera static"). Never re-describe the subject.
+6. Every shot has a Ken Burns fallback move; never the same move in two consecutive shots.
+7. Characters are fictional cartoons. No real names other than "Dad"; no brands, number plates,
+   addresses or workplaces. Describe the style by its qualities, never by naming an artist or a
+   studio.
+8. Square 1:1 masters of 1024 px with the subject centred; exports "9x16" (720x1280) and "16x9"
+   (1280x720); 24 fps; target_duration_s 60-90.
+9. All "*_choice" fields are null. "layers" is null unless a shot is a split screen (then exactly
+   two layers "a" and "b"). The end card must include the line "Made with AI".
+10. Character ids: dad (the memories), dad_now (about fifty, only at the end), me_child, me_teen,
+    me_adult. Give each a fixed description of 25-40 words with a colour anchor.
+
+JSON Schema:
+{"$schema": "https://json-schema.org/draft/2020-12/schema", "title": "The Toolbox storyboard", "description": "The contract between every pipeline stage. Stages read only the fields they use, so editing one field regenerates only the stages (and shots) that depend on it. Semantic checks that JSON Schema cannot express (unique shot ids, references between objects, word counts, measured duration, music coverage, privacy lint) live in pipeline/common/storyboard.py.", "type": "object", "additionalProperties": false, "required": ["schema_version", "title", "logline", "format", "style", "characters", "voices", "music", "shots", "end_card"], "properties": {"$schema": {"type": "string", "description": "Optional pointer to this file, for editor completion."}, "schema_version": {"const": 1}, "title": {"$ref": "#/$defs/text"}, "logline": {"$ref": "#/$defs/text"}, "format": {"type": "object", "additionalProperties": false, "required": ["fps", "master_aspect", "master_px", "exports", "target_duration_s"], "properties": {"fps": {"type": "integer", "enum": [24, 25, 30]}, "master_aspect": {"const": "1:1", "description": "Keyframes are square masters, cropped to each export at assembly."}, "master_px": {"type": "integer", "minimum": 512, "maximum": 2048}, "exports": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["name", "w", "h"], "properties": {"name": {"type": "string", "pattern": "^[0-9]+x[0-9]+$"}, "w": {"type": "integer", "minimum": 16}, "h": {"type": "integer", "minimum": 16}}}}, "target_duration_s": {"type": "object", "additionalProperties": false, "required": ["min", "max"], "properties": {"min": {"type": "number", "exclusiveMinimum": 0}, "max": {"type": "number", "exclusiveMinimum": 0}}}, "line_gap_s": {"type": "number", "minimum": 0, "maximum": 3, "description": "Silence between two narration lines in the same shot (default 0.35)."}}}, "style": {"type": "object", "additionalProperties": false, "required": ["block", "negative", "composition"], "properties": {"block": {"$ref": "#/$defs/text", "description": "Appended to every image prompt as 'Style: <block>'. Describes qualities, never a named artist or studio."}, "negative": {"$ref": "#/$defs/text", "description": "What must not appear (used as a negative prompt where the model supports one)."}, "composition": {"$ref": "#/$defs/text", "description": "Appended to every image prompt: keeps the subject inside the area that survives both crops of the square master."}, "reference_choice": {"$ref": "#/$defs/choice"}}}, "characters": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["id", "description", "seed"], "properties": {"id": {"$ref": "#/$defs/ident"}, "description": {"$ref": "#/$defs/text", "description": "One fixed sentence, attached word for word to every prompt that features the character."}, "seed": {"$ref": "#/$defs/seed"}, "derived_from": {"$ref": "#/$defs/ident", "description": "Generated from this character's chosen reference (image edit)."}, "reference_choice": {"$ref": "#/$defs/choice"}}}}, "props": {"type": "array", "description": "Recurring objects and places (the toolbox, the car, the home), described once and attached word for word like characters.", "items": {"type": "object", "additionalProperties": false, "required": ["id", "description"], "properties": {"id": {"$ref": "#/$defs/ident"}, "description": {"$ref": "#/$defs/text"}, "derived_from": {"$ref": "#/$defs/ident"}, "reference_choice": {"$ref": "#/$defs/choice"}}}}, "voices": {"type": "object", "minProperties": 1, "propertyNames": {"$ref": "#/$defs/ident"}, "additionalProperties": {"type": "object", "additionalProperties": false, "required": ["voice", "style"], "properties": {"voice": {"type": "string", "minLength": 1, "description": "A stock TTS voice name (no cloning)."}, "style": {"$ref": "#/$defs/text", "description": "Speaking-style instruction sent with every line in this voice."}, "candidates": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "description": "Stock voices to audition before the choice is final."}}}}, "music": {"type": "object", "additionalProperties": false, "required": ["cues", "chosen", "duck"], "properties": {"cues": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["id", "from_shot", "to_shot", "intent", "caption", "instrumental", "seeds"], "properties": {"id": {"$ref": "#/$defs/ident"}, "from_shot": {"$ref": "#/$defs/shot_id"}, "to_shot": {"$ref": "#/$defs/shot_id"}, "intent": {"$ref": "#/$defs/text", "description": "What the music must do for the story (for people)."}, "caption": {"$ref": "#/$defs/text", "description": "The prompt sent to the music model."}, "bpm": {"type": "integer", "minimum": 40, "maximum": 200}, "key": {"type": "string", "pattern": "^[A-G][#b]? (major|minor)$"}, "instrumental": {"type": "boolean"}, "seeds": {"type": "array", "minItems": 1, "maxItems": 6, "uniqueItems": true, "items": {"$ref": "#/$defs/seed"}}}}}, "chosen": {"type": "object", "description": "cue id -> index of the chosen candidate (null until one is chosen).", "propertyNames": {"$ref": "#/$defs/ident"}, "additionalProperties": {"$ref": "#/$defs/choice"}}, "duck": {"type": "object", "additionalProperties": false, "required": ["threshold", "ratio", "attack_ms", "release_ms"], "properties": {"threshold": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}, "ratio": {"type": "number", "minimum": 1, "maximum": 20}, "attack_ms": {"type": "number", "minimum": 0.01, "maximum": 2000}, "release_ms": {"type": "number", "minimum": 0.01, "maximum": 9000}}}}}, "shots": {"type": "array", "minItems": 8, "maxItems": 12, "items": {"$ref": "#/$defs/shot"}}, "end_card": {"type": "object", "additionalProperties": false, "required": ["duration_s", "lines"], "properties": {"duration_s": {"type": "number", "minimum": 2, "maximum": 8}, "lines": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/text"}}}}}, "$defs": {"text": {"type": "string", "minLength": 1, "pattern": "\\S"}, "ident": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}, "shot_id": {"type": "string", "pattern": "^s[0-9]{2}$"}, "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295}, "choice": {"description": "Index of the chosen candidate (resolved to a file by the stage manifest), or null while undecided. Never a file path.", "type": ["integer", "null"], "minimum": 0}, "kenburns": {"type": "object", "additionalProperties": false, "required": ["move", "amount"], "properties": {"move": {"enum": ["push_in", "pull_out", "pan_left", "pan_right", "tilt_up", "tilt_down", "static"]}, "amount": {"type": "number", "minimum": 0, "maximum": 0.3, "description": "Zoom or travel as a fraction of the frame (ignored for static)."}}}, "crop_focus": {"type": "object", "additionalProperties": false, "required": ["x", "y"], "description": "Centre of the crop in the square master (0..1). x matters for 9:16, y for 16:9.", "properties": {"x": {"type": "number", "minimum": 0, "maximum": 1}, "y": {"type": "number", "minimum": 0, "maximum": 1}}}, "speech_line": {"type": "object", "additionalProperties": false, "required": ["voice", "text"], "properties": {"voice": {"$ref": "#/$defs/ident"}, "text": {"$ref": "#/$defs/text", "description": "What is said, in the line's language (also the subtitle unless 'subtitle' is set)."}, "lang": {"enum": ["en", "am"], "default": "en"}, "subtitle": {"type": ["string", "null"], "minLength": 1, "description": "Subtitle text when it differs from 'text' (e.g. the English translation of an Amharic line)."}, "tts_text": {"type": ["string", "null"], "minLength": 1, "description": "What is sent to TTS when it differs from 'text' (phonetic re-spelling); subtitles are unaffected."}, "style": {"type": ["string", "null"], "minLength": 1, "description": "Overrides the voice's style for this line only."}}}, "echo_line": {"type": "object", "additionalProperties": false, "required": ["echo_of"], "description": "Reuses another line's audio (no model call), quieter and with reverb.", "properties": {"echo_of": {"type": "string", "pattern": "^s[0-9]{2}:[0-9]+$", "description": "<shot id>:<line index>"}, "gain_db": {"type": "number", "minimum": -30, "maximum": 0}, "reverb": {"type": "boolean"}, "subtitle": {"type": ["string", "null"], "minLength": 1}}}, "narration_line": {"if": {"type": "object", "required": ["echo_of"]}, "then": {"$ref": "#/$defs/echo_line"}, "else": {"$ref": "#/$defs/speech_line"}}, "layer": {"type": "object", "additionalProperties": false, "required": ["id", "image_prompt", "characters", "seed"], "description": "One panel of a composited shot (split screen): its own keyframe and clip.", "properties": {"id": {"type": "string", "pattern": "^[a-z]$"}, "image_prompt": {"$ref": "#/$defs/text"}, "characters": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/ident"}}, "props": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/ident"}}, "seed": {"$ref": "#/$defs/seed"}, "keyframe_choice": {"$ref": "#/$defs/choice"}, "motion_prompt": {"type": ["string", "null"], "minLength": 1}, "crop_focus": {"$ref": "#/$defs/crop_focus"}}}, "shot": {"type": "object", "additionalProperties": false, "required": ["id", "beat", "reason", "shot_size", "camera", "characters", "image_prompt", "seed", "motion", "kenburns", "crop_focus", "narration", "min_duration_s", "pad_before_s", "pad_after_s", "transition_in", "priority"], "properties": {"id": {"$ref": "#/$defs/shot_id"}, "beat": {"$ref": "#/$defs/text"}, "reason": {"$ref": "#/$defs/text", "description": "Why this shot exists in the story."}, "shot_size": {"enum": ["extreme_close_up", "close_up", "medium_close_up", "medium", "medium_wide", "wide", "insert"]}, "camera": {"enum": ["static", "push_in", "pull_out", "pan_left", "pan_right", "tilt_up", "tilt_down", "tracking"]}, "characters": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/ident"}}, "props": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/ident"}}, "image_prompt": {"$ref": "#/$defs/text", "description": "Subject + setting + shot size only. Character, prop, composition and style text are appended in code."}, "seed": {"$ref": "#/$defs/seed"}, "keyframe_choice": {"$ref": "#/$defs/choice"}, "motion": {"enum": ["wan", "kenburns"]}, "motion_prompt": {"type": ["string", "null"], "minLength": 1, "description": "Motion + camera only; never re-describes the subject."}, "kenburns": {"$ref": "#/$defs/kenburns"}, "crop_focus": {"$ref": "#/$defs/crop_focus"}, "narration": {"type": "array", "items": {"$ref": "#/$defs/narration_line"}}, "layers": {"type": ["array", "null"], "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/layer"}}, "min_duration_s": {"type": "number", "exclusiveMinimum": 0, "maximum": 20}, "pad_before_s": {"type": "number", "minimum": 0, "maximum": 5}, "pad_after_s": {"type": "number", "minimum": 0, "maximum": 5}, "duration_override_s": {"type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 30}, "transition_in": {"enum": ["cut", "fade_from_black", "crossfade", "dip_to_black"]}, "priority": {"type": "integer", "minimum": 1, "maximum": 99, "description": "Order of the GPU jobs: 1 runs first."}}}}}
+
+Brief (from the design document):
+
+### Logline
+A son remembers how his Habesha father fixed everything at home himself, always starting with the
+same calm words, *"እስኪ እንየው"* ("Let's look at it first"), until the day the son fixes something
+alone and calls to tell him.
+
+### Treatment
+Morning light falls on a dented red toolbox. My dad never called anyone to fix anything: if it
+could be done at home, he did it himself, and I was always one step behind him. Four memories
+follow, each one a different kind of repair. I hold the torch while he lies under our old white
+car. Wood shavings curl as he builds the rekebot we still serve coffee on. In a power cut, with
+the jebena waiting on the charcoal stove, everyone says "call someone"; Dad picks up his tester and
+says *"እስኪ እንየው"*, and the whole house lights up again. A leaking pipe, a wrench, patience, then
+silence. Years later the roles turn: I tighten the bolt on the same car while he watches with his
+arms folded and quotes the proverb about the egg that learns to walk. When I move out, he gives me
+the toolbox. Now, when something breaks, I hear his voice. I fix the tap myself and call him. On
+the other half of the screen, spanner in hand, he answers: *"ጎበዝ ልጄ"*, well done, my son.
+
+### Beats (one picture each)
+1. **The toolbox and the man who carries it** (s01–s02): the red toolbox in morning light, then Dad
+   crossing the yard of the compound with it, the boy one step behind.
+2. **Learning by helping** (s03–s07): four repairs, four tools: the torch under the car, the hand
+   plane and the rekebot, the candle at the fuse box (*"እስኪ እንየው"*), the drip that stops.
+3. **The turn** (s08): the teenager holds the spanner; Dad's arms are folded. The proverb
+   *"ቀስ በቀስ እንቁላል በእግሩ ይሄዳል"* ("Slowly, slowly, the egg walks on its own legs") names it.
+4. **The hand-over** (s09): the grown son opens the old toolbox in his own flat and hears Dad's
+   *"እስኪ እንየው"* in his head.
+5. **The call** (s10): a split screen, two phones, two tools. "Dad, I fixed it myself." *"ጎበዝ ልጄ"*.
+
+### Characters
+One fixed description per character is attached word for word to every image prompt that features
+them (the exact text is in `storyboard.json`). Each has a **colour anchor** that survives ageing and
+model drift: Dad is always in **faded navy-blue overalls** with a pencil behind his ear, I am always
+in **mustard yellow**, and the toolbox is always **red**.
+
+| id | Who | Appears in |
+|---|---|---|
+| `dad` | Dad in the memories: early forties, short curly hair greying at the temples, neat beard, navy overalls | s02, s03, s05, s08 (his hands in s04, s07) |
+| `dad_now` | Dad today, about fifty: more grey, same overalls; generated from the `dad` reference | s10 |
+| `me_child` | me at eight: round face, big curious eyes, oversized mustard T-shirt | s02, s03, s05, s06 |
+| `me_teen` | me at fifteen: tall and lanky, mustard hoodie | s08 |
+| `me_adult` | me in my mid-twenties: trimmed beard, mustard overshirt | s09, s10 |
+
+Recurring objects and places are described once in the same way (`props`): the red toolbox (and
+the same toolbox years later), the old white sedan, and the family home (cream walls,
+corrugated-iron roof, sky-blue gate, eucalyptus trees, black water tank). Other family members are
+only soft, unnamed background silhouettes (s05, s06).
+
+### Visual approach
+- **Cartoon, not realism.** A warm, hand-painted 2D cartoon look: soft golden light, gentle paper
+  texture, rounded friendly shapes, an earthy palette of ochre, terracotta and eucalyptus green
+  with sky-blue accents. Why cartoon: no real person's likeness is used (ETHICS.md); cartoon faces
+  drift less visibly between shots than realistic ones; and a storybook look suits a memory told
+  by a son. The style is described by its qualities, never by naming an artist or studio.
+- **One prompt recipe for every image**, built in code so the wording never drifts:
+  `{image_prompt}. {character descriptions}. {prop descriptions}. {composition}. Style: {style block}`.
+  `image_prompt` holds only the subject, setting and shot size.
+- **Square masters, two crops.** Keyframes are 1024×1024 with the subject centred and room on all
+  sides, then cropped to 9:16 (phones, first) and 16:9 (YouTube, laptops) at assembly.
+- **Light tells the time.** Morning gold for the opening, candlelight and night blue for the power
+  cut, warm afternoon for the ending.
+- **Where identity is hardest, show less face.** The woodwork and plumbing memories are close-ups of
+  his hands (navy sleeves as the anchor); the car memory shows his legs under the car. Faces appear
+  in medium and wide shots, where small drift is least visible.
+- **Motion is gentle.** One small movement per shot (dust in the light, a flame, a nod) plus a slow
+  camera move; Ken Burns on the keyframe is the fallback for every shot.
+
+### Sound approach
+- **Narration-led.** An English narrator (my voice in the story, a stock TTS voice, no cloning)
+  carries the film; about 140 words over roughly 75 seconds, so there is room to breathe.
+- **Dad speaks only Amharic**, three short lines in a second, deeper stock voice, each with an
+  English subtitle. Fewer words make each one land, and the Amharic is what the family will
+  recognise as *him*.
+- **The recurring line returns as a memory.** In s09 the s05 recording of *"እስኪ እንየው"* is reused,
+  quieter and with a soft reverb, as the voice in my head (no new model call).
+- **A quiet score.** One instrumental cue in a nostalgic Ethiopian *tizita* feel (the word means
+  memory, longing) with plucked krar, guitar and a light washint flute; ducked under the voice; it
+  thins out for the silence after the leaking pipe (s07), and the theme returns warmer for the
+  hand-over and the phone call.
+- **Phone-ready mix.** Loudness normalised to −14 LUFS; subtitles burned in so the film works with
+  the sound off.

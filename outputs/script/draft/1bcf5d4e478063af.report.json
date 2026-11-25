@@ -1,0 +1,18 @@
+{
+  "errors": [
+    "character 'dad': derived_from 'dad' is not another character",
+    "character 'me_child': derived_from 'me_child' is not another character",
+    "character 'me_teen': derived_from 'me_teen' is not another character",
+    "character 'me_adult': derived_from 'me_adult' is not another character",
+    "prop 'toolbox': derived_from 'toolbox' is not another prop",
+    "prop 'car': derived_from 'car' is not another prop",
+    "prop 'compound': derived_from 'compound' is not another prop"
+  ],
+  "estimated_total_s": 76.533,
+  "narration_words": 144,
+  "schema_errors": 0,
+  "semantic_errors": 7,
+  "shots": 10,
+  "warning_text": [],
+  "warnings": 0
+}

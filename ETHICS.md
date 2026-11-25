@@ -51,7 +51,7 @@ The three lines the cartoon Dad speaks (to be confirmed with him as words he wou
 asking."* He also agreed verbally. He asked for no changes. The screenshot stays on my phone (see above).
 
 **Follow-up (Step 2):** he hears the three lines in their final spoken form when the radio cut goes
-out for user test 1; his reaction is recorded here and in DESIGN.md §3. If he wants a line changed,
+out for user test 1; his reaction is recorded here and in DESIGN.md §4. If he wants a line changed,
 it changes in `storyboard.json` before anything else is generated.
 
 What he was asked (the WhatsApp message, in English; we also talked it through):

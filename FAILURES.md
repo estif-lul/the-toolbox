@@ -102,6 +102,12 @@ Written when each failure happens. Template:
   timeout (`timeout_s` param). Third run `20261125-144741-8d9d` (14:47 EAT): still 503, the slow
   attempt now ends at 57 s; Flash-Lite answered in 1.2 s.
 - Lesson: on free tiers, a 503 at the worst moment is normal; it's why every stage has a chain.
+- Still happening in Step 1 (2026-11-25, 15:46–15:49 EAT, runs `20261125-154638-d856` and
+  `20261125-154916-fae2`): 5 more 503s from 3.8 Flash (each answered in 2–4 s); with the 20 K-char
+  storyboard prompt, Flash-Lite **also** answered 503 three times in a row (15:47). The older
+  `gemini-3.5-flash` (listed for this key in `outputs/smoke/models_gemini.json`) answered at the
+  first try (64 s). It is now the middle step of the `script` chain (3.8 Flash with 1 attempt →
+  3.5 Flash → 3.5 Flash-Lite): one attempt on a model that is 503 all day saves its 20/day quota.
 
 ## F06 — keyframes: FLUX.1 schnell rejects `seed` (HTTP 400)
 - When / run_id: 2026-11-25 14:45 EAT, run `20261125-144459-1bfd`, smoke check `flux1`.
@@ -131,6 +137,30 @@ Written when each failure happens. Template:
   cache hits and the identical film; regenerating a shot produces a new variant, which is
   expected and is how the walkthrough's "change one shot" works. ARCHITECTURE.md must say this.
 - Lesson: "fixed seed = same image" is a property of a provider, not of diffusion in general. Test it.
+
+## F08 — script: Gemini refuses the storyboard schema as an output constraint (`too many states`)
+- When / run_id: 2026-11-25 15:46 EAT, run `20261125-154638-d856`, `make script` (first run).
+- Symptom: on `gemini-3.5-flash-lite` (3.8 Flash had answered 503, F05): `400 INVALID_ARGUMENT.
+  The specified schema produces a constraint that has too many states for serving. Typical causes
+  of this error are schemas with lots of text (for example, very long property or enum names),
+  schemas with long array length limits (especially when nested), or schemas using complex value
+  matchers (for example, integers or numbers with minimum/maximum bounds …)`.
+- Cause (verified by the fix): `response_json_schema` is compiled into a decoding state machine.
+  Our first converted copy still had ~50 numeric bounds (seeds, durations, crop focus, ducking),
+  array length limits (8–12 shots, 2 layers) and every description.
+- Tried: 1) the schema minus the keywords Gemini doesn't list → 400 as above. 2) the planned
+  fallback, no constraint at all (JSON mode, schema only in the prompt) → never reached a model
+  that was up (503 on every attempt, F05). 3) a **structural** constraint only: types, required
+  fields, closed objects (`additionalProperties: false`), enums and `$ref`s; no bounds, no
+  lengths, no descriptions (6.9 K chars). The full schema still goes in the prompt text →
+  accepted by `gemini-3.5-flash`, and the draft had **0 schema errors** (run `20261125-154916-fae2`).
+- Resolution: `pipeline/script.py` `gemini_schema()` keeps only the structure; the full schema is
+  checked afterwards by our own validator (`make validate` rules), which is the real contract.
+  The no-constraint retry stays as the fallback for any other 400 that mentions the schema.
+  `tests/test_script.py` pins what the constraint may contain.
+- Time lost: 15 min, 9 requests (5 of them on 3.8 Flash's 20/day).
+- Lesson: an output constraint is a hint to the decoder, not a validator. Send the shape, check the
+  details yourself.
 
 ## Positive result worth recording — FLUX.2 klein reference images work
 - Run `20261125-144547-072d`: `flux2_ref` with `input_image_0 = flux2.jpg` and the prompt "the same

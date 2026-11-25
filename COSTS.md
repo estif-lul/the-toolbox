@@ -30,9 +30,13 @@ Free tier. "Used" is the peak shown for the last 28 days, i.e. today's Step 0 sm
 |---|---|---|---|---|---|---|
 | `gemini-3.8-flash` | storyboard draft | 503 "high demand" in all 3 smoke runs, 14:20–14:48 EAT (F05) | 5 | 250K | **20** | 7 |
 | `gemini-3.5-flash-lite` | text fallback | works: 1.2–2.5 s, ~21 in / 5–9 out tokens | 15 | 250K | **500** | 2 |
+| `gemini-3.5-flash` | storyboard draft (middle of the `script` chain, added in Step 1) | works: 64 s for the full draft (5.8 K in, 6.0 K out, 11.7 K thinking tokens) | **[ME]** not on the 14:57 snapshot | | | 1 (Step 1) |
 | `gemini-3.8-flash-tts` | narration | works via the Interactions API (F03): ~8.7 s per short line | 3 | 10K | **10** | 2 |
 | `gemini-3.8-flash-lite-tts` | TTS fallback | works: 4.5–5.8 s per short line | 3 | 10K | **10** | 2 |
 
+- **Step 1 (15:46–15:50 EAT, the storyboard draft):** 5 more `gemini-3.8-flash` requests (all 503,
+  so ~12 of 20 used today), 4 `gemini-3.5-flash-lite` (1 × 400, 3 × 503) and 1 `gemini-3.5-flash`
+  (ok). A cache hit on `make script` costs nothing.
 - **Failed requests count.** All 6 logged calls to `gemini-3.8-flash` were 503 errors, and AI Studio
   counts 7 against the 20/day. (The 7th is not in runs.jsonl: possibly a request that timed out on
   our side but still reached the server, or a retry inside the SDK.) So retries on an overloaded
