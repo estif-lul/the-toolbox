@@ -1,0 +1,10 @@
+# Keep LF in the repo and in the working tree (Make recipes and hooks run in sh)
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.wav binary
+*.mp3 binary
+*.mp4 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
