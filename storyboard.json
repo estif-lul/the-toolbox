@@ -1,0 +1,412 @@
+{
+  "$schema": "schema/storyboard.schema.json",
+  "schema_version": 1,
+  "title": "The Toolbox",
+  "logline": "A son remembers how his Habesha father fixed everything at home himself, always starting with the same calm words, \"Let's look at it first\", until the day the son fixes something alone and calls to tell him.",
+  "format": {
+    "fps": 24,
+    "master_aspect": "1:1",
+    "master_px": 1024,
+    "exports": [
+      {"name": "9x16", "w": 720, "h": 1280},
+      {"name": "16x9", "w": 1280, "h": 720}
+    ],
+    "target_duration_s": {"min": 60, "max": 90},
+    "line_gap_s": 0.35
+  },
+  "style": {
+    "block": "warm hand-painted 2D storybook cartoon illustration, soft golden light, gentle paper texture, rounded friendly shapes, earthy palette of ochre, terracotta and eucalyptus green with sky-blue accents, cosy and nostalgic",
+    "negative": "text, letters, words, watermark, logo, signature, number plate, photorealistic, photograph, 3D render, realistic faces, extra fingers, deformed hands, distorted face",
+    "composition": "square frame, the main subject centred with generous empty space above, below and on both sides, nothing important near the edges",
+    "reference_choice": null
+  },
+  "characters": [
+    {
+      "id": "dad",
+      "description": "the father: a Habesha Ethiopian man in his early forties, warm brown skin, short black curly hair greying at the temples, short neat black beard, kind eyes with laugh lines, medium build, faded navy-blue work overalls with rolled sleeves, a yellow pencil behind his right ear",
+      "seed": 1101,
+      "reference_choice": null
+    },
+    {
+      "id": "dad_now",
+      "description": "the father at about fifty: the same Habesha Ethiopian man, more grey in his short curly hair and neat beard, deeper laugh lines around kind eyes, the same faded navy-blue work overalls, a yellow pencil behind his right ear",
+      "seed": 1102,
+      "derived_from": "dad",
+      "reference_choice": null
+    },
+    {
+      "id": "me_child",
+      "description": "the boy: a Habesha Ethiopian boy about eight years old, brown skin, short curly black hair, round face, big curious eyes, an oversized mustard-yellow T-shirt, khaki shorts and plastic sandals",
+      "seed": 1201,
+      "reference_choice": null
+    },
+    {
+      "id": "me_teen",
+      "description": "the teenage son: the same boy at about fifteen, tall and lanky, brown skin, short curly black hair, a faint moustache, a mustard-yellow hoodie with the sleeves pushed up, blue jeans",
+      "seed": 1202,
+      "derived_from": "me_child",
+      "reference_choice": null
+    },
+    {
+      "id": "me_adult",
+      "description": "the grown son: the same Habesha Ethiopian man in his mid-twenties, brown skin, short neat curly hair, a short trimmed beard, a mustard-yellow overshirt over a white T-shirt, dark trousers",
+      "seed": 1203,
+      "derived_from": "me_teen",
+      "reference_choice": null
+    }
+  ],
+  "props": [
+    {
+      "id": "toolbox",
+      "description": "the red toolbox: a dented red metal cantilever toolbox with scratched paint, fold-out trays and a worn black handle",
+      "reference_choice": null
+    },
+    {
+      "id": "toolbox_old",
+      "description": "the same red metal cantilever toolbox years later: faded red paint, many scratches and dents, fold-out trays full of well-used tools, a worn black handle wrapped in tape",
+      "derived_from": "toolbox",
+      "reference_choice": null
+    },
+    {
+      "id": "car",
+      "description": "an old boxy white 1980s family sedan with chrome bumpers and a few small rust spots, no badges and no number plate",
+      "reference_choice": null
+    },
+    {
+      "id": "home",
+      "description": "the family home: a modest Ethiopian compound with a single-storey house with cream walls and a corrugated-iron roof, a sky-blue metal gate, tall eucalyptus trees and a black plastic water tank on a metal stand",
+      "reference_choice": null
+    }
+  ],
+  "voices": {
+    "narrator": {
+      "voice": "Achird",
+      "style": "warm and unhurried, a quiet smile in the voice, a young man remembering his father",
+      "candidates": ["Achird", "Umbriel", "Iapetus"]
+    },
+    "dad": {
+      "voice": "Algenib",
+      "style": "calm, deep and patient, a father talking to his son",
+      "candidates": ["Algenib", "Charon", "Orus"]
+    }
+  },
+  "music": {
+    "cues": [
+      {
+        "id": "main",
+        "from_shot": "s01",
+        "to_shot": "s10",
+        "intent": "gentle and nostalgic, sparse enough to leave room for the voice; it thins out for the quiet of s07 and the theme returns warmer and fuller for the hand-over (s09) and the phone call (s10)",
+        "caption": "gentle nostalgic instrumental, Ethiopian tizita-style melody, soft fingerpicked krar and warm acoustic guitar, light washint flute, slow tempo, sparse and intimate, warm hopeful ending",
+        "bpm": 80,
+        "key": "D major",
+        "instrumental": true,
+        "seeds": [301, 302, 303]
+      }
+    ],
+    "chosen": {"main": null},
+    "duck": {"threshold": 0.02, "ratio": 6, "attack_ms": 300, "release_ms": 1500}
+  },
+  "shots": [
+    {
+      "id": "s01",
+      "beat": "motif",
+      "reason": "Hook and motif: the red toolbox is the strongest colour in the film and the object that carries the story from the first frame to the hand-over; it is what a phone viewer sees in the first three seconds.",
+      "shot_size": "close_up",
+      "camera": "push_in",
+      "characters": [],
+      "props": ["toolbox"],
+      "image_prompt": "Close-up of the red toolbox standing closed on worn wooden floorboards, early morning sunlight falling across it from a window, dust in the air, a quiet room",
+      "seed": 2001,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "dust drifts slowly through the beam of sunlight, the light warms a little, the camera very slowly pushes in",
+      "kenburns": {"move": "push_in", "amount": 0.08},
+      "crop_focus": {"x": 0.5, "y": 0.5},
+      "narration": [
+        {"voice": "narrator", "text": "My dad never called anyone to fix anything."}
+      ],
+      "layers": null,
+      "min_duration_s": 4.0,
+      "pad_before_s": 0.8,
+      "pad_after_s": 0.6,
+      "duration_override_s": null,
+      "transition_in": "fade_from_black",
+      "priority": 7
+    },
+    {
+      "id": "s02",
+      "beat": "place",
+      "reason": "Establishes the place, Dad and the boy in one picture: the family compound a Habesha audience recognises at once, and the boy literally one step behind his father.",
+      "shot_size": "wide",
+      "camera": "static",
+      "characters": ["dad", "me_child"],
+      "props": ["home", "toolbox"],
+      "image_prompt": "Wide shot of the family home on a sunny morning; in the middle of the yard the father walks towards the viewer carrying the red toolbox, the boy following one step behind him",
+      "seed": 2002,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the man and the boy walk slowly towards the camera, eucalyptus leaves sway in a light breeze, camera static",
+      "kenburns": {"move": "pull_out", "amount": 0.08},
+      "crop_focus": {"x": 0.5, "y": 0.55},
+      "narration": [
+        {"voice": "narrator", "text": "If it could be done at home, he did it himself. And I was always one step behind him."}
+      ],
+      "layers": null,
+      "min_duration_s": 5.0,
+      "pad_before_s": 0.4,
+      "pad_after_s": 0.6,
+      "duration_override_s": null,
+      "transition_in": "crossfade",
+      "priority": 6
+    },
+    {
+      "id": "s03",
+      "beat": "memory: the car",
+      "reason": "Memory 1, the car: the boy as the helper holding the torch, which is how the learning starts; the old white sedan returns in s08 to show the turn.",
+      "shot_size": "medium",
+      "camera": "static",
+      "characters": ["dad", "me_child"],
+      "props": ["car"],
+      "image_prompt": "Medium shot in the yard beside the old white sedan: the father lies on his back under the front of the car, only his legs and one arm holding a wrench visible, while the boy crouches beside the car pointing a torch underneath",
+      "seed": 2003,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the beam of the torch wobbles a little, the arm under the car turns the wrench back and forth, camera static",
+      "kenburns": {"move": "pan_right", "amount": 0.06},
+      "crop_focus": {"x": 0.5, "y": 0.55},
+      "narration": [
+        {"voice": "narrator", "text": "Under our old white car, I held the torch. He held the wrench, and explained every bolt."}
+      ],
+      "layers": null,
+      "min_duration_s": 5.0,
+      "pad_before_s": 0.4,
+      "pad_after_s": 0.6,
+      "duration_override_s": null,
+      "transition_in": "crossfade",
+      "priority": 4
+    },
+    {
+      "id": "s04",
+      "beat": "memory: woodwork",
+      "reason": "Memory 2, woodwork: he makes things, not only repairs them, and the rekebot ties his craft to the family's daily coffee ceremony (it leads into the jebena in s05).",
+      "shot_size": "insert",
+      "camera": "static",
+      "characters": [],
+      "props": [],
+      "image_prompt": "Close-up of the father's hands, navy-blue overall sleeves rolled up, pushing a hand plane along a plank on a wooden workbench, pale wood shavings curling up; beside the plank stands a finished low wooden rekebot, the Ethiopian coffee-cup stand, holding small white handleless coffee cups",
+      "seed": 2004,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the hand plane slides forward and a wood shaving curls up and falls, camera static",
+      "kenburns": {"move": "push_in", "amount": 0.06},
+      "crop_focus": {"x": 0.5, "y": 0.5},
+      "narration": [
+        {"voice": "narrator", "text": "From a few planks, he built the rekebot we still serve coffee on."}
+      ],
+      "layers": null,
+      "min_duration_s": 4.5,
+      "pad_before_s": 0.4,
+      "pad_after_s": 0.6,
+      "duration_override_s": null,
+      "transition_in": "cut",
+      "priority": 9
+    },
+    {
+      "id": "s05",
+      "beat": "memory: the power cut",
+      "reason": "Memory 3, the power cut: everyone else would call someone, Dad looks first. It introduces the recurring line 'እስኪ እንየው' at a moment every Ethiopian family knows (candlelight, coffee on the charcoal stove).",
+      "shot_size": "medium",
+      "camera": "static",
+      "characters": ["dad", "me_child"],
+      "props": [],
+      "image_prompt": "Medium shot inside the house at night during a power cut: the father stands at an open fuse box on the wall with a torch in one hand and a screwdriver tester in the other, the boy beside him holding up a lit candle to help; in the soft dark background a clay jebena coffee pot sits on a small charcoal stove, with faint silhouettes of family sitting around it",
+      "seed": 2005,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the candle flame flickers and warm light dances on the wall, the man slowly raises the tester towards the fuse box, camera static",
+      "kenburns": {"move": "pan_left", "amount": 0.05},
+      "crop_focus": {"x": 0.5, "y": 0.5},
+      "narration": [
+        {"voice": "narrator", "text": "When the power went out, everyone said: call someone. Dad just picked up his tester."},
+        {"voice": "dad", "lang": "am", "text": "እስኪ እንየው", "subtitle": "Let's look at it first.", "tts_text": null,
+         "style": "Speak in Amharic: calm and unhurried, almost to himself, a father reassuring his son"}
+      ],
+      "layers": null,
+      "min_duration_s": 6.0,
+      "pad_before_s": 0.4,
+      "pad_after_s": 0.7,
+      "duration_override_s": null,
+      "transition_in": "dip_to_black",
+      "priority": 3
+    },
+    {
+      "id": "s06",
+      "beat": "payoff",
+      "reason": "Emotional lift after the power cut: the whole house lights up and the boy's joy shows what Dad's patience gives the family.",
+      "shot_size": "wide",
+      "camera": "static",
+      "characters": ["me_child"],
+      "props": ["home"],
+      "image_prompt": "Wide shot of the family home at night under a starry sky, every window glowing warm yellow, the boy jumping for joy in the yard with his arms in the air, soft silhouettes of family figures cheering in the lit doorway",
+      "seed": 2006,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the boy jumps up and down with joy, the figures in the doorway raise their arms, the window light glows softly, camera static",
+      "kenburns": {"move": "pull_out", "amount": 0.1},
+      "crop_focus": {"x": 0.5, "y": 0.55},
+      "narration": [
+        {"voice": "narrator", "text": "And the whole house lit up again."}
+      ],
+      "layers": null,
+      "min_duration_s": 3.5,
+      "pad_before_s": 0.3,
+      "pad_after_s": 0.8,
+      "duration_override_s": null,
+      "transition_in": "cut",
+      "priority": 8
+    },
+    {
+      "id": "s07",
+      "beat": "memory: plumbing",
+      "reason": "Memory 4, plumbing: patience made visible, one drip at a time. Its quiet ending gives the film a breath before the turn and the proverb.",
+      "shot_size": "close_up",
+      "camera": "static",
+      "characters": [],
+      "props": [],
+      "image_prompt": "Close-up of a leaking pipe joint under a black plastic water tank on a metal stand, a drop of water falling; the father's hands, navy-blue overall sleeves rolled up, grip the joint with a heavy steel pipe wrench",
+      "seed": 2007,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the hands slowly turn the pipe wrench, a few drops fall and then the dripping stops, camera static",
+      "kenburns": {"move": "push_in", "amount": 0.1},
+      "crop_focus": {"x": 0.5, "y": 0.5},
+      "narration": [
+        {"voice": "narrator", "text": "A leaking pipe. A wrench. Patience. Then… silence."}
+      ],
+      "layers": null,
+      "min_duration_s": 4.5,
+      "pad_before_s": 0.4,
+      "pad_after_s": 1.2,
+      "duration_override_s": null,
+      "transition_in": "crossfade",
+      "priority": 10
+    },
+    {
+      "id": "s08",
+      "beat": "the turn",
+      "reason": "The turn: years later the son does the work and Dad watches. The proverb about the egg that learns to walk names the growth, and the white car from s03 shows how far he has come.",
+      "shot_size": "medium",
+      "camera": "push_in",
+      "characters": ["dad", "me_teen"],
+      "props": ["car"],
+      "image_prompt": "Medium shot in the yard: the teenage son leans over the open bonnet of the old white sedan, tightening a bolt with a spanner, while the father stands beside him with his arms folded, smiling proudly",
+      "seed": 2008,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the young man turns the spanner, the older man nods slowly, the camera slowly pushes in",
+      "kenburns": {"move": "pan_right", "amount": 0.05},
+      "crop_focus": {"x": 0.5, "y": 0.5},
+      "narration": [
+        {"voice": "narrator", "text": "Years later, he stopped fixing things for me, and started fixing them with me."},
+        {"voice": "dad", "lang": "am", "text": "ቀስ በቀስ እንቁላል በእግሩ ይሄዳል", "subtitle": "Slowly, slowly, the egg walks on its own legs.", "tts_text": null,
+         "style": "Speak in Amharic: warm and proud, a gentle smile in the voice, quoting an old proverb"}
+      ],
+      "layers": null,
+      "min_duration_s": 6.0,
+      "pad_before_s": 0.4,
+      "pad_after_s": 0.7,
+      "duration_override_s": null,
+      "transition_in": "dip_to_black",
+      "priority": 5
+    },
+    {
+      "id": "s09",
+      "beat": "motif returns",
+      "reason": "The motif returns: the toolbox, older now, has changed hands. My own tap leaks and Dad's 'እስኪ እንየው' comes back as a memory in my head: his way of facing a problem now lives in me, and the tap sets up what I fix in s10.",
+      "shot_size": "close_up",
+      "camera": "push_in",
+      "characters": ["me_adult"],
+      "props": ["toolbox_old"],
+      "image_prompt": "Close-up in a small, simple apartment: the grown son kneels on the floor and opens the old red toolbox, its trays unfolding to show well-used tools; a dripping kitchen tap in the soft background",
+      "seed": 2009,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the trays of the toolbox slowly unfold as the lid lifts, the camera slowly pushes in",
+      "kenburns": {"move": "push_in", "amount": 0.08},
+      "crop_focus": {"x": 0.5, "y": 0.5},
+      "narration": [
+        {"voice": "narrator", "text": "When I moved out, he gave me his old toolbox."},
+        {"voice": "narrator", "text": "Last week, my kitchen tap started leaking. And I heard him."},
+        {"echo_of": "s05:1", "gain_db": -8, "reverb": true, "subtitle": "Let's look at it first."}
+      ],
+      "layers": null,
+      "min_duration_s": 6.0,
+      "pad_before_s": 0.4,
+      "pad_after_s": 0.8,
+      "duration_override_s": null,
+      "transition_in": "crossfade",
+      "priority": 1
+    },
+    {
+      "id": "s10",
+      "beat": "ending",
+      "reason": "The ending: I fixed it myself and call him, and for the first time we see Dad as he is today. The split screen puts us side by side, both holding a tool; his 'ጎበዝ ልጄ' is the payoff of the whole film.",
+      "shot_size": "medium_close_up",
+      "camera": "static",
+      "characters": ["me_adult"],
+      "props": ["toolbox_old"],
+      "image_prompt": "Medium close-up in a small apartment kitchen: the grown son holds a phone to his ear with one hand and a wrench in the other, smiling, a kitchen tap behind him that no longer drips, the old red toolbox open on the counter",
+      "seed": 2010,
+      "keyframe_choice": null,
+      "motion": "wan",
+      "motion_prompt": "the young man smiles and nods while listening on the phone, camera static",
+      "kenburns": {"move": "pull_out", "amount": 0.06},
+      "crop_focus": {"x": 0.5, "y": 0.5},
+      "narration": [
+        {"voice": "narrator", "text": "So I called him."},
+        {"voice": "narrator", "text": "Dad, I fixed it myself.", "style": "speaking into a phone, proud and a little shy"},
+        {"voice": "dad", "lang": "am", "text": "ጎበዝ ልጄ", "subtitle": "Well done, my son.", "tts_text": null,
+         "style": "Speak in Amharic: warm and proud, softly laughing, on the phone to his grown son"},
+        {"voice": "narrator", "text": "And I could hear him smiling."}
+      ],
+      "layers": [
+        {
+          "id": "a",
+          "image_prompt": "Medium close-up in a small apartment kitchen: the grown son holds a phone to his ear with one hand and a wrench in the other, smiling, a kitchen tap behind him that no longer drips, the old red toolbox open on the counter",
+          "characters": ["me_adult"],
+          "props": ["toolbox_old"],
+          "seed": 2101,
+          "keyframe_choice": null,
+          "motion_prompt": "the young man smiles and nods while listening on the phone, camera static",
+          "crop_focus": {"x": 0.5, "y": 0.5}
+        },
+        {
+          "id": "b",
+          "image_prompt": "Medium close-up in the sunny yard of the family home in the afternoon: the father holds a phone to his ear with one hand and a spanner in the other, laughing softly, the sky-blue metal gate behind him",
+          "characters": ["dad_now"],
+          "props": [],
+          "seed": 2102,
+          "keyframe_choice": null,
+          "motion_prompt": "the man laughs softly and nods while listening on the phone, camera static",
+          "crop_focus": {"x": 0.5, "y": 0.5}
+        }
+      ],
+      "min_duration_s": 7.0,
+      "pad_before_s": 0.4,
+      "pad_after_s": 1.5,
+      "duration_override_s": null,
+      "transition_in": "cut",
+      "priority": 2
+    }
+  ],
+  "end_card": {
+    "duration_s": 3.0,
+    "lines": [
+      "Made with AI",
+      "For Dad, who fixes everything himself",
+      "Characters are fictional cartoons",
+      "Images: FLUX · Video: Wan 2.2 · Music: ACE-Step · Voice: Gemini TTS"
+    ]
+  }
+}
