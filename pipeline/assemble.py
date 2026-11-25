@@ -214,3 +214,143 @@ def run_radio(*, dry_run: bool = False, sb: dict | None = None, timing: dict | N
                   f"TP {qc['loudness']['TP']:.1f} dBTP, {len(cues)} subtitle cues for {len(items)} lines)")
     console.print(f"  subtitles {qc['srt']}; stem {qc['stem']}; music = placeholder pad {qc['music']}")
     return qc
+
+
+# ---------------------------------------------------------------------------------------------
+# Step 3: the rough Ken Burns film (the safety net: from here on there is always a film)
+
+SUB_STYLES = {  # PlayRes set to the frame so FontSize and margins are real pixels
+    "9x16": ("PlayResX=720,PlayResY=1280,FontName=Arial,FontSize=40,PrimaryColour=&H00FFFFFF,"
+             "OutlineColour=&H00000000,BorderStyle=1,Outline=2.5,Shadow=1,Alignment=2,"
+             "MarginL=40,MarginR=40,MarginV=280"),
+    "16x9": ("PlayResX=1280,PlayResY=720,FontName=Arial,FontSize=40,PrimaryColour=&H00FFFFFF,"
+             "OutlineColour=&H00000000,BorderStyle=1,Outline=2.5,Shadow=1,Alignment=2,MarginV=40"),
+}
+
+
+def frame_counts(tl: dict, fps: int = FPS) -> list[int]:
+    """Frames per shot (then the end card) by cumulative rounding, so the cut never drifts
+    from the timeline the narration and subtitles use."""
+    edges = [s["start_s"] for s in tl["shots"]] + [tl["end_card"]["start_s"], tl["total_s"]]
+    frames = [round(t * fps) for t in edges]
+    return [b - a for a, b in zip(frames, frames[1:])]
+
+
+def segment_filters(segments: list[dict], export: str) -> tuple[str, int]:
+    """Filter chains for each segment -> [s0][s1]... and the number of inputs they use.
+    segment = {kind: clip|split|card, inputs: [...], focus: [...], frames: n}."""
+    from .common.crops import FULL, HALF, export_crop
+
+    W, H = FULL[export]
+    hw, hh = HALF[export]
+    parts, idx = [], 0
+
+    def tail(n: int) -> str:
+        return (f"fps={FPS},setsar=1,format=yuv420p,tpad=stop_mode=clone:stop_duration=2,"
+                f"trim=end_frame={n},setpts=PTS-STARTPTS")
+
+    for k, seg in enumerate(segments):
+        n = seg["frames"]
+        if seg["kind"] == "clip":
+            x, y, w, h = export_crop(export, seg["focus"][0])
+            parts.append(f"[{idx}:v]crop={w}:{h}:{x}:{y},scale={W}:{H}:flags=lanczos,{tail(n)}[s{k}]")
+            idx += 1
+        elif seg["kind"] == "split":
+            halves = []
+            for j, focus in enumerate(seg["focus"][:2]):
+                x, y, w, h = export_crop(export, focus, half=True)
+                parts.append(f"[{idx}:v]crop={w}:{h}:{x}:{y},scale={hw}:{hh}:flags=lanczos,fps={FPS},setsar=1,"
+                             f"format=yuv420p[s{k}h{j}]")
+                halves.append(f"[s{k}h{j}]")
+                idx += 1
+            stack = "vstack" if export == "9x16" else "hstack"
+            parts.append(f"{''.join(halves)}{stack}=inputs=2,{tail(n)}[s{k}]")
+        else:  # a still card (placeholder or end card), already W x H
+            parts.append(f"[{idx}:v]scale={W}:{H},{tail(n)}[s{k}]")
+            idx += 1
+    return ";".join(parts), idx
+
+
+def rough_segments(sb: dict, tl: dict, kb_manifest: dict, export: str) -> list[dict]:
+    from .common import endcard
+    from .common.crops import FULL
+    from .keyframes import keyframe_items
+
+    counts = frame_counts(tl)
+    by_shot: dict[str, list[dict]] = {}
+    for it in keyframe_items(sb):
+        by_shot.setdefault(it["shot"], []).append(it)
+    shots = {s["id"]: s for s in sb["shots"]}
+    W, H = FULL[export]
+    segs = []
+    for st, n in zip(tl["shots"], counts):
+        items = by_shot[st["shot_id"]]
+        clips = [kb_manifest.get(it["id"]) for it in items]
+        if all(clips):
+            kind = "split" if len(items) == 2 else "clip"
+            segs.append({"kind": kind, "inputs": [c["path"] for c in clips],
+                         "focus": [it["crop_focus"] for it in items], "frames": n, "shot": st["shot_id"]})
+        else:
+            card = TMP / f"pending_{st['shot_id']}_{export}.png"
+            endcard.card([f"{st['shot_id']} - {shots[st['shot_id']].get('beat', '')}", "picture pending"], W, H, card)
+            segs.append({"kind": "card", "inputs": [rel(card)], "focus": [], "frames": n, "shot": st["shot_id"],
+                         "pending": True})
+    ec = TMP / f"endcard_{export}.png"
+    endcard.card(list((sb.get("end_card") or {}).get("lines") or ["Made with AI"]), W, H, ec)
+    segs.append({"kind": "card", "inputs": [rel(ec)], "focus": [], "frames": counts[-1], "shot": "end_card"})
+    return segs
+
+
+def rough_args(segments: list[dict], export: str, srt: Path, audio_src: Path, out: Path) -> list[str]:
+    args: list[str] = []
+    for seg in segments:
+        for p in seg["inputs"]:
+            if seg["kind"] == "card":
+                args += ["-loop", "1", "-framerate", str(FPS), "-t", f"{seg['frames'] / FPS + 2:.3f}"]
+            args += ["-i", p]
+    chains, n_inputs = segment_filters(segments, export)
+    labels = "".join(f"[s{k}]" for k in range(len(segments)))
+    graph = (f"{chains};{labels}concat=n={len(segments)}:v=1:a=0[cat];"
+             f"[cat]subtitles={rel(srt)}:force_style='{SUB_STYLES[export]}'[v]")
+    return args + ["-i", rel(audio_src), "-filter_complex", graph, "-map", "[v]", "-map", f"{n_inputs}:a",
+                   "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-r", str(FPS),
+                   "-c:a", "copy", "-movflags", "+faststart",
+                   "-metadata", "comment=Made with AI - rough Ken Burns cut (draft)", "-shortest", rel(out)]
+
+
+def run_rough(*, profile: str | None = None, dry_run: bool = False, console=None) -> dict:
+    """Ken Burns pictures + the radio cut's mixed sound, both aspect ratios."""
+    from rich.console import Console
+
+    from .common.cache import Manifest
+    from .shots import run_kenburns
+
+    console = console or Console()
+    sb = sbm.load_storyboard()
+    timing = sbm.load_timing()
+    if timing is None:
+        raise AssemblyError("no outputs/narration/timing.json yet: run `make narration` first")
+    radio = CUTS / "radio_cut.mp4"
+    if not radio.exists():
+        raise AssemblyError("no outputs/cuts/radio_cut.mp4 yet: run `make radio` first (the rough cut reuses its mix)")
+    tl = sbm.timeline(sb, timing)
+    run_kenburns(profile, sb=sb, dry_run=dry_run, console=console)
+    kb = Manifest("kenburns").entries
+    TMP.mkdir(parents=True, exist_ok=True)
+    srt = CUTS / "rough.srt"  # narration only: the end card is a picture here
+    atomic_write_text(srt, subtitles.to_srt(subtitles.build_cues(sb, tl, line_pauses(timing))))
+    results = {}
+    for export in ("9x16", "16x9"):
+        segs = rough_segments(sb, tl, kb, export)
+        out = CUTS / f"rough_kb_{export}.mp4"
+        ffmpeg.run(rough_args(segs, export, srt, radio, out), dry_run=dry_run)
+        pending = [s["shot"] for s in segs if s.get("pending")]
+        if not dry_run:
+            p = ffmpeg.probe(out)
+            results[export] = {"path": rel(out), "duration_s": round(p["duration"], 3), "video": p.get("video"),
+                               "pending": pending}
+            console.print(f"rough cut {export}: {rel(out)} ({p['duration']:.1f}s, {p['video']['w']}x{p['video']['h']})"
+                          + (f"; pictures pending: {', '.join(pending)}" if pending else ""))
+    if not dry_run:
+        atomic_write_json(CUTS / "rough_qc.json", {"timeline_s": tl["total_s"], "exports": results})
+    return results

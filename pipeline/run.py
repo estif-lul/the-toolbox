@@ -24,6 +24,8 @@ STAGES = {
     "audition": (2, "the same lines in each candidate stock voice, one request per voice"),
     "radio": (2, "radio cut: narration + placeholder music on black, subtitles"),
     "refs": (3, "style + character reference sheets (candidates + contact sheets)"),
+    "choose": (3, "record a choice: choose ITEM PICK (style, dad, s05, s10a ...)"),
+    "revise": (3, "edit a chosen reference sheet: revise ITEM FROM 'instruction' (new candidates)"),
     "keyframes": (3, "per-shot keyframe candidates with crop previews"),
     "kenburns": (3, "Ken Burns clip per shot from the chosen keyframe"),
     "shots": (4, "Wan 2.2 moving shots on Kaggle (push / wait / pull)"),
@@ -62,6 +64,16 @@ def _parser() -> argparse.ArgumentParser:
             sp.add_argument("--voices", nargs="*", default=None, help="stock voices (default: the role's candidates)")
             sp.add_argument("--lines", nargs="*", default=None, help="line refs like s01:0 (default per role)")
             sp.add_argument("--no-style", action="store_true", help="send no style instruction (E03)")
+        if name == "choose":
+            sp.add_argument("item", help="style, a character id, a shot id or a layer (s10a)")
+            sp.add_argument("pick", help="candidate index, or 'none' to clear")
+        if name == "revise":
+            sp.add_argument("item", help="a ref item: style or a character id")
+            sp.add_argument("source", type=int, help="the candidate index to edit")
+            sp.add_argument("instruction", help="what to change, e.g. 'remove the pencil from behind his ear'")
+        if name == "assemble":
+            sp.add_argument("--mode", choices=["rough", "final"], default="final",
+                            help="rough = Ken Burns stills + the radio-cut sound (Step 3); final = Step 5")
         if name == "music":
             sp.add_argument("--placeholder", action="store_true",
                             help="only the code-generated placeholder pad for the current timeline")
@@ -142,6 +154,32 @@ def main(argv: list[str] | None = None) -> int:
             run_audition(args.role, profile=profile, model=args.model, voices=args.voices, refs=args.lines,
                          no_style=args.no_style, dry_run=args.dry_run)
             return 0
+        if args.cmd in ("refs", "keyframes"):
+            from . import keyframes
+
+            fn = keyframes.run_refs if args.cmd == "refs" else keyframes.run_keyframes
+            res = fn(profile, only=args.only, force=args.force, dry_run=args.dry_run)
+            return 0 if not res.get("failed") else 1
+        if args.cmd == "revise":
+            from .keyframes import run_revise
+
+            res = run_revise(args.item, args.source, args.instruction, profile, dry_run=args.dry_run)
+            return 0 if not res.get("failed") else 1
+        if args.cmd == "kenburns":
+            from .shots import run_kenburns
+
+            run_kenburns(profile, only=args.only, force=args.force, dry_run=args.dry_run)
+            return 0
+        if args.cmd == "assemble" and args.mode == "rough":
+            from .assemble import run_rough
+
+            run_rough(profile=profile, dry_run=args.dry_run)
+            return 0
+        if args.cmd == "choose":
+            from .choose import choose
+
+            print(choose(args.item, None if args.pick.lower() == "none" else int(args.pick)))
+            return 0
         if args.cmd == "radio":
             from .assemble import run_radio
 
@@ -160,6 +198,16 @@ def main(argv: list[str] | None = None) -> int:
     except env.MissingKeyError as exc:
         print(f"\n{exc}", file=sys.stderr)
         return 3
+    except Exception as exc:  # known stage errors: a clear message, no stack trace
+        from .assemble import AssemblyError
+        from .common.invoke import AllProvidersFailed
+        from .keyframes import NotReady
+        from .narration import SplitFailed, StoryboardInvalid
+
+        if isinstance(exc, (AssemblyError, AllProvidersFailed, SplitFailed, StoryboardInvalid, NotReady)):
+            print(f"\n{args.cmd}: {exc}", file=sys.stderr)
+            return 1
+        raise
 
 
 if __name__ == "__main__":

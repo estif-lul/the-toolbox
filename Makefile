@@ -13,7 +13,7 @@ export FORCE RUN_GPU
 
 .DEFAULT_GOAL := help
 .PHONY: help setup smoke models validate test check secrets \
-        script narration narration-check audition radio refs keyframes kenburns shots shots-push shots-pull music assemble film costs
+        script narration narration-check audition radio refs choose revise keyframes kenburns rough shots shots-push shots-pull music assemble film costs
 
 help:                         ## list the targets
 	@echo "The Toolbox pipeline. Targets:"
@@ -60,11 +60,20 @@ radio:                        ## [Step 2] radio cut: narration + placeholder mus
 refs:                         ## [Step 3] style + character reference sheets
 	$(RUN) refs $(FLAGS)
 
+choose:                       ## [Step 3] record a pick: make choose ITEM=dad PICK=2 (style, dad, s05, s10a ...)
+	$(RUN) choose $(ITEM) $(PICK)
+
+revise:                       ## [Step 3] edit a chosen sheet: make revise ITEM=dad FROM=0 EDIT="remove the pencil"
+	$(RUN) revise $(ITEM) $(FROM) "$(EDIT)" $(FLAGS)
+
 keyframes:                    ## [Step 3] keyframe candidates per shot
 	$(RUN) keyframes $(FLAGS)
 
 kenburns:                     ## [Step 3] Ken Burns clip per shot
 	$(RUN) kenburns $(FLAGS)
+
+rough:                        ## [Step 3] rough film: Ken Burns stills + radio-cut sound, 9:16 and 16:9
+	$(RUN) assemble --mode rough $(FLAGS)
 
 shots:                        ## [Step 4] Wan 2.2 on Kaggle: push + wait + pull
 	$(RUN) shots $(FLAGS)
