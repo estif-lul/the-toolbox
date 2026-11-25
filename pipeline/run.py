@@ -21,6 +21,7 @@ STAGES = {
     # name: (step that implements it, one-line description)
     "script": (1, "draft storyboard.draft.json with Gemini from DESIGN.md + the schema"),
     "narration": (2, "Gemini TTS per narration line (cached) -> outputs/narration/timing.json"),
+    "audition": (2, "the same lines in each candidate stock voice, one request per voice"),
     "radio": (2, "radio cut: narration + placeholder music on black, subtitles"),
     "refs": (3, "style + character reference sheets (candidates + contact sheets)"),
     "keyframes": (3, "per-shot keyframe candidates with crop previews"),
@@ -50,6 +51,20 @@ def _parser() -> argparse.ArgumentParser:
     v.add_argument("--path", default=None, help="storyboard file (default: storyboard.json)")
     for name, (step, desc) in STAGES.items():
         sp = sub.add_parser(name, parents=[common], help=f"{desc} [Step {step}]")
+        if name == "narration":
+            sp.add_argument("--batch-lines", type=int, default=None,
+                            help="max lines per TTS request (default: tts params batch_lines)")
+            sp.add_argument("--verify", action="store_true",
+                            help="hear every line back (transcribe) and compare with its text; no TTS calls")
+        if name == "audition":
+            sp.add_argument("--role", required=True, help="voice role in storyboard.voices (narrator, dad)")
+            sp.add_argument("--model", default=None, help="TTS model id from the tts chain (default: the primary)")
+            sp.add_argument("--voices", nargs="*", default=None, help="stock voices (default: the role's candidates)")
+            sp.add_argument("--lines", nargs="*", default=None, help="line refs like s01:0 (default per role)")
+            sp.add_argument("--no-style", action="store_true", help="send no style instruction (E03)")
+        if name == "music":
+            sp.add_argument("--placeholder", action="store_true",
+                            help="only the code-generated placeholder pad for the current timeline")
         if name == "shots":
             sp.add_argument("--push", action="store_true", help="only push stale jobs to Kaggle")
             sp.add_argument("--pull", action="store_true", help="only pull and ingest finished clips")
@@ -113,6 +128,32 @@ def main(argv: list[str] | None = None) -> int:
             from .script import main as script_main
 
             return script_main(profile, force=args.force is not None, dry_run=args.dry_run)
+        if args.cmd == "narration":
+            from .narration import run_narration, run_verify
+
+            if args.verify:
+                return 0 if not run_verify(profile, force=args.force is not None)["bad"] else 1
+            res = run_narration(profile, only=args.only, force=args.force, dry_run=args.dry_run,
+                                batch_lines=args.batch_lines)
+            return 0 if res["status"] == "dry_run" or (not res.get("missing") and not res.get("errors")) else 1
+        if args.cmd == "audition":
+            from .narration import run_audition
+
+            run_audition(args.role, profile=profile, model=args.model, voices=args.voices, refs=args.lines,
+                         no_style=args.no_style, dry_run=args.dry_run)
+            return 0
+        if args.cmd == "radio":
+            from .assemble import run_radio
+
+            res = run_radio(dry_run=args.dry_run)
+            return 0 if res.get("status") == "dry_run" or res.get("ok") else 1
+        if args.cmd == "music" and args.placeholder:
+            from .common import storyboard as sbm
+            from .music import placeholder
+
+            total = sbm.timeline(sbm.load_storyboard(), sbm.load_timing())["total_s"]
+            print(f"music: placeholder pad, {total:.1f}s -> {placeholder(total, dry_run=args.dry_run)}")
+            return 0
         step, desc = STAGES[args.cmd]
         print(f"{args.cmd}: not implemented yet ({desc}); it is built in Step {step}", file=sys.stderr)
         return 2

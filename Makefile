@@ -13,12 +13,12 @@ export FORCE RUN_GPU
 
 .DEFAULT_GOAL := help
 .PHONY: help setup smoke models validate test check secrets \
-        script narration radio refs keyframes kenburns shots shots-push shots-pull music assemble film costs
+        script narration narration-check audition radio refs keyframes kenburns shots shots-push shots-pull music assemble film costs
 
 help:                         ## list the targets
 	@echo "The Toolbox pipeline. Targets:"
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed -E 's/^([a-z-]+):.*## (.*)/  \1|\2/' | awk -F'|' '{printf "  %-14s %s\n", $$1, $$2}'
-	@echo "Variables: PROFILE=free|paid  ONLY='s05 s06'  FORCE=1  DRY_RUN=1  RUN_GPU=1"
+	@echo "Variables: PROFILE=free|paid  ONLY='s05 s06'  FORCE=1  DRY_RUN=1  RUN_GPU=1  ROLE= MODEL= VOICES= NO_STYLE=1"
 
 setup:                        ## install Python 3.12 + deps (uv), install the secrets pre-commit hook
 	uv sync
@@ -47,6 +47,12 @@ script:                       ## [Step 1] Gemini draft of the storyboard -> stor
 
 narration:                    ## [Step 2] TTS per line (cached) -> outputs/narration/timing.json
 	$(RUN) narration $(FLAGS)
+
+narration-check:              ## [Step 2] hear every line back (transcribe) + repair a wrong batch cut
+	$(RUN) narration --verify $(FLAGS)
+
+audition:                     ## [Step 2] candidate voices: make audition ROLE=dad [MODEL=...] [NO_STYLE=1]
+	$(RUN) audition --role $(ROLE) $(if $(MODEL),--model $(MODEL),) $(if $(VOICES),--voices $(VOICES),) $(if $(NO_STYLE),--no-style,) $(FLAGS)
 
 radio:                        ## [Step 2] radio cut: narration + placeholder music, subtitles
 	$(RUN) radio $(FLAGS)

@@ -32,13 +32,23 @@ profiles:
         model: gemini-3.5-flash-lite
         params: {temperature: 0.8, min_interval_s: 4, timeout_s: 180}
 
+    transcribe:                             # narration --verify: hears each line back (audio in, text out)
+      - provider: gemini_text               # not 3.8 Flash: 503 all day on 25 Nov, and 20 RPD
+        model: gemini-3.5-flash-lite        # 15 RPM, 500 RPD
+        params: {temperature: 0, min_interval_s: 4, timeout_s: 60}
+      - provider: gemini_text
+        model: gemini-3.5-flash
+        params: {temperature: 0, min_interval_s: 13, timeout_s: 60}
+
     tts:                                    # narration; stock voices only, no silent fallback
+      # batch_lines: lines per request (one turn each, split at <long pause>); rpd: the daily
+      # request limit, used only to warn before a run (pipeline/narration.py quota_note).
       - provider: gemini_tts
         model: gemini-3.8-flash-tts         # Interactions API (F03); 3 RPM, 10K TPM, **10 RPD**
-        params: {min_interval_s: 21}
+        params: {min_interval_s: 21, max_attempts: 2, batch_lines: 8, rpd: 10}
       - provider: gemini_tts
         model: gemini-3.8-flash-lite-tts    # 3 RPM, 10K TPM, **10 RPD**
-        params: {min_interval_s: 21}
+        params: {min_interval_s: 21, max_attempts: 2, batch_lines: 8, rpd: 10}
 
     image:                                  # keyframes and reference sheets
       - provider: cloudflare_image
@@ -81,6 +91,10 @@ profiles:
       - provider: gemini_text
         model: gemini-3.8-flash
         params: {temperature: 0.8, timeout_s: 180}
+    transcribe:
+      - provider: gemini_text
+        model: gemini-3.5-flash-lite
+        params: {temperature: 0}
     tts:
       - provider: paid_tts
         model: gemini-3.8-flash-tts-paid-tier

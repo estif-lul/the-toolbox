@@ -5,6 +5,9 @@ not generate_content: the TTS models are not visible to `models.list()` / `model
 generate_content returns 404 for them (FAILURES.md F03). The style is passed as a
 `speech_metadata` annotation, which keeps the spoken text exactly what the storyboard says.
 The response is a complete WAV (24 kHz, mono, 16-bit) as base64; raw PCM is also handled.
+
+`synthesize_batch` sends several lines in one request (one turn each, with its own style), which
+is how the narration fits the free tier's 10 requests a day (pipeline/narration.py).
 """
 
 from __future__ import annotations
@@ -17,6 +20,16 @@ from typing import Any
 from ..common.env import require
 from ..common.retry import RetryableError
 from .base import AudioResult, BaseAdapter
+
+
+LONG_PAUSE = "<long pause>"  # a documented inline pause tag of the 3.8 TTS models
+
+
+def turn(text: str, style: str | None) -> dict[str, Any]:
+    content: dict[str, Any] = {"type": "text", "text": text}
+    if style:
+        content["annotations"] = [{"type": "speech_metadata", "style": style}]
+    return content
 
 
 def pcm_to_wav(pcm: bytes, rate: int = 24000, channels: int = 1, width: int = 2) -> bytes:
@@ -55,12 +68,24 @@ class GeminiTTS(BaseAdapter):
         return self._client
 
     def synthesize(self, text: str, voice: str, style: str | None = None) -> AudioResult:
-        content: dict[str, Any] = {"type": "text", "text": text}
-        if style:
-            content["annotations"] = [{"type": "speech_metadata", "style": style}]
+        return self._speak([turn(text, style)], voice)
+
+    def synthesize_batch(self, items: list[tuple[str, str | None]], voice: str) -> AudioResult:
+        """Several lines in ONE request (the free tier allows 10 TTS requests a day).
+
+        Each line is its own turn with its own style annotation (the docs: "split the script into
+        separate turns with distinct `style` values for each turn"), and a documented
+        `<long pause>` tag ends every turn but the last, so the narration stage can cut the audio
+        at the pauses (pipeline/common/audio.py split_points).
+        """
+        turns = [turn(text + (f" {LONG_PAUSE}" if i < len(items) - 1 else ""), style)
+                 for i, (text, style) in enumerate(items)]
+        return self._speak(turns, voice)
+
+    def _speak(self, content: list[dict], voice: str) -> AudioResult:
         interaction = self.client.interactions.create(
             model=self.model,
-            input=[{"type": "user_input", "content": [content]}],
+            input=[{"type": "user_input", "content": content}],
             response_format={"type": "audio"},
             generation_config={"speech_config": [{"voice": voice}]},
         )

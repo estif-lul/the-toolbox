@@ -81,12 +81,15 @@ class Provider(Protocol):
 
 @runtime_checkable
 class TextProvider(Provider, Protocol):
-    def generate_json(self, prompt: str, schema: dict | None = None) -> TextResult: ...
+    def generate_json(self, prompt: str, schema: dict | None = None,
+                      attachments: Sequence[tuple[bytes, str]] = ()) -> TextResult: ...
 
 
 @runtime_checkable
 class TTSProvider(Provider, Protocol):
     def synthesize(self, text: str, voice: str, style: str | None = None) -> AudioResult: ...
+    # Optional: several lines in one request, cut apart at the pauses by the narration stage.
+    # def synthesize_batch(self, items: list[tuple[str, str | None]], voice: str) -> AudioResult
 
 
 @runtime_checkable

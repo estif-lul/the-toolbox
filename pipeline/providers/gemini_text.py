@@ -31,7 +31,9 @@ class GeminiText(BaseAdapter):
             )
         return self._client
 
-    def generate_json(self, prompt: str, schema: dict | None = None) -> TextResult:
+    def generate_json(self, prompt: str, schema: dict | None = None,
+                      attachments: list[tuple[bytes, str]] = ()) -> TextResult:
+        """`attachments` = [(bytes, mime)], e.g. a WAV to transcribe (narration --verify)."""
         from google.genai import types
 
         config = types.GenerateContentConfig(
@@ -39,7 +41,10 @@ class GeminiText(BaseAdapter):
             response_json_schema=schema,
             temperature=self.params.get("temperature"),
         )
-        resp = self.client.models.generate_content(model=self.model, contents=prompt, config=config)
+        contents: Any = prompt
+        if attachments:
+            contents = [*(types.Part.from_bytes(data=d, mime_type=m) for d, m in attachments), prompt]
+        resp = self.client.models.generate_content(model=self.model, contents=contents, config=config)
         text = resp.text or ""
         if not text.strip():
             raise FatalError(f"empty response (finish_reason={_finish_reason(resp)})")
