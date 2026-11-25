@@ -1,0 +1,257 @@
+[
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 2.5 Flash",
+    "name": "models/gemini-2.5-flash"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 2.5 Pro",
+    "name": "models/gemini-2.5-pro"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens"
+    ],
+    "display_name": "Gemma 4 26B A4B IT",
+    "name": "models/gemma-4-26b-a4b-it"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens"
+    ],
+    "display_name": "Gemma 4 31B IT",
+    "name": "models/gemma-4-31b-it"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 2.5 Flash-Lite",
+    "name": "models/gemini-2.5-flash-lite"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Nano Banana",
+    "name": "models/gemini-2.5-flash-image"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 3.1 Flash Lite",
+    "name": "models/gemini-3.1-flash-lite"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Nano Banana Pro",
+    "name": "models/gemini-3-pro-image"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Nano Banana 2",
+    "name": "models/gemini-3.1-flash-image"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Nano Banana 2 Lite",
+    "name": "models/gemini-3.1-flash-lite-image"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Nano Banana 2.1",
+    "name": "models/gemini-nano-banana-2.1"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 3.5 Flash",
+    "name": "models/gemini-3.5-flash"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 3.5 Flash Lite",
+    "name": "models/gemini-3.5-flash-lite"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens"
+    ],
+    "display_name": "Gemini Omni Flash Preview",
+    "name": "models/gemini-omni-flash-preview"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 3.6 Flash",
+    "name": "models/gemini-3.6-flash"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 3.7 Flash",
+    "name": "models/gemini-3.7-flash"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "createCachedContent",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 3.8 Flash",
+    "name": "models/gemini-3.8-flash"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 4 Argon",
+    "name": "models/gemini-4-argon"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 4 Carbon",
+    "name": "models/gemini-4-carbon"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 4 Hydrogen",
+    "name": "models/gemini-4-hydrogen"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens",
+      "batchGenerateContent"
+    ],
+    "display_name": "Gemini 4 Neon",
+    "name": "models/gemini-4-neon"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens"
+    ],
+    "display_name": "Antigravity Agent Preview",
+    "name": "models/antigravity-preview-05-2026"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens"
+    ],
+    "display_name": "Antigravity Agent Preview",
+    "name": "models/antigravity-preview-09-2026"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens"
+    ],
+    "display_name": "Antigravity Agent Preview Latest",
+    "name": "models/antigravity-preview-latest"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens"
+    ],
+    "display_name": "Deep Research Max Preview (Apr-21-2026)",
+    "name": "models/deep-research-max-preview-04-2026"
+  },
+  {
+    "actions": [
+      "generateContent",
+      "countTokens"
+    ],
+    "display_name": "Deep Research Preview (Apr-21-2026)",
+    "name": "models/deep-research-preview-04-2026"
+  },
+  {
+    "actions": [
+      "embedContent",
+      "countTextTokens",
+      "countTokens",
+      "asyncBatchEmbedContent"
+    ],
+    "display_name": "Gemini Embedding 001",
+    "name": "models/gemini-embedding-001"
+  },
+  {
+    "actions": [
+      "embedContent",
+      "countTextTokens",
+      "countTokens",
+      "asyncBatchEmbedContent"
+    ],
+    "display_name": "Gemini Embedding 2",
+    "name": "models/gemini-embedding-2"
+  }
+]

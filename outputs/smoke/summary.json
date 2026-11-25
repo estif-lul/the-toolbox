@@ -1,0 +1,14 @@
+{
+  "profile": "free",
+  "rows": [
+    {
+      "check": "text",
+      "latency_s": 104.548,
+      "model": "",
+      "notes": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "ok": false,
+      "provider": "gemini_text:gemini-3.8-flash"
+    }
+  ],
+  "run_id": "20261125-142645-32c4"
+}
