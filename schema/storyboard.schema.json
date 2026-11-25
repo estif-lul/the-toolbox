@@ -185,8 +185,8 @@
       "additionalProperties": false,
       "required": ["move", "amount"],
       "properties": {
-        "move": {"enum": ["push_in", "pull_out", "pan_left", "pan_right", "pan_up", "pan_down"]},
-        "amount": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.3, "description": "Zoom or travel as a fraction of the frame."}
+        "move": {"enum": ["push_in", "pull_out", "pan_left", "pan_right", "tilt_up", "tilt_down", "static"]},
+        "amount": {"type": "number", "minimum": 0, "maximum": 0.3, "description": "Zoom or travel as a fraction of the frame (ignored for static)."}
       }
     },
     "crop_focus": {

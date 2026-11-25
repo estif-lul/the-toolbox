@@ -51,6 +51,13 @@ def test_schema_is_valid_draft_2020_12():
     Draft202012Validator.check_schema(json.loads(sbm.SCHEMA.read_text(encoding="utf-8")))
 
 
+def test_kenburns_moves_match_the_adapter():
+    from pipeline.providers.kenburns import MOVES
+
+    schema = json.loads(sbm.SCHEMA.read_text(encoding="utf-8"))
+    assert set(schema["$defs"]["kenburns"]["properties"]["move"]["enum"]) == set(MOVES)
+
+
 def test_minimal_storyboard_is_valid():
     rep = sbm.validate(minimal_storyboard())
     assert rep.errors == []
