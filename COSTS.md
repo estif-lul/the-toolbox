@@ -23,12 +23,26 @@ Checked 2026-11-25 (Step 0). "Documented" = read from the provider's page; "obse
 our own calls; **[ME]** = only visible in my account dashboard.
 
 ### Gemini API (key from Google AI Studio)
-| Model | Used for | Status | Free-tier limits |
-|---|---|---|---|
-| `gemini-3.8-flash` | storyboard draft | listed, but 503 "high demand" in all 3 smoke runs on 2026-11-25, 14:20–14:48 EAT (F05) | RPM / RPD **[ME]: read from aistudio.google.com/rate-limit** |
-| `gemini-3.5-flash-lite` | text fallback | works: 2.45 s, 21 in / 9 out tokens | **[ME]** as above |
-| `gemini-3.8-flash-tts` | narration | works via the Interactions API (F03): 8.6 s for a 2.2 s line | **[ME]** as above |
-| `gemini-3.8-flash-lite-tts` | TTS fallback | works: 5.8 s for a 1.7 s line | **[ME]** as above |
+Limits read from my project's AI Studio rate-limit page (signed in) on 2026-11-25 at 14:57 EAT,
+Free tier. "Used" is the peak shown for the last 28 days, i.e. today's Step 0 smoke calls.
+
+| Model | Used for | Status | RPM | TPM | **RPD** | Used today |
+|---|---|---|---|---|---|---|
+| `gemini-3.8-flash` | storyboard draft | 503 "high demand" in all 3 smoke runs, 14:20–14:48 EAT (F05) | 5 | 250K | **20** | 7 |
+| `gemini-3.5-flash-lite` | text fallback | works: 1.2–2.5 s, ~21 in / 5–9 out tokens | 15 | 250K | **500** | 2 |
+| `gemini-3.8-flash-tts` | narration | works via the Interactions API (F03): ~8.7 s per short line | 3 | 10K | **10** | 2 |
+| `gemini-3.8-flash-lite-tts` | TTS fallback | works: 4.5–5.8 s per short line | 3 | 10K | **10** | 2 |
+
+- **Failed requests count.** All 6 logged calls to `gemini-3.8-flash` were 503 errors, and AI Studio
+  counts 7 against the 20/day. (The 7th is not in runs.jsonl: possibly a request that timed out on
+  our side but still reached the server, or a retry inside the SDK.) So retries on an overloaded
+  model burn the daily quota: the config now caps 3.8 Flash at 2 attempts.
+- **TTS is the binding constraint: 10 requests/day per model**, 20/day across both TTS models,
+  resetting 11:00 EAT. One narration pass with one request per line (~15 lines) would not fit in a
+  day. Step 2 must batch lines into fewer requests (PLAN.md "Step 0 findings").
+- Pacing in config/providers.yaml = 60 / RPM: 13 s (3.8 Flash), 4 s (Flash-Lite), 21 s (both TTS).
+- A full `make smoke` costs 1 request of each TTS model's 10/day and up to 2 of 3.8 Flash's 20;
+  during development, run only the checks needed (`make smoke ONLY="flux2 kaggle"`).
 
 - Documented (aistudio.google.com/docs/rate-limits, read 2026-11-25): no per-model free-tier
   numbers are published any more ("Rate limits depend on a variety of factors (such as your usage

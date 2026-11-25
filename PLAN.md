@@ -454,6 +454,19 @@ are on record before any generation, and the paid lane is pluggable.
   via the **Interactions API**, not generate_content (style = a `speech_metadata` annotation; output
   is a complete 24 kHz mono 16-bit WAV). Image `@cf/black-forest-labs/flux-2-klein-4b` →
   `flux-1-schnell`.
+- **Step 2 (critical): TTS free tier = 3 RPM, 10 requests/day per model** (Flash TTS and
+  Flash-Lite TTS each; reset 11:00 EAT; failed requests count). Step 0 used 2 of each, so 8 + 8 are
+  left today and 10 + 10 tomorrow. One request per line (~15 lines) + auditions (12) + Amharic takes
+  (6) cannot fit. Plan for Step 2:
+  - **Batch lines into a request**: put several lines in one request with clear pauses between
+    them, then split the WAV at the silences (FFmpeg `silencedetect`) into per-line files, checking
+    that segment count = line count. The first full pass = 1–3 requests per voice.
+  - **Edits stay per line**: a changed line is re-synthesised alone (1 request), so "change one
+    line → one model call" still holds for the walkthrough.
+  - **Audition cheaply**: one request per candidate voice containing both test lines (3 requests);
+    style vs no style on the chosen voice only (+1). Amharic: Dad's 3 lines in one request, 2 takes.
+  - Keep Flash TTS for all final narration (one consistent voice); spend Flash-Lite TTS on auditions
+    and experiments.
 - **Step 3:** klein **reference images work** (plan A is on). The klein **seed does not reproduce**
   an image, and schnell accepts **no seed** at all → seeds pick candidates but don't guarantee
   re-creation; reproducibility = committed cached files. Budget ≈ 104 neurons per klein image

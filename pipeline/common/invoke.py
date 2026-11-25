@@ -82,7 +82,9 @@ def invoke(
                       model=provider.model, status="ok", error=f"from {prev_name}: {prev_err}")
         key = key_fn(provider) if key_fn else None
         call_params = {**(getattr(provider, "params", {}) or {}), **(params or {})}
-        for attempt in range(1, max_attempts + 1):
+        # A provider may cap its own attempts (failed calls still use up a free-tier daily quota).
+        attempts = min(max_attempts, int((getattr(provider, "params", {}) or {}).get("max_attempts", max_attempts)))
+        for attempt in range(1, attempts + 1):
             _pace(provider)
             try:
                 with timed_call(stage=stage, provider=provider.name, model=provider.model, shot_id=shot_id,
@@ -99,7 +101,7 @@ def invoke(
                 raise
             except Exception as exc:  # noqa: BLE001
                 err = classify(exc)
-                if isinstance(err, RetryableError) and attempt < max_attempts:
+                if isinstance(err, RetryableError) and attempt < attempts:
                     delay = backoff_delay(attempt, retry_after=err.retry_after)
                     log_event("retry", stage=stage, shot_id=shot_id, provider=provider.name,
                               model=provider.model, attempt=attempt, status="waiting",

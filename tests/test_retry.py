@@ -105,6 +105,17 @@ def test_invoke_retries_then_falls_back_and_logs_everything(run_log):
     ]
 
 
+def test_invoke_respects_a_provider_attempt_cap(run_log):
+    def always_503(n):
+        raise http_error(503)
+
+    primary = Fake("primary", always_503)
+    primary.params = {"max_attempts": 2}
+    backup = Fake("backup", lambda n: "ok")
+    invoke([primary, backup], lambda p: p.go(), stage="text", sleep=lambda s: None)
+    assert primary.calls == 2
+
+
 def test_invoke_daily_quota_skips_retries(run_log):
     primary = Fake("primary", lambda n: (_ for _ in ()).throw(http_error(429, "limit PerDay reached")))
     backup = Fake("backup", lambda n: "ok")

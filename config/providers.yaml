@@ -11,21 +11,23 @@ default_profile: free
 
 profiles:
   free:
+    # Free-tier limits from AI Studio (2026-11-25, COSTS.md): pacing = 60 s / RPM, rounded up.
+    # Failed requests (503) count against RPD too, so the overloaded model gets fewer attempts.
     text:                                   # script / storyboard draft / translation
       - provider: gemini_text
-        model: gemini-3.8-flash
-        params: {temperature: 0.7}
+        model: gemini-3.8-flash             # 5 RPM, 250K TPM, 20 RPD
+        params: {temperature: 0.7, min_interval_s: 13, max_attempts: 2, timeout_s: 60}
       - provider: gemini_text
-        model: gemini-3.5-flash-lite        # no 3.8 Flash-Lite text model is served (F04)
-        params: {temperature: 0.7}
+        model: gemini-3.5-flash-lite        # 15 RPM, 250K TPM, 500 RPD; no 3.8 Flash-Lite text model (F04)
+        params: {temperature: 0.7, min_interval_s: 4}
 
     tts:                                    # narration; stock voices only, no silent fallback
       - provider: gemini_tts
-        model: gemini-3.8-flash-tts         # Interactions API (F03)
-        params: {min_interval_s: 6}         # client-side pacing until the real RPM is known
+        model: gemini-3.8-flash-tts         # Interactions API (F03); 3 RPM, 10K TPM, **10 RPD**
+        params: {min_interval_s: 21}
       - provider: gemini_tts
-        model: gemini-3.8-flash-lite-tts
-        params: {min_interval_s: 6}
+        model: gemini-3.8-flash-lite-tts    # 3 RPM, 10K TPM, **10 RPD**
+        params: {min_interval_s: 21}
 
     image:                                  # keyframes and reference sheets
       - provider: cloudflare_image
