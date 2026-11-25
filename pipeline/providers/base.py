@@ -2,7 +2,7 @@
 
 Text, TTS and image providers are synchronous (one request, one result). Video and music
 providers are batch-async (`submit` -> `status` -> `collect`), because Kaggle kernels and most
-paid video APIs work that way. A paid adapter only has to match these signatures (PLAN.md §10).
+paid video APIs work that way. A paid adapter only has to match these signatures (docs/PAID_LANE.md).
 """
 
 from __future__ import annotations

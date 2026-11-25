@@ -110,5 +110,5 @@ rounded shapes). **No living artist or studio is named** in any prompt.
 
 ## 7. Data-retention note for the paid lane
 
-Before any paid provider is adopted (PLAN.md §10), its licence, output terms, watermarking /
+Before any paid provider is adopted (the `paid` profile in `config/providers.yaml`), its licence, output terms, watermarking /
 provenance (SynthID, C2PA) and data-retention policy are checked and added to the table above.

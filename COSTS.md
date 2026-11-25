@@ -39,7 +39,7 @@ Free tier. "Used" is the peak shown for the last 28 days, i.e. today's Step 0 sm
   model burn the daily quota: the config now caps 3.8 Flash at 2 attempts.
 - **TTS is the binding constraint: 10 requests/day per model**, 20/day across both TTS models,
   resetting 11:00 EAT. One narration pass with one request per line (~15 lines) would not fit in a
-  day. Step 2 must batch lines into fewer requests (PLAN.md "Step 0 findings").
+  day. Step 2 must batch several lines into one request and split the audio at the pauses.
 - Pacing in config/providers.yaml = 60 / RPM: 13 s (3.8 Flash), 4 s (Flash-Lite), 21 s (both TTS).
 - A full `make smoke` costs 1 request of each TTS model's 10/day and up to 2 of 3.8 Flash's 20;
   during development, run only the checks needed (`make smoke ONLY="flux2 kaggle"`).
@@ -95,7 +95,7 @@ Free tier. "Used" is the peak shown for the last 28 days, i.e. today's Step 0 sm
   unused ($0.00). It might give access to frontier models for the ceiling comparison (to check in Step 6).
 - Accelerators (from the CLI, kaggle 2.2.5): `kaggle kernels push --accelerator NvidiaTeslaT4`
   ("GPU T4 x2") or `machine_shape` in kernel-metadata.json. **P100 is retired**: a request for it
-  silently runs on a T4 instead. This removes the "P100 instead of a T4" risk in PLAN.md §8.
+  silently runs on a T4 instead, so the video kernel always runs on T4s.
 
 ### Local
 - FFmpeg 9.0.1 (gyan.dev full build): the Ken Burns smoke clip (2 s, 1024², 24 fps, 4× upscale)

@@ -1,7 +1,8 @@
 """Load and validate storyboard.json, and compute the timeline from it.
 
 `validate(sb)` = JSON Schema (Draft 2020-12, schema/storyboard.schema.json, written in Step 1)
-+ the semantic checks of PLAN.md §2.2. It returns a `Report` with errors and warnings; any error
++ semantic checks (ids, references, reasons, narration length, duration, music coverage,
+privacy lint, motion prompts). It returns a `Report` with errors and warnings; any error
 stops a run before a single model call is made.
 
 `timeline(sb, timing)` turns measured narration durations (outputs/narration/timing.json, written
@@ -29,7 +30,7 @@ WORDS_MIN, WORDS_MAX = 120, 230
 ESTIMATE_WPS = 2.3          # words per second, used only until real TTS timing exists
 DEFAULT_LINE_GAP_S = 0.35   # silence between two narration lines in the same shot
 
-# Soft privacy lint (PLAN.md §2.2 check 8): phone numbers, plate-like strings, emails.
+# Soft privacy lint: phone numbers, plate-like strings, emails.
 PHONE = re.compile(r"(?<!\d)(?:\+?\d[\d\s\-]{7,}\d)(?!\d)")
 PLATE = re.compile(r"\b(?:AA|OR|AM|TG|SD|ET)?\s?\d-?[A-Z]?\d{4,6}\b")
 EMAIL = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+")

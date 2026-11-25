@@ -85,8 +85,8 @@ everything himself (car, woodwork, electricity, plumbing) and I learned it from 
 - B's best idea (the boy holding the torch) survives as shot s03; C's sense of place survives as the
   compound in s02 and the house lighting up in s06.
 
-The full draft story, characters and shot list are in PLAN.md §3; the logline, treatment and beat
-list are added in Step 1, and every shot's reason lives in `storyboard.json`.
+The logline, treatment, beat list and characters are added to this file next, and every shot's
+reason lives in `storyboard.json`.
 
 ---
 

@@ -25,7 +25,7 @@ ADAPTERS: dict[str, str] = {
     "kenburns": "pipeline.providers.kenburns:KenBurns",
     "kaggle_wan": "pipeline.providers.kaggle_wan:KaggleWan",
     "kaggle_acestep": "pipeline.providers.kaggle_acestep:KaggleAceStep",
-    # paid lane (PLAN.md §10): stubs until implemented, see docs/PAID_LANE.md
+    # paid lane: stubs until implemented, see docs/PAID_LANE.md
     "paid_text": "pipeline.providers.paid_stubs:PaidText",
     "paid_tts": "pipeline.providers.paid_stubs:PaidTTS",
     "paid_image": "pipeline.providers.paid_stubs:PaidImage",

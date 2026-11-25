@@ -1,4 +1,4 @@
-"""The paid / frontier lane (PLAN.md §10), designed in now, implemented later.
+"""The paid / frontier lane, designed in now, implemented later.
 
 Each class has the same signature as its free counterpart, so implementing one is a single file
 plus a config line in config/providers.yaml (profile `paid`). Until then they fail loudly, and the

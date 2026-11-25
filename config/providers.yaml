@@ -55,7 +55,7 @@ profiles:
         model: ffmpeg-zoompan
         params: {fps: 24, size: 1024}
 
-  # The paid / frontier lane (PLAN.md §10, docs/PAID_LANE.md). Stubs until implemented; each
+  # The paid / frontier lane (docs/PAID_LANE.md). Stubs until implemented; each
   # stage keeps the free adapter as its fallback so a missing implementation never silently
   # changes quality. Model ids are placeholders until prices and terms are checked.
   paid:

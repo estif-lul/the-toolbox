@@ -2,7 +2,7 @@
 
 Each entry is written **when the experiment runs**, tied to evidence (run_ids in runs.jsonl,
 cache keys, file paths, measured numbers). One variable changes at a time; the seed stays fixed
-when comparing prompts. Target: at least 12 real entries. The planned backlog is in PLAN.md §13.
+when comparing prompts. Target: at least 12 real entries.
 
 Template:
 

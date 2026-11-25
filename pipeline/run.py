@@ -105,7 +105,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.cmd == "validate":
             return cmd_validate(args)
         step, desc = STAGES[args.cmd]
-        print(f"{args.cmd}: not implemented yet ({desc}); it is built in Step {step} of PLAN.md", file=sys.stderr)
+        print(f"{args.cmd}: not implemented yet ({desc}); it is built in Step {step}", file=sys.stderr)
         return 2
     except env.MissingKeyError as exc:
         print(f"\n{exc}", file=sys.stderr)

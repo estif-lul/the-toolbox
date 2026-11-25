@@ -6,7 +6,7 @@ made by a small code pipeline: `storyboard.json` is the contract, and each stage
 moving shots, music, narration, assembly) reads it and writes its outputs. Only what changed
 gets regenerated.
 
-> **Status: Step 0 (scaffold + smoke test).** The stages are added step by step (see `PLAN.md`).
+> **Status: Step 0 (scaffold + smoke test).** The stages are added one at a time.
 > This README is completed in Step 6.
 
 ## Quickstart
@@ -25,7 +25,7 @@ make help                 # every target
 `make film` (Step 5) runs the whole pipeline end to end.
 
 ## Where things are
-- `PLAN.md`: the step-by-step plan · `DESIGN.md`: audience, intent, user tests ·
+- `DESIGN.md`: audience, intent, user tests ·
   `ETHICS.md`: consent, privacy, labelling, licences
 - `pipeline/`: stages; `pipeline/common/`: logging, caching, retries, storyboard, FFmpeg;
   `pipeline/providers/`: one adapter per model API, chosen by `config/providers.yaml`

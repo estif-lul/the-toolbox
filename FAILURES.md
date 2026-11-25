@@ -1,6 +1,6 @@
 # FAILURES — what broke, what I tried, what fixed it
 
-Written when each failure happens. Template (PLAN.md §13):
+Written when each failure happens. Template:
 
 ```
 ## F03 — <stage>: <symptom in a few words>
@@ -60,7 +60,7 @@ Written when each failure happens. Template (PLAN.md §13):
   `aistudio.google.com/docs/speech-generation`; the old `ai.google.dev` URL redirects) say TTS now
   goes through the **Interactions API** (`client.interactions.create`, `response_format={"type":"audio"}`,
   `generation_config.speech_config=[{"voice": ...}]`, style as a `speech_metadata` annotation), not
-  `generate_content` with `response_modalities=["AUDIO"]` as in older guides and in PLAN.md.
+  `generate_content` with `response_modalities=["AUDIO"]` as in older guides.
   The TTS models are not visible to the models endpoint. Current ids: `gemini-3.8-flash-tts` and
   `gemini-3.8-flash-lite-tts`.
 - Tried: 1) metadata lookups of 16 ids (all 404). 2) Read the docs. 3) Interactions API with
