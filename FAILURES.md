@@ -209,6 +209,41 @@ Written when each failure happens. Template:
 - Resolution: `Alignment=2` (bottom centre in both numberings) with `MarginV=100`.
 - Time lost: 5 min. Lesson: look at a frame, not just the exit code.
 
+## F12 — keyframes: "torch" drawn as a flaming torch (s05)
+- When / run_id: 2026-11-25 22:22 EAT, run `20261125-222217-bf51`.
+- Symptom: in all 3 candidates of the power-cut shot Dad holds a burning torch (fire on a stick),
+  not an electric one. Dad's greying temples also became a white headband in the dark.
+- Cause (verified by the fix): "a torch in one hand" is British English for a flashlight; the image
+  model read the other sense. The narration keeps "torch" (it is how I talk); only the image prompt
+  changed.
+- Resolution: "a small electric flashlight" → 3 of 3 electric, chosen #0 (Dad aims it at the fuse
+  box). `outputs/keyframes/rejected/s05_v1_flaming_torch.png`.
+- Time lost: 5 min, ~440 neurons. Lesson: image prompts are not narration; write them in the most
+  literal, least ambiguous words.
+
+## F13 — keyframes: Dad lost his overalls next to the teenager (s08)
+- When / run_id: 2026-11-25 22:22 EAT, run `20261125-222217-bf51`.
+- Symptom: in 3 of 3 candidates Dad wears a white shirt and jeans, although his reference sheet and
+  his description say faded navy-blue work overalls (his colour anchor, the cue that he is the
+  same man across the film).
+- Cause (suspected): with two people and two sheets, the teen's hoodie-and-jeans outfit bled onto
+  Dad; his description is long and comes after the shot text.
+- Resolution: the s08 image prompt now names it in the action: "the father, in his faded navy-blue
+  work overalls, stands beside him". Regenerated after the 03:00 EAT allowance reset (with s03,
+  s04, s07). `outputs/keyframes/rejected/s08_v1_contact.png`.
+- Lesson: a colour anchor has to be in the shot sentence, not only in the attached description.
+
+## F14 — tests: a test wrote contact sheets into the real outputs/
+- When: 2026-11-25 23:15 EAT, `tests/test_keyframes.py` (first run).
+- Symptom: the test's fake images (flat brown squares) appeared in `outputs/refs/contact_*.png` and
+  `outputs/keyframes/*/contact.png`.
+- Cause (verified): `contact_sheet` paths were built from the repo root instead of the outputs
+  directory the tests redirect (`cache.OUTPUTS`). Manifests and images were not touched (they
+  already used `cache.OUTPUTS`).
+- Resolution: every output path in `pipeline/keyframes.py` now resolves through `cache.OUTPUTS`;
+  `keyframes.rebuild_sheets()` rebuilt all 16 real sheets from the manifests (no model calls).
+- Time lost: 10 min. Lesson: one helper for "where outputs go", used everywhere, or tests leak.
+
 ## Positive result worth recording — FLUX.2 klein reference images work
 - Run `20261125-144547-072d`: `flux2_ref` with `input_image_0 = flux2.jpg` and the prompt "the same
   red apple from the reference image, now on a blue ceramic plate" kept the same apple, the same

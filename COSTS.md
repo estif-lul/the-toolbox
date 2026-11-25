@@ -104,6 +104,21 @@ Free tier. "Used" is the peak shown for the last 28 days, i.e. today's Step 0 sm
 | FLUX.2 klein 4B + 1 reference | 4.9 s, 11.2 s |
 
   Latency roughly doubled between 14:45 and 14:48 EAT, so it depends on load; Step 3 should batch.
+- **Step 3 (21:58–22:23 EAT, refs + keyframes):** 69 FLUX.2 klein 4B images, 0 errors, 0 fallbacks.
+
+  | What | Images | Refs per image | Latency min / median / max | Neurons (est.) |
+  |---|---|---|---|---|
+  | Reference sheets (style 4, 5 characters, 2 regenerated sets, 4 edits) | 36 | 0–1 | 4.0 / 9.2 / 15.4 s | ~4,440 |
+  | Keyframes (10 images × 3, s05 twice; s07 deferred) | 33 | 1–2 | 5.5 / 11.3 / 17.6 s | ~4,660 |
+  | Ken Burns clips (FFmpeg, local) | 7 clips | — | 1.8 / 4.1 / 5.7 s | 0 |
+
+  - The day's estimate reached **~9,890 of 10,000 neurons** (Step 0 + Step 3), counted from
+    runs.jsonl with the documented per-tile rates (`pipeline/keyframes.py neurons_today`). The
+    keyframe stage now **generates in shot-priority order and defers whole shots** that would
+    pass the allowance (margin 300, `NEURON_MARGIN`); s03, s04, s07 and s08 wait for 03:00 EAT.
+  - 4 parallel requests: 30 keyframes in 1 min 42 s wall time.
+  - Spent on rejects (E21, E22, F12): 8 sheets (boy v1, teen v1) + 3 keyframes (s05 v1) ≈ 1,450
+    neurons. The pencil edits (E23) cost 4 images instead of 8 new sheets.
   Step 0 made 6 klein images (2 with a reference) and 2 schnell images (+1 rejected, F06):
   ≈ 6 × 104 + 2 × 22 + 2 × 58 ≈ 785 neurons (~8% of a day). The dashboard's own neuron count can be checked under Workers AI → Usage **[ME, optional]**.
 

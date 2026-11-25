@@ -183,3 +183,89 @@ in `outputs/smoke/summary.json`.
   heard-back check (`make narration-check`) after every batch run.
 - Evidence: `outputs/narration/batches/*.json` (each cut, its pause, its length ratio, any
   repair); `outputs/narration/verify_report.json`; runs.jsonl stage `narration_check`.
+
+## E21 — image: skin tone drifts lighter unless the text insists (the boy and the grown son)
+- Date / run_id: 2026-11-25 22:00–22:15 EAT, runs `20261125-220047-5f96` (v1), `20261125-220344-f836` (v2),
+  `20261125-221544-195e` (grown son).
+- Hypothesis: If the boy's description says "brown skin" and "a Habesha Ethiopian boy", the
+  sheets will show a brown-skinned Habesha boy, because the same wording worked for Dad.
+- Change (one variable): the skin-tone wording. Held fixed: FLUX.2 klein 4B, 4 steps, seeds
+  1201–1204, the chosen style image as reference, the sheet prompt.
+- Result: **v1 "brown skin": 4 of 4 boys light-skinned** (peach to light tan;
+  `outputs/refs/rejected/contact_me_child_v1_light_skin.png`). Dad, described the same way,
+  came out brown-skinned in 3 of 4 (the fourth was a light-skinned man in a polo shirt, E22).
+  **v2 "with warm brown skin, the same skin tone as his father": 3 of 4 right**; the fourth
+  was again a light-skinned boy at the style image's table (E22). The grown son, drawn from the
+  chosen boy's sheet: 3 of 4 right, 1 visibly lighter. In keyframes, the **hands-only inserts**
+  (s04, which has no character attached) came out with light-skinned hands in 3 of 3.
+- Decision: the descriptions now say "warm brown skin" for every age of the son; hands-only
+  shots say "the father's warm brown hands" (s04, s07). Every candidate is checked for this
+  before it can be chosen, and rejected sets are kept in `outputs/*/rejected/`.
+  The image model's default for a cartoon child is light-skinned; it has to be told, and
+  checked.
+- Evidence: the contact sheets above; `outputs/keyframes/rejected/s04_v1_contact.png`.
+
+## E22 — image: what a reference image carries besides its style
+- Date / run_id: 2026-11-25 22:00–22:22 EAT (the refs and keyframe runs).
+- Hypothesis: If the style image (the red toolbox on a table) is passed with every image as "the
+  style reference (ignore its subject)", the line work and palette will carry over and the table
+  and toolbox will not, because the prompt says which reference is for what.
+- Change: which references go with which image. Held fixed: the model, steps, seeds.
+- Result: the style carried over everywhere, and so did the subject: **2 of 4 Dad sheets and 1 of
+  4 boy sheets put the figure at the style image's table** (one with the toolbox), and both of
+  those also lost the character's skin tone and clothes (E21). In s01 all 3 candidates put the
+  toolbox on a stool like the style image's, not on floorboards as written. Without the style
+  image, sheets drawn from a parent sheet (dad_now, the teen, the grown son) and keyframes
+  that only got character sheets (s05, s06, s08, s10b) kept the look: **0 leaks in 27 images**.
+- Decision: the style image goes only to the first sheets (style + dad + boy) and to keyframes
+  with no character or with the toolbox in shot (s01, s04, s07, s09, s10a). The character sheets
+  carry the style everywhere else (`pipeline/keyframes.py keyframe_jobs`).
+- Evidence: `outputs/refs/contact_dad.png` (#1, #3), `outputs/refs/contact_me_child.png` (#0),
+  `outputs/keyframes/s01/contact.png`.
+
+## E19 — image: the age chain (teen and grown son drawn from the boy, Dad at fifty from Dad)
+- Date / run_id: 2026-11-25 22:08–22:15 EAT, runs `20261125-220711-4e2e`/`-220720-16c9` (v1), `20261125-221544-195e` (v2).
+- Hypothesis: If the teen, the grown son and Dad at fifty are drawn with the chosen younger
+  sheet as a reference, they will read as the same person at another age, because the face comes
+  from the image rather than from a new random draw.
+- Change: v1 passed the parent sheet with the default sentence ("keep each person's face, skin
+  tone, hair and clothes exactly as in their reference"); v2 says "keep the family resemblance
+  (face shape, eyes, skin tone, hair texture) and its art style, but draw him at the new age,
+  with the body proportions and clothes described". The teen's "a faint moustache" was replaced by
+  "a tall, lanky teenager with long arms and legs and a longer, thinner face".
+- Result: **Dad at fifty: 4 of 4 clearly the same man**, greyer (chosen: #2, then the pencil
+  edit #4, E23). **Teen v1: 4 of 4 kept the eight-year-old's body** and drew the faint moustache
+  as a full cartoon moustache (`outputs/refs/rejected/contact_me_teen_v1_child_body_moustache.png`).
+  **Teen v2: no moustache, a longer face, but still about 12–13** in this big-head storybook
+  style (chosen: #0, the lankiest). The grown son, now drawn from the boy (`derived_from:
+  me_child` instead of the teen, so a weak teen sheet cannot spread to s09 and s10): 3 of 4
+  plausible, chosen #2 (beard, overshirt, the most adult face). Judged by me; the "same person"
+  check by a second person is the near-final user test.
+- Decision: keep v2. The teen appears only in s08, next to Dad, where his height relative to Dad
+  matters more than his face.
+
+## E23 — image: removing one detail from a chosen sheet by editing it (the pencil)
+- Date / run_id: 2026-11-25 22:12 EAT, run `20261125-221226-c348` (`make revise`).
+- Hypothesis: If the chosen sheet is passed as the only reference with "Edit reference image 1:
+  remove the yellow pencil from behind his ear. Keep everything else exactly as it is", the pencil
+  goes and the face I chose stays, because an edit starts from the image instead of a new draw.
+- Change: the instruction (2 candidates each for Dad #0 and Dad at fifty #2). Held fixed: model, steps.
+- Result: **4 of 4 removed the pencil and kept the face, clothes, pose and background**. Cost:
+  4 images (~500 neurons) instead of 8 new sheets and another round of choosing. I asked for the
+  change after seeing the sheets: the pencil was drawn very large and added nothing.
+- Decision: keep (Dad #4, Dad at fifty #4); "a yellow pencil behind his right ear" is removed from
+  both descriptions so no keyframe asks for it. `make revise ITEM=… FROM=… EDIT=…` is now a stage
+  command; the manifest records `revised_from` and the instruction.
+
+## E08 — edit: does "subject centred" survive both crops?
+- Date: 2026-11-25 22:55–23:05 EAT, the rough cut (`make rough`).
+- Hypothesis: If every image prompt asks for the subject centred with empty space around it, the
+  centred 576-wide 9:16 column and 576-high 16:9 band will both keep the subject, because the
+  central area is what both crops share.
+- Result: **9:16 kept every subject. 16:9 cut the top of Dad's head in s05** and the hair of the
+  grown son in s09: standing full figures fill the square's height, and a centred 16:9 band drops
+  the top 22%. The crop previews on the contact sheets (orange 9:16, blue 16:9) show this before
+  any animation; the first rough cut confirmed it.
+- Decision: move the band per shot with `crop_focus.y` (an edit only: no image is regenerated):
+  s05 0.40, s09 0.45, s10a/s10b 0.45, s02 0.58 (to keep their feet). Re-checked on frames of the
+  rebuilt rough cut. Step 5 checks every shot this way.

@@ -15,6 +15,19 @@ Written before any generation (first commit). Updated as models are chosen; fina
 - Other family members appear only as **unnamed, soft background figures** (e.g. silhouettes
   cheering when the lights come back). They are not designed to be recognisable. If any specific
   relative is ever meant to be recognisable, their agreement is recorded in the table below first.
+- The reference sheets are drawn from text only; the later images get the *generated* sheets as
+  references (never a photo).
+
+### Representation check (Step 3)
+We are Habesha, and the film is for a Habesha family audience, so every candidate image is checked
+for drift towards a generic or lighter-skinned default before it can be chosen. It happened:
+- all 4 first sheets of the boy were light-skinned although the text said "brown skin"; so were
+  1 of 4 grown-son sheets, one Dad sheet, and the hands in the hands-only woodwork shot;
+- fix: "warm brown skin, the same skin tone as his father" for every age of the son, and "the
+  father's warm brown hands" in hands-only shots; the rejected sets are kept in
+  `outputs/*/rejected/` and described in EXPERIMENTS.md E21.
+Nothing was rendered in a stereotyped way in the candidates seen so far; the check continues for
+the remaining keyframes and the moving shots.
 
 ## 2. Consent record
 

@@ -6,10 +6,12 @@ made by a small code pipeline: `storyboard.json` is the contract, and each stage
 moving shots, music, narration, assembly) reads it and writes its outputs. Only what changed
 gets regenerated.
 
-> **Status: Step 2 (narration + radio cut).** `storyboard.json` (10 shots) validates against
-> `schema/storyboard.schema.json`. The narration is generated and measured (75.7 s with the end
-> card), and `outputs/cuts/radio_cut.mp4` (sound + subtitles on black) is ready for the first
-> user test. The picture stages are added next. This README is completed in Step 6.
+> **Status: Step 3 (the look + a rough film).** The narration is measured (75.7 s with the end
+> card) and the radio cut is out for the first user test. The style and the characters are
+> locked (reference sheets in `outputs/refs/`), 7 of 10 shots have a chosen keyframe, and a rough
+> Ken Burns film exists in both formats (`outputs/cuts/rough_kb_9x16.mp4`, `rough_kb_16x9.mp4`);
+> shots still waiting for a picture show a labelled card. Moving shots and music come next. This
+> README is completed in Step 6.
 
 ## Quickstart
 
@@ -27,6 +29,11 @@ make audition ROLE=dad    # the role's candidate stock voices, one TTS request p
 make narration            # every narration line -> WAV (cached per line) + outputs/narration/timing.json
 make narration-check      # hear each line back (transcribe), repair a batch cut in the wrong pause
 make radio                # radio cut: narration + placeholder pad + subtitles on black -> outputs/cuts/
+make refs                 # style + character reference candidates (whatever is ready) + contact sheets
+make choose ITEM=dad PICK=4   # record a pick in storyboard.json (style, a character, s05, s10a ...)
+make revise ITEM=dad FROM=0 EDIT="remove the pencil"   # edit a chosen sheet (new candidates)
+make keyframes            # 3 candidates per shot, references attached, crop previews drawn
+make rough                # Ken Burns clips + the radio-cut sound -> outputs/cuts/rough_kb_{9x16,16x9}.mp4
 make help                 # every target
 ```
 
