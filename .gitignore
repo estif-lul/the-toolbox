@@ -33,3 +33,6 @@ desktop.ini
 
 # Private evidence (consent chats, account pages): kept on my machine, never in the public repo
 [Ss]creenshot*
+
+# Final-edit intermediates (rebuilt by make assemble)
+outputs/final/*.wav

@@ -111,7 +111,7 @@ def candidates(sb: dict) -> list[dict]:
     return out
 
 
-def audition(sb: dict, *, dry_run: bool = False, console=None) -> list[dict]:
+def render_auditions(sb: dict, *, dry_run: bool = False, console=None) -> list[dict]:
     """The radio cut once per candidate -> outputs/cuts/audition_cN.mp4 (+ loudness of each candidate)."""
     from .assemble import run_radio
     from .common.cache import OUTPUTS
@@ -149,7 +149,7 @@ def run_music(profile: str | None = None, *, push: bool = False, pull: bool = Fa
     console = console or Console()
     sb = sbm.load_storyboard()
     if audition or audition_only:
-        res = audition(sb, dry_run=dry_run, console=console)
+        res = render_auditions(sb, dry_run=dry_run, console=console)
         return {"auditions": res}
     tl = sbm.timeline(sb, sbm.load_timing())
     ace = registry.get_provider(STAGE, profile).primary
@@ -160,5 +160,5 @@ def run_music(profile: str | None = None, *, push: bool = False, pull: bool = Fa
                        extra={"repo": ace.params.get("repo", "https://github.com/ace-step/ACE-Step-1.5.git")},
                        dry_run=dry_run, say=console.print)
     if res.get("ingested"):
-        res["auditions"] = audition(sb, dry_run=dry_run, console=console)
+        res["auditions"] = render_auditions(sb, dry_run=dry_run, console=console)
     return res

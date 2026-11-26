@@ -104,7 +104,7 @@
         "seeds": [301, 302, 303]
       }
     ],
-    "chosen": {"main": null},
+    "chosen": {"main": 1},
     "duck": {"threshold": 0.02, "ratio": 6, "attack_ms": 300, "release_ms": 1500}
   },
   "shots": [

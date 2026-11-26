@@ -1,0 +1,38 @@
+[
+  {
+    "candidate_lufs": {
+      "I": -15.87,
+      "LRA": 3.4,
+      "TP": -1.0
+    },
+    "film": "outputs/cuts/audition_c1.mp4",
+    "item": "main_c1",
+    "n": 1,
+    "path": "outputs/music/main_c1/1b0a88a2752cdd60.flac",
+    "seed": 301
+  },
+  {
+    "candidate_lufs": {
+      "I": -15.7,
+      "LRA": 3.2,
+      "TP": -0.97
+    },
+    "film": "outputs/cuts/audition_c2.mp4",
+    "item": "main_c2",
+    "n": 2,
+    "path": "outputs/music/main_c2/236ea2d322690962.flac",
+    "seed": 302
+  },
+  {
+    "candidate_lufs": {
+      "I": -15.88,
+      "LRA": 4.2,
+      "TP": -0.97
+    },
+    "film": "outputs/cuts/audition_c3.mp4",
+    "item": "main_c3",
+    "n": 3,
+    "path": "outputs/music/main_c3/e727b300477a9349.flac",
+    "seed": 303
+  }
+]

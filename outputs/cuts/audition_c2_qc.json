@@ -1,0 +1,35 @@
+{
+  "audio": {
+    "channels": 2,
+    "codec": "aac",
+    "rate": 48000
+  },
+  "cues": 20,
+  "duration_s": 75.7,
+  "lines": 17,
+  "loudness": {
+    "I": -14.57,
+    "LRA": 5.3,
+    "TP": -0.79
+  },
+  "music": "outputs/music/main_c2/236ea2d322690962.flac",
+  "music_note": "ACE-Step candidate main_c2 (seed 302)",
+  "ok": false,
+  "path": "outputs/cuts/audition_c2.mp4",
+  "sources": {
+    "gain_pad_db": -10.3,
+    "gain_voice_db": 3.33,
+    "narration_I": -19.33,
+    "pad_I": -15.7
+  },
+  "srt": "outputs/cuts/radio_cut.srt",
+  "stem": "outputs/cuts/narration_stem.wav",
+  "timeline_s": 75.67,
+  "video": {
+    "codec": "h264",
+    "fps": 24.0,
+    "frames": 1816,
+    "h": 720,
+    "w": 1280
+  }
+}
