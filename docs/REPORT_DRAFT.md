@@ -34,9 +34,16 @@ Every call is logged and every output cached, so changing one line regenerates o
   (DESIGN.md §4). That told me the story and the length hold up as sound alone, but it was thin
   evidence: I did not collect answers question by question.
   **[ME]** What I would do differently: ask for one concrete answer, e.g. "which line would you cut?"
-- **Test 2 (near-final film):** pending. Same questions, plus whether the characters feel like the
-  same people throughout and whether the subtitles are readable (DESIGN.md §5).
-  **[ME]** Quotes, the pattern, and the change it caused (with its commit).
+- **Test 2 (near-final film, sent before the moving shots were finished):** everyone answered.
+  The verdict was "very good, given it is a free model". No one reported confusion, a pacing
+  problem, a character who stopped looking like himself, or unreadable subtitles, and no one asked
+  for a change (DESIGN.md §5).
+  - The qualifier is the insight: they judged it partly as technology, and forgave the visible
+    limits (stills between short moving shots).
+  - **[ME]** One or two real quotes, if I have them.
+  - **[ME]** What I'd change in my testing: both tests told me *that* it works, not *which moment*
+    carries it. Next time I'd ask one forced-choice question ("which shot would you cut?") and
+    record every answer.
 - **From Dad:** he agreed to the story and to his three lines being said by a computer voice in a
   cartoon (ETHICS.md §2). **[ME]** His reaction to hearing them.
 
