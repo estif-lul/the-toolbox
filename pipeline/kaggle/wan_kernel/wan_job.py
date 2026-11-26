@@ -10,7 +10,9 @@
 # recommends). Phase A encodes every prompt with the UMT5 text encoder, then frees it.
 # Phase B loads one transformer + VAE per GPU and runs one worker thread per GPU.
 # Per job: denoise to latents, then decode (on OOM: VAE tiling, then the transformer moved to the
-# CPU for the decode). If the denoise itself runs out of memory: retry once at 576x576, 49 frames.
+# CPU for the decode). Attention is forced to PyTorch's memory-efficient kernel: on the pilot the
+# default path ran out of memory at 704x704x81 (a ~5 GB attention matrix, i.e. the math kernel).
+# If that rung fails for any reason: retry once at 576x576, 49 frames with the default attention.
 # A job that still fails is recorded and the batch goes on.
 
 EXPECTED_JOBS_SHA = ""
@@ -194,14 +196,23 @@ def decode(pipe, latents, dev):
     raise RuntimeError("VAE decode out of memory on every rung: " + "; ".join(notes))
 
 
+def set_attention(pipe, backend):
+    try:
+        pipe.transformer.set_attention_backend(backend)
+        return backend
+    except Exception as exc:  # noqa: BLE001
+        return f"default ({type(exc).__name__}: {exc})"[:200]
+
+
 def run_job(pipe, i, job):
     dev = f"cuda:{i}"
     img = Image.open(os.path.join(IN_DIR, job["image"])).convert("RGB")
-    rungs = [(job["width"], job["height"], job["frames"])]
-    rungs.append((min(job["width"], 576), min(job["height"], 576), min(job["frames"], 49)))
+    rungs = [(job["width"], job["height"], job["frames"], "_native_efficient")]
+    rungs.append((min(job["width"], 576), min(job["height"], 576), min(job["frames"], 49), "native"))
     notes = []
-    for w, h, n in rungs:
+    for w, h, n, backend in rungs:
         try:
+            attn = set_attention(pipe, backend)
             torch.cuda.reset_peak_memory_stats(dev)
             gen = torch.Generator(device=dev).manual_seed(int(job["seed"]))
             t = time.time()
@@ -217,10 +228,12 @@ def run_job(pipe, i, job):
             frames, how, dnotes = decode(pipe, latents, dev)
             notes += dnotes
             return frames, {"width": w, "height": h, "frames": n, "steps": job["steps"], "guidance": job["guidance"],
-                            "fps": job["fps"], "denoise_s": round(denoise_s, 1), "decode": how}, notes
-        except torch.cuda.OutOfMemoryError:
-            notes.append(f"denoise OOM at {w}x{h}x{n}")
-            log(f"{job['item']}: OOM at {w}x{h}x{n}, trying the next rung")
+                            "fps": job["fps"], "denoise_s": round(denoise_s, 1), "decode": how,
+                            "attention": attn}, notes
+        except Exception as exc:  # noqa: BLE001 - OOM or an unsupported attention kernel: next rung
+            kind = "OOM" if isinstance(exc, torch.cuda.OutOfMemoryError) else f"{type(exc).__name__}: {str(exc)[:160]}"
+            notes.append(f"denoise failed at {w}x{h}x{n} ({backend}): {kind}")
+            log(f"{job['item']}: {kind} at {w}x{h}x{n} ({backend}), trying the next rung")
             torch.cuda.empty_cache()
     raise RuntimeError("; ".join(notes))
 

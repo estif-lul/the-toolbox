@@ -201,3 +201,14 @@ def test_keyscale_spelling():
     assert music.keyscale("D major") == "D Major"
     assert music.keyscale("f# minor") == "F# Minor"
     assert music.keyscale("") == ""
+
+
+def test_a_forced_redo_from_a_new_run_replaces_the_clip(outputs, keyframes_chosen, tmp_path):
+    jobs, _ = shots.wan_jobs(sb_with_layers(), "wan-5b", PARAMS)
+    manifest = Manifest("shots")
+    small = _results(tmp_path, jobs[:1], used={"width": 576, "height": 576, "frames": 49})
+    shots.ingest(small, {"jobs_sha": "a" * 64, "jobs": jobs[:1]}, manifest, stage="shots", provider="p", model="m")
+    assert manifest.get(jobs[0]["item"])["degraded"] is True
+    full = _results(tmp_path, jobs[:1])
+    res = shots.ingest(full, {"jobs_sha": "b" * 64, "jobs": jobs[:1]}, manifest, stage="shots", provider="p", model="m")
+    assert res["ingested"] == [jobs[0]["item"]] and manifest.get(jobs[0]["item"])["degraded"] is False

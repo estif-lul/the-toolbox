@@ -269,3 +269,38 @@ in `outputs/smoke/summary.json`.
 - Decision: move the band per shot with `crop_focus.y` (an edit only: no image is regenerated):
   s05 0.40, s09 0.45, s10a/s10b 0.45, s02 0.58 (to keep their feet). Re-checked on frames of the
   rebuilt rough cut. Step 5 checks every shot this way.
+
+## E13 — music: three seeds of one caption, chosen by ear under the narration
+- Date / run_id: 2026-11-26 10:15 (push, `20261126-101457-b2e4`) → 10:32 (pull + ingest,
+  `20261126-103235-dade`); Kaggle kernel `toolbox-music` v1, jobs.json `8709d6fe64e4`.
+- Hypothesis: If the caption fixes the texture (krar, acoustic guitar, washint, sparse, slow) and
+  BPM / key go in their own fields (80, D major), then three seeds give three usable variations, and
+  the choice is about which one sits best under the voice, not which one is "good".
+- Change (one variable): the seed (301 / 302 / 303). Held fixed: caption, 80 BPM, D major, 4/4,
+  80 s (the film + a 4 s tail), instrumental, ACE-Step 1.5 turbo, 8 steps, DiT only (no LM "thinking").
+- Result (measured):
+  - 3 of 3 candidates usable: no vocals, nothing broken heard.
+  - 6.6 s of GPU per candidate on a T4 (peak 7.8 GB). The whole kernel took 3.5 min, of which
+    1.5 min was installing the repo's locked environment (`uv sync`: torch 2.10 + cu128 on Kaggle's
+    driver) and the rest downloading weights.
+  - Loudness (before mixing): c1 −15.9 LUFS, LRA 3.4; c2 −15.7, LRA 3.2; c3 −15.9, LRA 4.2; c3 has an
+    ~11 s intro before its melody. The auditions are the radio cut once per candidate, the score
+    ducked under the narration (`outputs/cuts/audition_c1..3.mp4`).
+- Decision: **c1 (seed 301)**, chosen by me by ear. Why: **[ME] one line: texture, whether it
+  fights the voice, the ending.** Recorded with `make choose ITEM=main PICK=1`.
+- Evidence: `outputs/music/main_c{1,2,3}/`, `outputs/music/auditions.json`,
+  `outputs/music/kaggle/8709d6fe64e4/` (results.jsonl, env.json, the kernel log).
+
+## E14 — music: can a model pre-listen for me?
+- Date: 2026-11-26 ~10:37 EAT, `scripts/describe_music.py` (3 calls to gemini-3.5-flash-lite with
+  the candidate as audio, stage `music_check`).
+- Hypothesis: If a multimodal model describes each candidate (instruments, vocals, artifacts,
+  structure, ending), it will narrow the choice before I listen, the way the transcription check
+  caught a bad narration cut (E20).
+- Result: it found no vocals and no artifacts in any candidate, which is consistent with what I
+  heard. But all three descriptions largely **repeat the brief back**: "fits the brief perfectly",
+  "krar, guitar, washint", "gentle, nostalgic". It does not tell the candidates apart, and it named
+  instruments from the prompt it was given.
+- Decision: use it only as a negative check (vocals, glitches); the choice stays a human one. A
+  better prompt would not give it the brief at all ("describe what you hear").
+- Evidence: `outputs/music/describe.json`.

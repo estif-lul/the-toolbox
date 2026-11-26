@@ -1,0 +1,58 @@
+{
+  "s09": {
+    "cache_key": "9c7e8b1da7b6bc040c838a8eb9d717294c264440f88b76571736315a58b3652b",
+    "created_at": "2026-11-26T10:41:59+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "45eece612b0b7cf9a032b9a68e36e363d9551acfb6d0b36e346a70af3281bf50",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise OOM at 704x704x81",
+      "decode OOM (plain)"
+    ],
+    "params_used": {
+      "decode": "tiling",
+      "denoise_s": 183.1,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s09/9c7e8b1da7b6bc04.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 373.1,
+    "seed": 2009,
+    "sha256": "aa7dd0217368334ede61e988d3cfccb63e26809fcc47d350b113dd18e120cfb2",
+    "status": "ok"
+  },
+  "s10a": {
+    "cache_key": "d6b5959716e639e9bd962ba0c98f867f9a2464229977d9e91661942c84c6a2f8",
+    "created_at": "2026-11-26T10:41:59+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "45eece612b0b7cf9a032b9a68e36e363d9551acfb6d0b36e346a70af3281bf50",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise OOM at 704x704x81",
+      "decode OOM (plain)"
+    ],
+    "params_used": {
+      "decode": "tiling",
+      "denoise_s": 199.3,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s10a/d6b5959716e639e9.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 394.3,
+    "seed": 2101,
+    "sha256": "ccb08823264ad1f36b98daefd6e07581911fe23d13473900b571289e025c1420",
+    "status": "ok"
+  }
+}

@@ -150,7 +150,8 @@ def stale_jobs(jobs: list[dict], manifest: Manifest, only=None, force=None) -> l
 
 def ingest(results, handle: dict, manifest: Manifest, *, stage: str, provider: str, model: str) -> dict:
     """Copy finished outputs into the cache, update the manifest, log one model_call per job.
-    A job already ingested (same key, fresh) is skipped, so pulling twice logs nothing twice."""
+    A job already ingested from this same Kaggle run is skipped, so pulling twice logs nothing twice;
+    a forced redo (same key, new run) replaces the earlier clip."""
     import shutil
 
     by_id = {j["job_id"]: j for j in handle["jobs"]}
@@ -161,7 +162,7 @@ def ingest(results, handle: dict, manifest: Manifest, *, stage: str, provider: s
             unknown.append(r.job_id)
             continue
         item, key = job["item"], job["cache_key"]
-        if manifest.is_fresh(item, key):
+        if already_ingested(manifest, job, handle["jobs_sha"]):
             continue
         row = r.meta or {}
         out = None
@@ -182,6 +183,11 @@ def ingest(results, handle: dict, manifest: Manifest, *, stage: str, provider: s
                   latency_s=r.seconds, gpu_s=r.seconds, cost_usd=0.0,
                   status="ok" if out else "error", error=None if out else str(r.error or "failed")[:400])
     return {"ingested": done, "failed": failed, "unknown": unknown}
+
+
+def already_ingested(manifest: Manifest, job: dict, jobs_sha: str) -> bool:
+    e = manifest.get(job["item"])
+    return bool(e and e.get("jobs_sha") == jobs_sha and manifest.is_fresh(job["item"], job["cache_key"]))
 
 
 def keep_evidence(folder, stage_dir, jobs_sha: str) -> None:
@@ -223,7 +229,7 @@ def kaggle_round(adapter, jobs: list[dict], stage_dir, manifest: Manifest, *, st
         if handle is None:
             say(f"{stage}: no Kaggle job to pull (push first)")
             return res
-        if all(manifest.is_fresh(j["item"], j["cache_key"]) for j in handle["jobs"]):
+        if all(already_ingested(manifest, j, handle["jobs_sha"]) for j in handle["jobs"]):
             say(f"{stage}: the last Kaggle run ({len(handle['jobs'])} job(s)) is already ingested")
             return res
         status = kc.wait(adapter.kaggle_stage, say=say) if both else adapter.status(None)
@@ -254,7 +260,11 @@ def run_shots(profile: str | None = None, *, push: bool = False, pull: bool = Fa
     wan = registry.get_provider("video", profile).primary
     manifest = Manifest(WAN_STAGE)
     jobs, waiting = wan_jobs(sb, wan.model, wan.params, wan.name)
-    stale = stale_jobs(jobs, manifest, only, force)[: limit or None]
+    stale = stale_jobs(jobs, manifest, only, force)
+    # a forced redo of a clip that already exists goes after every missing clip
+    stale = [{**j, "priority": j["priority"] + 100} if manifest.is_fresh(j["item"], j["cache_key"]) else j
+             for j in stale]
+    stale = sorted(stale, key=lambda j: (j["priority"], j["item"]))[: limit or None]
     res = kaggle_round(wan, stale, OUTPUTS / WAN_STAGE, manifest, stage=WAN_STAGE, push=push, pull=pull,
                        extra={"time_budget_s": float(wan.params.get("time_budget_s", 8 * 3600))},
                        dry_run=dry_run, say=console.print)

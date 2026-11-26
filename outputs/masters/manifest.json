@@ -1,0 +1,34 @@
+{
+  "s09": {
+    "cache_key": "e56179ca5d8b24da44c5cd403fedd5048c3e26d6cbf02993dbbd4940d976df6a",
+    "created_at": "2026-11-26T10:45:17+03:00",
+    "fps": 24,
+    "frames": 262,
+    "hold_amount": 0.06,
+    "hold_move": "push_in",
+    "model": "hold-and-drift",
+    "path": "outputs/masters/s09/e56179ca5d8b24da.mp4",
+    "provider": "ffmpeg",
+    "sha256": "d028b49c8f91771f607e845115f52cc0273496532dc0440ab6ecf49dd5be361c",
+    "size": 1024,
+    "status": "ok",
+    "wan": "outputs/shots/s09/9c7e8b1da7b6bc04.mp4",
+    "wan_frames": 49
+  },
+  "s10a": {
+    "cache_key": "90e6d5d73ae9f8c0ca918b387d8f23b6fd48a29eeb60e7bb6b83cab5deb9c657",
+    "created_at": "2026-11-26T10:45:24+03:00",
+    "fps": 24,
+    "frames": 225,
+    "hold_amount": 0.06,
+    "hold_move": "push_in",
+    "model": "hold-and-drift",
+    "path": "outputs/masters/s10a/90e6d5d73ae9f8c0.mp4",
+    "provider": "ffmpeg",
+    "sha256": "f4092c4af15292c7d2761fe29384cd2bb7915b95258bf3e98df6e10b1a509b9c",
+    "size": 1024,
+    "status": "ok",
+    "wan": "outputs/shots/s10a/d6b5959716e639e9.mp4",
+    "wan_frames": 49
+  }
+}

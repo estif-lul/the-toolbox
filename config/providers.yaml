@@ -61,7 +61,7 @@ profiles:
     video:                                  # moving shots
       - provider: kaggle_wan
         model: Wan-AI/Wan2.2-TI2V-5B-Diffusers
-        params: {width: 704, height: 704, frames: 81, steps: 30, guidance: 5.0}
+        params: {width: 704, height: 704, frames: 81, steps: 30, guidance: 5.0, time_budget_s: 5000}
       - provider: kenburns                  # local FFmpeg, always available
         model: ffmpeg-zoompan
         params: {fps: 24, size: 1024}
