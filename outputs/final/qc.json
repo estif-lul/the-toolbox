@@ -1,0 +1,277 @@
+{
+  "audio": {
+    "first_pass": {
+      "input_i": "-16.51",
+      "input_lra": "6.20",
+      "input_thresh": "-28.01",
+      "input_tp": "-0.40",
+      "normalization_type": "dynamic",
+      "output_i": "-15.40",
+      "output_lra": "4.90",
+      "output_thresh": "-26.68",
+      "output_tp": "-1.50",
+      "target_offset": "1.40"
+    },
+    "gain_music_db": -6.13,
+    "gain_voice_db": 3.33,
+    "music": "ACE-Step candidate main_c1 (seed 301)",
+    "music_I": -15.87,
+    "music_path": "outputs/music/main_c1/1b0a88a2752cdd60.flac",
+    "music_target_lufs": -22.0,
+    "narration_I": -19.33
+  },
+  "exports": {
+    "16x9": {
+      "audio": {
+        "channels": 2,
+        "codec": "aac",
+        "rate": 48000
+      },
+      "checks": {
+        "audio": true,
+        "duration": true,
+        "fps": true,
+        "loudness_I": true,
+        "resolution": true,
+        "true_peak": true
+      },
+      "duration_s": 75.667,
+      "loudness": {
+        "I": -14.64,
+        "LRA": 5.0,
+        "TP": -1.2
+      },
+      "ok": true,
+      "path": "outputs/final/the_toolbox_16x9.mp4",
+      "segments": [
+        {
+          "frames": 115,
+          "shot": "s01",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 153,
+          "shot": "s02",
+          "source": "kenburns",
+          "xfade": true
+        },
+        {
+          "frames": 180,
+          "shot": "s03",
+          "source": "kenburns",
+          "xfade": true
+        },
+        {
+          "frames": 116,
+          "shot": "s04",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 187,
+          "shot": "s05",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 84,
+          "shot": "s06",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 199,
+          "shot": "s07",
+          "source": "kenburns",
+          "xfade": true
+        },
+        {
+          "frames": 223,
+          "shot": "s08",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 262,
+          "shot": "s09",
+          "source": "wan",
+          "xfade": true
+        },
+        {
+          "frames": 225,
+          "shot": "s10",
+          "source": "kenburns+wan",
+          "xfade": false
+        },
+        {
+          "frames": 72,
+          "shot": "end_card",
+          "source": "card",
+          "xfade": false
+        }
+      ],
+      "sha256": "39fdabb0d8c934403cfca2472b93aefe7ed9b0b7f9a8d55f5e64e17066ddcf46",
+      "video": {
+        "codec": "h264",
+        "fps": 24.0,
+        "frames": 1816,
+        "h": 720,
+        "w": 1280
+      }
+    },
+    "9x16": {
+      "audio": {
+        "channels": 2,
+        "codec": "aac",
+        "rate": 48000
+      },
+      "checks": {
+        "audio": true,
+        "duration": true,
+        "fps": true,
+        "loudness_I": true,
+        "resolution": true,
+        "true_peak": true
+      },
+      "duration_s": 75.667,
+      "loudness": {
+        "I": -14.64,
+        "LRA": 5.0,
+        "TP": -1.2
+      },
+      "ok": true,
+      "path": "outputs/final/the_toolbox_9x16.mp4",
+      "segments": [
+        {
+          "frames": 115,
+          "shot": "s01",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 153,
+          "shot": "s02",
+          "source": "kenburns",
+          "xfade": true
+        },
+        {
+          "frames": 180,
+          "shot": "s03",
+          "source": "kenburns",
+          "xfade": true
+        },
+        {
+          "frames": 116,
+          "shot": "s04",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 187,
+          "shot": "s05",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 84,
+          "shot": "s06",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 199,
+          "shot": "s07",
+          "source": "kenburns",
+          "xfade": true
+        },
+        {
+          "frames": 223,
+          "shot": "s08",
+          "source": "kenburns",
+          "xfade": false
+        },
+        {
+          "frames": 262,
+          "shot": "s09",
+          "source": "wan",
+          "xfade": true
+        },
+        {
+          "frames": 225,
+          "shot": "s10",
+          "source": "kenburns+wan",
+          "xfade": false
+        },
+        {
+          "frames": 72,
+          "shot": "end_card",
+          "source": "card",
+          "xfade": false
+        }
+      ],
+      "sha256": "7c02ae08a839e12488ad46ce34d390b13c79e612ce2ce1ab7a4b5825ba4f2283",
+      "video": {
+        "codec": "h264",
+        "fps": 24.0,
+        "frames": 1816,
+        "h": 1280,
+        "w": 720
+      }
+    }
+  },
+  "ok": true,
+  "sources": {
+    "s01": {
+      "path": "outputs/kenburns/s01/b39898205b368a36.mp4",
+      "source": "kenburns"
+    },
+    "s02": {
+      "path": "outputs/kenburns/s02/c147b9394a26aa6d.mp4",
+      "source": "kenburns"
+    },
+    "s03": {
+      "path": "outputs/kenburns/s03/e4d11f94bb157fbf.mp4",
+      "source": "kenburns"
+    },
+    "s04": {
+      "path": "outputs/kenburns/s04/79b97e9f9a2bc3e7.mp4",
+      "source": "kenburns"
+    },
+    "s05": {
+      "path": "outputs/kenburns/s05/a6fc56bb48529e03.mp4",
+      "source": "kenburns"
+    },
+    "s06": {
+      "path": "outputs/kenburns/s06/bb607c5f3e5bb1d5.mp4",
+      "source": "kenburns"
+    },
+    "s07": {
+      "path": "outputs/kenburns/s07/20970c047ae331b4.mp4",
+      "source": "kenburns"
+    },
+    "s08": {
+      "path": "outputs/kenburns/s08/4917c9bc94ddcfea.mp4",
+      "source": "kenburns"
+    },
+    "s09": {
+      "path": "outputs/masters/s09/e56179ca5d8b24da.mp4",
+      "source": "wan"
+    },
+    "s10a": {
+      "path": "outputs/masters/s10a/90e6d5d73ae9f8c0.mp4",
+      "source": "wan"
+    },
+    "s10b": {
+      "path": "outputs/kenburns/s10b/67bec865e97517b2.mp4",
+      "source": "kenburns"
+    }
+  },
+  "subtitles": {
+    "cues": 20,
+    "narration_lines": 17,
+    "ok": true,
+    "srt": "outputs/final/film.srt"
+  },
+  "timeline_s": 75.67
+}

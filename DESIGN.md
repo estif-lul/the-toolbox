@@ -247,6 +247,11 @@ subtitle is understood by the non-Amharic speakers, and whether 75 s feels long 
 on a phone (pictures, moving shots where Wan produced a good clip, the chosen score, burned-in
 subtitles, the AI end card). Sent as a WhatsApp video.
 
+**Version tested:** sent 2026-11-26 ~11:00 EAT, the cut committed as "film: near-final v0 for user
+test 2": final story, pictures, score (c1), subtitles and end card; 2 of 11 images moving (s09,
+s10a, 2 s Wan clips), the rest slow Ken Burns moves. The other moving shots were still rendering;
+sending early gave the replies more time.
+
 **Who:** at least 3 people, ideally at least one who heard the radio cut (named by relationship
 only), and Dad if he wants to see it.
 
