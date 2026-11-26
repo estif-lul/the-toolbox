@@ -273,12 +273,25 @@ only), and Dad if he wants to see it.
 
 **Answers** (verbatim, pasted as they arrive):
 
+**Result (my summary, 2026-11-26 ~11:15 EAT):** everyone I sent it to answered. Their overall verdict:
+**very good, given that it is made with free models.** Nobody reported confusion, a pacing
+problem, a character who stopped looking like himself, unreadable subtitles or a wrong detail, and
+nobody asked for a change. The answers were not recorded question by question; any I paste later go
+in the table verbatim.
+
 | Who (relationship) | Date / how | Q1 About | Q2 Moment | Q3 Confusing / pace | Q4 Feeling at the end | Q5 Same people? | Q6 Subtitles / sound | Q7 Our family? |
 |---|---|---|---|---|---|---|---|---|
-| | | | | | | | | |
+| All testers (summarised by me) | 2026-11-26, WhatsApp | — | — | no problem raised | — | no problem raised | no problem raised | no problem raised |
 
-**Insights:** *(patterns across answers)*
+**Insights:**
+- Across both tests, no one found the story confusing or the length wrong. The film works as
+  intended at the level these testers judged it.
+- The praise came with a qualifier, "given it is a free model": they judged it partly as a piece of
+  technology. For this family audience, the craft limits (stills between moving shots, 2–3 s of
+  motion per shot) are visible but forgiven.
+- Neither test produced per-question answers. That is the weakness of my testing: I learned *that*
+  it works, not *which moment* carries it.
 
-**Changes decided** (each goes into `storyboard.json` in a commit that names this test; `make film`
-then regenerates only what changed, and runs.jsonl shows it):
-- *(to fill)*
+**Changes decided:** none from the testers. The changes after this test come from my own review of
+the moving shots (which clips are kept and which fall back to Ken Burns), recorded in FAILURES.md and
+EXPERIMENTS.md.
