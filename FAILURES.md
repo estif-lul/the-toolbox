@@ -277,11 +277,32 @@ Written when each failure happens. Template:
 - What did not happen: no NaNs. The fp16 text embeddings were finite and the frames were not
   black, so fp16 on a T4 (no bf16) works for this model.
 - Resolution: the first rung now forces `set_attention_backend("_native_efficient")`. Any failure
-  there falls back to 576/49 with the default attention. Result of the full batch (kernel v2):
-  see the outcome line below.
+  there falls back to 576/49 with the default attention.
+- Outcome (kernel v2, 2026-11-26 11:00–11:47, 11 jobs): **the efficient kernel did not fix it.**
+  All 11 ran out of memory at 704x704x81 again and were made at 576x576x49. The ladder did its job:
+  11 of 11 clips usable for the edit, no NaNs, nothing lost but the time of each failed attempt
+  (EXPERIMENTS E09).
 - Time lost: the pilot itself (15 min wall, ~13 GPU-min of jobs). It was the point of the pilot:
   the full batch did not repeat it.
-- Lesson: on a 16 GB card, check which attention kernel actually runs before blaming the resolution.
+- Lesson: on a 16 GB card, measure the headroom before choosing the resolution. Changing the
+  attention kernel was not enough with ~2 GB left; the fallback ladder is what saved the batch.
+
+## F17 — shots: three Wan clips morph (s07, s08, s09)
+- When / run: batch `75fd75d50d25`, reviewed 2026-11-26 ~12:55 EAT (EXPERIMENTS E15).
+- Symptom:
+  - s07: the pot moves out of the frame, a third hand appears and the last frame is almost empty.
+  - s08: the son's body folds onto the car.
+  - s09: the toolbox lid swells like cloth, with a glowing panel inside, and stays like that for the
+    ~9 s hold.
+- Cause (inferred): at 576 px and 49 frames, the 5B model keeps shapes when the motion is small and
+  already implied by the keyframe, and loses them when the prompt asks for new shapes. The s07 and
+  s09 prompts also asked for two things at once ("turn the wrench" + "the dripping stops"; "the lid
+  lifts" + "the trays unfold").
+- Resolution: `"motion": "kenburns"` for these three shots (one line each). The clips stay in the
+  cache, so going back costs no GPU.
+- Time lost: ~20 GPU-min on three unused clips (3 x ~6.6 min).
+- Lesson: ask Wan for one small motion the keyframe already implies. And judge the **last** frame
+  first: the edit holds it longest.
 
 ## Positive result worth recording — FLUX.2 klein reference images work
 - Run `20261125-144547-072d`: `flux2_ref` with `input_image_0 = flux2.jpg` and the prompt "the same

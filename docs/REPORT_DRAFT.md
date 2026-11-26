@@ -2,7 +2,7 @@
 
 > A draft built from the repository's evidence, for me to **rewrite in my own voice** before
 > exporting it to PDF/DOCX. Every claim links to the file that backs it. **[ME]** marks what only I
-> can write. Brackets with "pending" are filled when user test 2 comes back.
+> can write.
 
 ## 1. What I set out to make, and for whom
 
@@ -69,8 +69,13 @@ Candidates, all with evidence. Pick one and tell it as a story:
 - **Wan 2.2 on a free T4.**
   - The pilot ran out of memory at 704×704×81: the default attention path builds a ~5 GB attention
     matrix. A fallback ladder made 2 s clips at 576 px instead.
-  - Forcing PyTorch's memory-efficient attention: result pending.
-  - Evidence: FAILURES.md F16, `outputs/shots/kaggle/`.
+  - Forcing PyTorch's memory-efficient attention did not fix it: all 11 batch clips fell back to
+    576 px, 2 s (E09). The edit had been built for that: each clip plays, then its last frame holds
+    with a slow drift.
+  - A frame-by-frame review kept 8 of 11 and sent three back to Ken Burns. Small motions the picture
+    already implies survive; motions that need new shapes (a lid opening, a body bending) break
+    (E15, F17).
+  - Evidence: FAILURES.md F16, F17; EXPERIMENTS.md E09, E15; `outputs/shots/kaggle/`.
 
 ## 4. A suggested practice that beat my instinct
 

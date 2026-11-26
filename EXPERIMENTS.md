@@ -311,3 +311,61 @@ in `outputs/smoke/summary.json`.
 - Decision: use it only as a negative check (vocals, glitches); the choice stays a human one. A
   better prompt would not give it the brief at all ("describe what you hear").
 - Evidence: `outputs/music/describe.json`.
+
+## E09 — video: memory-efficient attention for 704x704x81 on a free T4
+- Date / run_id: 2026-11-26. Push 10:45 (`20261126-104354-37d6`); Kaggle kernel `toolbox-wan` v2 ran
+  11:00–11:47 EAT on T4 x2; pull and ingest 12:49 (`20261126-124941-21af`). jobs.json `75fd75d50d25`,
+  11 jobs: the 9 missing shots plus s09 and s10a redone.
+- Hypothesis: If the first rung forces PyTorch's memory-efficient attention
+  (`set_attention_backend("_native_efficient")`), then 704x704x81 (3.4 s) fits in the T4's 15 GB,
+  because the pilot's out-of-memory error looked like the default path building the whole ~5 GB
+  attention matrix (FAILURES F16).
+- Change (one variable): the attention backend on the first rung. Held fixed: Wan 2.2 TI2V-5B
+  (fp16 transformer, fp32 VAE), 30 steps, guidance 5.0, one seed per shot (2001–2009, 2101, 2102),
+  the prompts and the keyframes.
+- Result (measured):
+  - **0 of 11 at 704x704x81.** Every job ran out of memory on the first rung again
+    (`denoise failed at 704x704x81 (_native_efficient): OOM`) and was made at 576x576x49 (2.04 s)
+    with the default attention.
+  - Denoising took 187–219 s per clip (about 7 s a step); 380–414 s per job in all, including the
+    failed attempt and the decode. Two clips (s10b, s05) also needed a tiled VAE decode.
+  - No NaNs and no black frames: fp16 on a T4 is fine for this model.
+  - Wall time 46.5 min for 11 clips on two T4s. Setup: 2.5 min weights download, 57 s prompt
+    encoding. Kaggle GPU quota after all of Step 4: 1.08 h of the weekly 30 h.
+- Conclusion: the hypothesis was wrong, or at least not enough. With ~2 GB left after the weights,
+  the attention kernel was not the only thing that did not fit (inferred, not profiled). The next
+  things to try would be moving the VAE to the CPU while denoising, or model CPU offload; both cost
+  time on a T4.
+- Decision: keep 576x576x49 for this film. The edit was built for short clips: each clip plays, then
+  its last frame holds with a slow drift (ARCHITECTURE.md §9). 720p belongs to the paid lane (a 24 GB
+  GPU in bf16, docs/PAID_LANE.md).
+- Evidence: `outputs/shots/kaggle/75fd75d50d25/` (results.jsonl `notes`, env.json, the kernel log),
+  `outputs/shots/manifest.json` (`degraded: true` and `params_used` on every clip).
+
+## E15 — video: which Wan clips survive a frame-by-frame review
+- Date / run_id: 2026-11-26 ~12:50–13:00 EAT. Final renders `20261126-125245-e1b5` (9 images moving)
+  and `20261126-125708-6023` (8 moving, final v1).
+- Hypothesis: If every clip is judged on five frames (0, 12, 24, 36, 48) and then inside the finished
+  film in both crops, the bad clips are caught before anyone else sees them. Because the last frame
+  is held for up to 9 s, the last frame matters more than the motion.
+- Change (one variable): per shot, `"motion": "wan"` or `"kenburns"` in `storyboard.json`.
+  Held fixed: the clips, the keyframes, the edit.
+- Result:
+  - **Kept (8 images):** s01 (dust in the light), s02 (walking towards the camera), s03 (the
+    torch beam wobbles), s04 (the plane slides, shavings fall off the edge), s05 (the candle flickers,
+    he raises the tester), s06 (the jump; 2–3 smeared frames mid-jump read as motion blur at 24 fps),
+    s10a and s10b (smiling and nodding on the phone).
+  - **Rejected, back to Ken Burns (3):**
+    - s07: the scene melts. The pot leaves the frame, a third hand appears and the last frame is
+      almost empty.
+    - s08: in the second second the son's body folds onto the car.
+    - s09: the lid opens but swells like cloth, with a glowing white-and-blue panel inside. It is
+      held for ~9 s in 16:9. The pilot's s09 (same seed, run before) had the same swelling lid.
+  - Pattern: motion the keyframe already implies survives (light, a small hand movement, a nod, a
+    walk). Motion that needs new shapes breaks (a lid opening, a body bending, water stopping).
+- Judged by: Claude Code (the coding assistant that runs the pipeline), from frame strips and from
+  frames of the finished film. **[ME] confirm by watching final v1.** Any shot flips back with one
+  line in `storyboard.json`, and the clips stay in the cache, so it costs no GPU.
+- Decision: final v1 with 8 of 11 images moving.
+- Evidence: commits `f289cef` (clips) and `6de2072` (final v1); the unused clips are kept in
+  `outputs/shots/s07`, `s08`, `s09`; FAILURES F17.

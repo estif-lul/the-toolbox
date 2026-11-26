@@ -11,9 +11,10 @@ It is made by a small code pipeline. `storyboard.json` is the contract: each sta
 reference sheets, keyframes, moving shots, music, the edit) reads it and writes cached outputs, so
 **changing one shot regenerates only that shot**. Every model call is logged to `runs.jsonl`.
 
-> **Status (2026-11-26):** the final edit runs end to end in both formats with the chosen score.
-> Wan 2.2 moving shots are pulled in as the Kaggle batch finishes; any shot without a clip uses
-> its Ken Burns move. User test 2 is out.
+> **Status (2026-11-26): final v1.** 75.7 s, both formats, QC passed (−14.6 LUFS, true peak
+> −1.2 dB). 8 of the 11 images move (Wan 2.2, ~2 s each, then a slow hold on the last frame). s07,
+> s08 and s09 use their Ken Burns move after review (EXPERIMENTS E15). User test 2: everyone
+> answered, and nobody asked for a change.
 
 ## Quickstart
 

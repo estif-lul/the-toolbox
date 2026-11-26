@@ -152,7 +152,9 @@ Same timeline, same subtitles, two encodes.
 
 - Wan 2.2 runs on free Kaggle T4s in fp16 (no bf16 on a T4). A shot without a fresh clip falls back
   to Ken Burns in the edit, which is still a complete film.
-- Wan clips are ~3.4 s and most shots are longer: the edit holds the last frame with a slow drift.
+- Wan clips are ~2 s on a free T4 (576x576x49; 704x704x81 runs out of memory, FAILURES F16) and
+  most shots are 4–11 s: the edit holds the last frame with a slow drift. So the last frame is
+  what a viewer looks at longest, and a clip is judged on it first (EXPERIMENTS E15).
 - The style image leaks its own props into other images, and the model drifts towards lighter skin
   unless the text insists (EXPERIMENTS E21, E22). Both are handled in the prompts, and every
   candidate is checked by eye.
