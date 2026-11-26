@@ -37,7 +37,25 @@ def list_price(row: dict, prices: dict) -> float | None:
         return 0.0
     if model.startswith("@cf/") and p and p.get("neurons"):
         return round(neurons(model, int((row.get("params") or {}).get("refs") or 0)) * USD_PER_NEURON, 6)
+    if p and p.get("unit") == "per_1m_tokens" and p.get("input") is not None:
+        tokens = usage_tokens(row)
+        if tokens is None:
+            # a failed request returns no usage; such requests are counted as not billed
+            return 0.0 if row.get("status") != "ok" else None
+        tin, tout = tokens
+        return round((tin * p["input"] + tout * p["output"]) / 1e6, 6)
     return None
+
+
+def usage_tokens(row: dict) -> tuple[int, int] | None:
+    """(input, output + thinking) tokens from the usage the Gemini adapters log, if any."""
+    u = (row.get("extra") or {}).get("usage") or row.get("usage")
+    if not u:
+        return None
+    if "total_input_tokens" in u:          # Interactions API (TTS)
+        return int(u.get("total_input_tokens") or 0), int(u.get("total_output_tokens") or 0) + int(
+            u.get("total_thought_tokens") or 0)
+    return int(u.get("prompt_tokens") or 0), int(u.get("output_tokens") or 0) + int(u.get("thinking_tokens") or 0)
 
 
 def summarise(rows: list[dict], prices: dict, key) -> dict[tuple, dict]:
@@ -117,7 +135,12 @@ def build(rows: list[dict], prices: dict) -> str:
         f"**{total['gpu_s'] / 60:.1f} GPU-min** (T4).",
         f"- Paid by me: **${total['cost']:.2f}** (free tiers only).",
         f"- List-price equivalent of the calls with a checked price: **${total['list']:.4f}**; "
-        f"{total['list_unknown']} calls have no checked price yet (shown as unknown, not 0).",
+        f"{total['list_unknown']} calls have no checked price (shown as unknown, not 0): the Kaggle GPU "
+        "jobs (no T4 list price recorded), models not on the pricing page, and calls whose usage was not logged.",
+        "- Gemini prices are the Standard (paid) tier for 2026 from the pricing page, applied to the token "
+        "usage each call logged; a failed request (no usage returned) is counted as not billed. "
+        "Workers AI images use the documented neurons per tile. Prices double for the Gemini 3.8 models "
+        "from 2027-01-01.",
         END,
     ])
 
