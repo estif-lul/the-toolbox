@@ -12,9 +12,10 @@ reference sheets, keyframes, moving shots, music, the edit) reads it and writes 
 **changing one shot regenerates only that shot**. Every model call is logged to `runs.jsonl`.
 
 > **Status (2026-11-26): final v1.** 75.7 s, both formats, QC passed (−14.6 LUFS, true peak
-> −1.2 dB). 8 of the 11 images move (Wan 2.2, ~2 s each, then a slow hold on the last frame). s07,
-> s08 and s09 use their Ken Burns move after review (EXPERIMENTS E15). User test 2: everyone
-> answered, and nobody asked for a change.
+> −1.2 dB). 7 of the 11 images move (Wan 2.2, ~2 s each, then a slow hold on the last frame). s07,
+> s08 and s09 use their Ken Burns move after review. s06 uses its Ken Burns move too: its keyframe
+> was regenerated in the live walkthrough change, so its Wan clip no longer matches (EXPERIMENTS
+> E15). User test 2: everyone answered, and nobody asked for a change.
 
 ## Quickstart
 

@@ -237,48 +237,48 @@
     "status": "ok"
   },
   "s06#0": {
-    "cache_key": "85251a5c1a4cf567eb6913168d6317451b996322c6425de1b5b782d9fea16887",
-    "created_at": "2026-11-25T22:13:56+03:00",
+    "cache_key": "c9ad7e6e75cd240df3429d8d85705eb47203e15ba2e2f7ec9e151b0478903aa1",
+    "created_at": "2026-11-26T14:15:10+03:00",
     "fell_back": false,
     "model": "@cf/black-forest-labs/flux-2-klein-4b",
-    "path": "outputs/keyframes/s06/85251a5c1a4cf567.jpg",
-    "prompt_sha": "6a8b93e93e42c75221f7ba391cd545017b5227386f2838c03d44a8fec6735f73",
+    "path": "outputs/keyframes/s06/c9ad7e6e75cd240d.jpg",
+    "prompt_sha": "efe64369c28f665ac61e8bde3355cfc8ee9b1e42f6ac631a7ae1b82beddfd36d",
     "provider": "cloudflare_image",
     "refs": [
       "outputs/refs/me_child/20c509ebfa07510f.jpg"
     ],
     "seed": 2006,
-    "sha256": "153cf5d33e64ad4ead1966e59e68fe2bccef06ac5ee07c03e746c098ee57bb04",
+    "sha256": "7bec41acd261e85ea715d45455bffedb329f36555e3635d12157ed5fd99db903",
     "status": "ok"
   },
   "s06#1": {
-    "cache_key": "b3490af632459bd5a62fa9ab1e1f5ced777833341fe60cb660335c70a35b5232",
-    "created_at": "2026-11-25T22:13:57+03:00",
+    "cache_key": "5e820637f2fd059bd2bbe537c8460d0506c171f28b617214cbe4fdebf7d23b53",
+    "created_at": "2026-11-26T14:15:10+03:00",
     "fell_back": false,
     "model": "@cf/black-forest-labs/flux-2-klein-4b",
-    "path": "outputs/keyframes/s06/b3490af632459bd5.jpg",
-    "prompt_sha": "6a8b93e93e42c75221f7ba391cd545017b5227386f2838c03d44a8fec6735f73",
+    "path": "outputs/keyframes/s06/5e820637f2fd059b.jpg",
+    "prompt_sha": "efe64369c28f665ac61e8bde3355cfc8ee9b1e42f6ac631a7ae1b82beddfd36d",
     "provider": "cloudflare_image",
     "refs": [
       "outputs/refs/me_child/20c509ebfa07510f.jpg"
     ],
     "seed": 2007,
-    "sha256": "3cf76f863210f25fe8f21700abf461d1bb31189023a90c7fde085a8154a2475c",
+    "sha256": "447b4525345fe2f20d48998121c768f2efe801f6f1e0fb2c3da28de2e02cbdbc",
     "status": "ok"
   },
   "s06#2": {
-    "cache_key": "fa2e97e2666fa6f5b61af76e6d1829549c7b4570fcfc27d2d558d97017b5d83e",
-    "created_at": "2026-11-25T22:13:57+03:00",
+    "cache_key": "9474d71e4aa0e859adf003e7c153cb391a779b23c6f34b70a7fe0981a106a4f7",
+    "created_at": "2026-11-26T14:15:10+03:00",
     "fell_back": false,
     "model": "@cf/black-forest-labs/flux-2-klein-4b",
-    "path": "outputs/keyframes/s06/fa2e97e2666fa6f5.jpg",
-    "prompt_sha": "6a8b93e93e42c75221f7ba391cd545017b5227386f2838c03d44a8fec6735f73",
+    "path": "outputs/keyframes/s06/9474d71e4aa0e859.jpg",
+    "prompt_sha": "efe64369c28f665ac61e8bde3355cfc8ee9b1e42f6ac631a7ae1b82beddfd36d",
     "provider": "cloudflare_image",
     "refs": [
       "outputs/refs/me_child/20c509ebfa07510f.jpg"
     ],
     "seed": 2008,
-    "sha256": "b2f5b7c3e6a69a36fe6a999a1cc6cf1b3e51654289155e0f084125c55ebd58f3",
+    "sha256": "6dd18b74ac4f8ab5bb028793f02c219942726b191b9cf11ece675252984e8a12",
     "status": "ok"
   },
   "s07#0": {
