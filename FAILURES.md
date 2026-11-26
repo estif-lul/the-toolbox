@@ -264,6 +264,25 @@ Written when each failure happens. Template:
 - Lesson: describe a pose the model can draw whole (lying beside, side view) and let the narration
   carry "under the car".
 
+## F16 — shots: Wan 2.2 ran out of memory at 704x704x81 on a T4 (pilot)
+- When / run: 2026-11-26 10:27–10:41 EAT, Kaggle kernel `toolbox-wan` v1 (pilot: s09 + s10a,
+  one per T4), jobs.json `45eece612b0b`; pulled in run `20261126-1041*`.
+- Symptom: both jobs logged `denoise OOM at 704x704x81` about 10 s into the denoise. The ladder then
+  made them at 576x576x49 (2 s instead of 3.4 s). The VAE decode also needed tiling (`decode OOM
+  (plain)`). Peak 14.9 GB of the T4's 15 GB.
+- Cause (inferred from the numbers, not profiled): the transformer (fp16, ~10 GB) and the VAE (fp32,
+  2.8 GB) left ~2 GB. At 704x704x81 there are 22x22x21 = 10,164 tokens, and an attention matrix for
+  24 heads in fp16 is ~5 GB. So PyTorch's default path was materialising the whole matrix (the
+  "math" kernel) instead of using the memory-efficient kernel the T4 supports.
+- What did not happen: no NaNs. The fp16 text embeddings were finite and the frames were not
+  black, so fp16 on a T4 (no bf16) works for this model.
+- Resolution: the first rung now forces `set_attention_backend("_native_efficient")`. Any failure
+  there falls back to 576/49 with the default attention. Result of the full batch (kernel v2):
+  see the outcome line below.
+- Time lost: the pilot itself (15 min wall, ~13 GPU-min of jobs). It was the point of the pilot:
+  the full batch did not repeat it.
+- Lesson: on a 16 GB card, check which attention kernel actually runs before blaming the resolution.
+
 ## Positive result worth recording — FLUX.2 klein reference images work
 - Run `20261125-144547-072d`: `flux2_ref` with `input_image_0 = flux2.jpg` and the prompt "the same
   red apple from the reference image, now on a blue ceramic plate" kept the same apple, the same
