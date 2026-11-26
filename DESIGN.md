@@ -218,19 +218,24 @@ ETHICS.md §2.
 > 5. Did anything sound wrong (a word, a name, a pause)? Did Dad's Amharic lines sound natural?
 > 6. Does this feel like our family and home? What detail is missing or wrong?
 
-**Status:** ready to send 2026-11-25 ~21:40 EAT. Answers are pasted below verbatim as they arrive.
+**Status:** sent 2026-11-25 evening; replies by 2026-11-26 morning.
+
+**Result (my summary, 2026-11-26 ~10:00 EAT):** the people I shared it with thought it was OK as
+it is. Nobody asked for a change to the story, the pace or Dad's lines, so nothing in the
+narration changed and no TTS request was spent. The individual answers were not collected
+question by question; if I paste any of them later they go in the table below, verbatim.
 
 | Who (relationship) | Date / how | Q1 About | Q2 Moment | Q3 Confusing / pace | Q4 Feeling at the end | Q5 Sound / Amharic | Q6 Our family? |
 |---|---|---|---|---|---|---|---|
-| | | | | | | | |
+| Family and friends (summarised by me) | 2026-11-25/26, WhatsApp | — | — | no problem raised | — | no problem raised | no problem raised |
 
-**Where they reacted:** *(timecodes or lines they mention)*
+**Insights:** no pattern of confusion; the story and the 75 s length hold up as a radio piece. Test 1
+is thin evidence (no per-question answers), so user test 2 (near-final cut, Step 5) asks the same
+questions, records each answer, and checks what this test could not: the pictures, the
+consistency of the characters, and whether the proverb's subtitle lands.
 
-**Insights:** *(patterns across answers, not single opinions)*
-
-**Changes decided** (each one goes into `storyboard.json` in a commit that names this test; only the
-changed lines regenerate, which runs.jsonl shows):
-- *(to fill)*
+**Changes decided:** none to the story or the narration. (The picture changes made since come from
+my own review of the images, not from this test: FAILURES.md F12, F13, F15.)
 
 Things I'm listening for in the answers, from building it: whether "Dad, I fixed it myself" reads
 clearly (the automatic check, `make narration-check`, hears "That I fixed it myself"), whether the proverb's

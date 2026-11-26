@@ -232,6 +232,10 @@ Written when each failure happens. Template:
   work overalls, stands beside him". Regenerated after the 03:00 EAT allowance reset (with s03,
   s04, s07). `outputs/keyframes/rejected/s08_v1_contact.png`.
 - Lesson: a colour anchor has to be in the shot sentence, not only in the attached description.
+- Outcome (2026-11-26 ~10:05 EAT, after the reset): 2 of 3 new candidates keep the overalls. The
+  pick was #2 anyway, where Dad wears a yellow hoodie like his son's, for its composition (bonnet
+  open, both faces readable). So s08 is the one shot where Dad's colour anchor is missing; user
+  test 2 checks whether viewers still read him as the same man.
 
 ## F14 — tests: a test wrote contact sheets into the real outputs/
 - When: 2026-11-25 23:15 EAT, `tests/test_keyframes.py` (first run).
@@ -243,6 +247,22 @@ Written when each failure happens. Template:
 - Resolution: every output path in `pipeline/keyframes.py` now resolves through `cache.OUTPUTS`;
   `keyframes.rebuild_sheets()` rebuilt all 16 real sheets from the manifests (no model calls).
 - Time lost: 10 min. Lesson: one helper for "where outputs go", used everywhere, or tests leak.
+
+## F15 — keyframes: Dad's body twisted against the car (s03)
+- When / run_id: 2026-11-25 ~22:20 EAT (first keyframe run); fixed in run `20261126-095546-2b46`
+  after the 03:00 EAT allowance reset.
+- Symptom: the first s03 prompt (Dad on his back half under the front of the car, the boy holding
+  a torch) gave bodies folded against the bumper: in the best candidate (#2) his torso bends up into
+  the grille at an angle no body makes. I called the set "unusable"; the reason (the contorted
+  position) was confirmed on 2026-11-26. `outputs/keyframes/rejected/s03_v1_contact.png`.
+- Cause (suspected): "half under the car" asks the model to hide part of a body behind an object
+  it also draws; it bends the body instead of hiding it.
+- Resolution: a side view, Dad on a flattened cardboard sheet, the boy with "a small electric
+  flashlight" (not "torch", F12). 1 of 3 new candidates was clean: #0, Dad lies beside the car
+  (not under it) with his face visible; chosen. The Wan motion prompt was rewritten to match the
+  picture ("the father lying on the cardboard turns the wrench").
+- Lesson: describe a pose the model can draw whole (lying beside, side view) and let the narration
+  carry "under the car".
 
 ## Positive result worth recording — FLUX.2 klein reference images work
 - Run `20261125-144547-072d`: `flux2_ref` with `input_image_0 = flux2.jpg` and the prompt "the same

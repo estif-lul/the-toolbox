@@ -3,12 +3,7 @@
     "16x9": {
       "duration_s": 75.667,
       "path": "outputs/cuts/rough_kb_16x9.mp4",
-      "pending": [
-        "s03",
-        "s04",
-        "s07",
-        "s08"
-      ],
+      "pending": [],
       "video": {
         "codec": "h264",
         "fps": 24.0,
@@ -20,12 +15,7 @@
     "9x16": {
       "duration_s": 75.667,
       "path": "outputs/cuts/rough_kb_9x16.mp4",
-      "pending": [
-        "s03",
-        "s04",
-        "s07",
-        "s08"
-      ],
+      "pending": [],
       "video": {
         "codec": "h264",
         "fps": 24.0,
