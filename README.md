@@ -104,6 +104,7 @@ plus the Kaggle GPU time. The tables are generated from `runs.jsonl` (`make cost
   - ARCHITECTURE.md: stages, contract, cache keys, failure handling
   - EXPERIMENTS.md, FAILURES.md, COSTS.md
   - ETHICS.md: consent, privacy, labelling, licences
+  - docs/REPORT.md (also as docs/REPORT.pdf): the report, what I learned and what I would build next
   - docs/PAID_LANE.md
 
 ## Licences and labelling
