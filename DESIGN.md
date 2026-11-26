@@ -242,4 +242,38 @@ clearly (the automatic check, `make narration-check`, hears "That I fixed it mys
 subtitle is understood by the non-Amharic speakers, and whether 75 s feels long on a phone.
 
 ## 5. User test 2 (near-final cut)
-*To be filled in Step 5.*
+
+**What they get:** `outputs/final/the_toolbox_9x16.mp4`: the near-final film as people will see it
+on a phone (pictures, moving shots where Wan produced a good clip, the chosen score, burned-in
+subtitles, the AI end card). Sent as a WhatsApp video.
+
+**Who:** at least 3 people, ideally at least one who heard the radio cut (named by relationship
+only), and Dad if he wants to see it.
+
+**The message sent with it:**
+> This is the nearly finished version of the short film about Dad (about 75 seconds, made with AI).
+> Could you watch it with the sound on and answer in a few words?
+> 1. In one sentence, what is this film about?
+> 2. Which moment stayed with you?
+> 3. Was anything confusing, too slow or too fast?
+> 4. How did you feel at the end?
+> 5. Did the characters feel like the same people all the way through (Dad, and the boy as he grows up)?
+> 6. Could you read the subtitles easily? Did anything sound wrong?
+> 7. Does it feel like our family and home? What detail is missing or wrong?
+
+**What I am checking from my own review**, beyond test 1:
+- Whether Dad still reads as Dad in s08, where he is not in his overalls (FAILURES F13).
+- Whether the 9:16 split screen at the end reads as a phone call.
+- Whether the moving shots feel alive or uncanny.
+
+**Answers** (verbatim, pasted as they arrive):
+
+| Who (relationship) | Date / how | Q1 About | Q2 Moment | Q3 Confusing / pace | Q4 Feeling at the end | Q5 Same people? | Q6 Subtitles / sound | Q7 Our family? |
+|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | |
+
+**Insights:** *(patterns across answers)*
+
+**Changes decided** (each goes into `storyboard.json` in a commit that names this test; `make film`
+then regenerates only what changed, and runs.jsonl shows it):
+- *(to fill)*
