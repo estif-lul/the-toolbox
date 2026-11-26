@@ -248,7 +248,7 @@
       "camera": "static",
       "characters": ["me_child"],
       "props": ["home"],
-      "image_prompt": "Wide shot of the family home at night under a dark sky, every window glowing warm yellow, the boy jumping for joy in the yard with his arms in the air, soft silhouettes of family figures cheering in the lit doorway",
+      "image_prompt": "Wide shot of the family home at night under a starry sky, every window glowing warm yellow, the boy jumping for joy in the yard with his arms in the air, soft silhouettes of family figures cheering in the lit doorway",
       "seed": 2006,
       "keyframe_choice": 2,
       "motion": "wan",

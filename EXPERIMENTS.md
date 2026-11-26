@@ -367,10 +367,5 @@ in `outputs/smoke/summary.json`.
   frames of the finished film. **[ME] confirm by watching final v1.** Any shot flips back with one
   line in `storyboard.json`, and the clips stay in the cache, so it costs no GPU.
 - Decision: final v1 with 8 of 11 images moving.
-- Later (2026-11-26 14:15 EAT, run `20261126-141457-c523`): the walkthrough's live change edited
-  s06's image prompt ("a starry sky" → "a dark sky"). Only s06 was regenerated: 3 keyframe calls and
-  its Ken Burns clip, with cache hits for every other shot. Its Wan clip was made from the old
-  keyframe, so it is stale, and the edit uses s06's Ken Burns move instead. **The final film now has
-  7 of 11 images moving.** A new s06 clip would be one Kaggle job (`make shots-push`).
 - Evidence: commits `f289cef` (clips) and `6de2072` (final v1); the unused clips are kept in
   `outputs/shots/s07`, `s08`, `s09`; FAILURES F17.

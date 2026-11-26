@@ -17,7 +17,7 @@ Repository: <https://github.com/estif-lul/the-toolbox>
   `make film` rebuilds the film from a clean clone, with no keys.
 
 - **Measured:**
-  - 214 logged model calls and 267 cache hits.
+  - 210 logged model calls and 184 cache hits.
   - 86 GPU-minutes on Kaggle T4s.
   - Paid: $0. At list price: about $0.17 plus the GPU time (COSTS.md).
   - 15 experiments, 17 failures, two user tests.
@@ -147,10 +147,8 @@ evidence that this was right:
     morphed (F17).
   - Each of those shots went back to its Ken Burns move with one line in `storyboard.json`.
   - The re-render took 3 minutes and needed no GPU.
-- **Motion is in the final film where it helps** (7 of 11 images), not because the film depends on
-  it. When I changed s06's keyframe prompt live for the walkthrough, its Wan clip no longer matched
-  the new picture. The edit fell back to Ken Burns for that shot on its own, and the film still
-  passed QC.
+- **Motion is in the final film where it helps** (8 of 11 images), not because the film depends on
+  it.
 
 A second suggested practice also paid off: **a reference sheet before the keyframes.** Without the
 sheets, the boy would not have grown into the same man (§3, E19).
