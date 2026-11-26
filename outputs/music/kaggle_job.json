@@ -1,0 +1,69 @@
+{
+  "jobs": [
+    {
+      "cache_key": "1b0a88a2752cdd60c8eeb7934a3e8ac7d951f2a2c7899025aad7c33cdde79136",
+      "item": "main_c1",
+      "job_id": "1b0a88a2752cdd60",
+      "params": {
+        "bpm": 80,
+        "config_path": "acestep-v15-turbo",
+        "duration_s": 80.0,
+        "keyscale": "D Major",
+        "shift": 3.0,
+        "steps": 8,
+        "timesignature": "4"
+      },
+      "priority": 1,
+      "prompt": "gentle nostalgic instrumental, Ethiopian tizita-style melody, soft fingerpicked krar and warm acoustic guitar, light washint flute, slow tempo, sparse and intimate, warm hopeful ending",
+      "seed": 301,
+      "shot": "main"
+    },
+    {
+      "cache_key": "236ea2d322690962d18586db89ccdf40f67510e88f6a5931355b876bf1c92e62",
+      "item": "main_c2",
+      "job_id": "236ea2d322690962",
+      "params": {
+        "bpm": 80,
+        "config_path": "acestep-v15-turbo",
+        "duration_s": 80.0,
+        "keyscale": "D Major",
+        "shift": 3.0,
+        "steps": 8,
+        "timesignature": "4"
+      },
+      "priority": 2,
+      "prompt": "gentle nostalgic instrumental, Ethiopian tizita-style melody, soft fingerpicked krar and warm acoustic guitar, light washint flute, slow tempo, sparse and intimate, warm hopeful ending",
+      "seed": 302,
+      "shot": "main"
+    },
+    {
+      "cache_key": "e727b300477a9349d2002762afc6981d63ca9df98b85c0185fdcd3a14a9c877b",
+      "item": "main_c3",
+      "job_id": "e727b300477a9349",
+      "params": {
+        "bpm": 80,
+        "config_path": "acestep-v15-turbo",
+        "duration_s": 80.0,
+        "keyscale": "D Major",
+        "shift": 3.0,
+        "steps": 8,
+        "timesignature": "4"
+      },
+      "priority": 3,
+      "prompt": "gentle nostalgic instrumental, Ethiopian tizita-style melody, soft fingerpicked krar and warm acoustic guitar, light washint flute, slow tempo, sparse and intimate, warm hopeful ending",
+      "seed": 303,
+      "shot": "main"
+    }
+  ],
+  "jobs_sha": "8709d6fe64e497c3acdbd557d2b67af0290164090c40de21ed8fb992a4ca1c73",
+  "meta": {
+    "jobs": 3,
+    "push": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/<user>/toolbox-music",
+    "staged": "outputs/.kaggle_staging/music/dataset",
+    "version": 1
+  },
+  "provider": "kaggle_acestep",
+  "ref": "toolbox-music",
+  "saved_at": "2026-11-26T10:15:23+03:00",
+  "submitted_at": "2026-11-26T10:14:59+03:00"
+}

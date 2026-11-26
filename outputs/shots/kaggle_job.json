@@ -1,0 +1,53 @@
+{
+  "jobs": [
+    {
+      "cache_key": "9c7e8b1da7b6bc040c838a8eb9d717294c264440f88b76571736315a58b3652b",
+      "item": "s09",
+      "job_id": "9c7e8b1da7b6bc04",
+      "keyframe": "outputs/keyframes/s09/8e65d8ebfd8e9796.jpg",
+      "negative_prompt": "text, letters, words, watermark, logo, signature, number plate, photorealistic, photograph, 3D render, realistic faces, extra fingers, deformed hands, distorted face, flicker, morphing, warping, melting, extra limbs, extra fingers, distorted hands, sudden cuts, fast camera movement, camera shake, blurry, static image",
+      "params": {
+        "fps": 24,
+        "frames": 81,
+        "guidance": 5.0,
+        "height": 704,
+        "steps": 30,
+        "width": 704
+      },
+      "priority": 1,
+      "prompt": "the trays of the toolbox slowly unfold as the lid lifts, the camera slowly pushes in. Hand-painted 2D storybook cartoon, soft golden light, gentle natural motion.",
+      "seed": 2009,
+      "shot": "s09"
+    },
+    {
+      "cache_key": "d6b5959716e639e9bd962ba0c98f867f9a2464229977d9e91661942c84c6a2f8",
+      "item": "s10a",
+      "job_id": "d6b5959716e639e9",
+      "keyframe": "outputs/keyframes/s10a/1e239f4fa85c3836.jpg",
+      "negative_prompt": "text, letters, words, watermark, logo, signature, number plate, photorealistic, photograph, 3D render, realistic faces, extra fingers, deformed hands, distorted face, flicker, morphing, warping, melting, extra limbs, extra fingers, distorted hands, sudden cuts, fast camera movement, camera shake, blurry, static image",
+      "params": {
+        "fps": 24,
+        "frames": 81,
+        "guidance": 5.0,
+        "height": 704,
+        "steps": 30,
+        "width": 704
+      },
+      "priority": 2,
+      "prompt": "the young man smiles and nods while listening on the phone, camera static. Hand-painted 2D storybook cartoon, soft golden light, gentle natural motion.",
+      "seed": 2101,
+      "shot": "s10"
+    }
+  ],
+  "jobs_sha": "45eece612b0b7cf9a032b9a68e36e363d9551acfb6d0b36e346a70af3281bf50",
+  "meta": {
+    "jobs": 2,
+    "push": "Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/<user>/toolbox-wan",
+    "staged": "outputs/.kaggle_staging/wan/dataset",
+    "version": 1
+  },
+  "provider": "kaggle_wan",
+  "ref": "toolbox-wan",
+  "saved_at": "2026-11-26T10:14:01+03:00",
+  "submitted_at": "2026-11-26T10:13:29+03:00"
+}

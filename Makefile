@@ -13,7 +13,7 @@ export FORCE RUN_GPU
 
 .DEFAULT_GOAL := help
 .PHONY: help setup smoke models validate test check secrets \
-        script narration narration-check audition radio refs choose revise keyframes kenburns rough shots shots-push shots-pull music assemble film costs
+        script narration narration-check audition radio refs choose revise keyframes kenburns rough shots shots-push shots-pull shots-pilot music music-push music-pull audition-music assemble film costs
 
 help:                         ## list the targets
 	@echo "The Toolbox pipeline. Targets:"
@@ -84,8 +84,20 @@ shots-push:                   ## [Step 4] push stale Wan jobs to Kaggle (overnig
 shots-pull:                   ## [Step 4] pull finished Wan clips from Kaggle
 	$(RUN) shots --pull $(FLAGS)
 
+shots-pilot:                  ## [Step 4] push only the 2 highest-priority Wan jobs (measures minutes per clip)
+	$(RUN) shots --push --limit 2 $(FLAGS)
+
 music:                        ## [Step 4] ACE-Step candidates + audition
 	$(RUN) music $(FLAGS)
+
+music-push:                   ## [Step 4] push the ACE-Step candidates to Kaggle
+	$(RUN) music --push $(FLAGS)
+
+music-pull:                   ## [Step 4] pull finished candidates and render the auditions
+	$(RUN) music --pull $(FLAGS)
+
+audition-music:               ## [Step 4] radio cut once per candidate -> outputs/cuts/audition_cN.mp4
+	$(RUN) music --audition $(FLAGS)
 
 assemble:                     ## [Step 5] final edit, both aspect ratios
 	$(RUN) assemble $(FLAGS)

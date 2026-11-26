@@ -77,9 +77,14 @@ def _parser() -> argparse.ArgumentParser:
         if name == "music":
             sp.add_argument("--placeholder", action="store_true",
                             help="only the code-generated placeholder pad for the current timeline")
+            sp.add_argument("--push", action="store_true", help="only push the stale ACE-Step candidates to Kaggle")
+            sp.add_argument("--pull", action="store_true", help="only pull and ingest finished candidates")
+            sp.add_argument("--audition", action="store_true",
+                            help="only render the radio cut once per candidate (outputs/cuts/audition_cN.mp4)")
         if name == "shots":
             sp.add_argument("--push", action="store_true", help="only push stale jobs to Kaggle")
             sp.add_argument("--pull", action="store_true", help="only pull and ingest finished clips")
+            sp.add_argument("--limit", type=int, default=None, help="push only the N highest-priority stale jobs (pilot)")
     return ap
 
 
@@ -185,6 +190,18 @@ def main(argv: list[str] | None = None) -> int:
 
             res = run_radio(dry_run=args.dry_run)
             return 0 if res.get("status") == "dry_run" or res.get("ok") else 1
+        if args.cmd == "shots":
+            from .shots import run_shots
+
+            res = run_shots(profile, push=args.push, pull=args.pull, only=args.only, force=args.force,
+                            limit=args.limit, dry_run=args.dry_run)
+            return 0 if not res.get("failed") else 1
+        if args.cmd == "music" and not args.placeholder:
+            from .music import run_music
+
+            res = run_music(profile, push=args.push, pull=args.pull, audition=args.audition, force=args.force,
+                            dry_run=args.dry_run)
+            return 0 if not res.get("failed") else 1
         if args.cmd == "music" and args.placeholder:
             from .common import storyboard as sbm
             from .music import placeholder
@@ -204,7 +221,9 @@ def main(argv: list[str] | None = None) -> int:
         from .keyframes import NotReady
         from .narration import SplitFailed, StoryboardInvalid
 
-        if isinstance(exc, (AssemblyError, AllProvidersFailed, SplitFailed, StoryboardInvalid, NotReady)):
+        from .providers.kaggle_common import KaggleError
+
+        if isinstance(exc, (AssemblyError, AllProvidersFailed, SplitFailed, StoryboardInvalid, NotReady, KaggleError)):
             print(f"\n{args.cmd}: {exc}", file=sys.stderr)
             return 1
         raise

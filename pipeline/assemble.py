@@ -146,7 +146,10 @@ def endcard_cue(sb: dict, tl: dict) -> subtitles.Cue:
 
 
 def run_radio(*, dry_run: bool = False, sb: dict | None = None, timing: dict | None = None,
-              console=None) -> dict:
+              console=None, music_path: Path | None = None, music_lufs: float | None = None,
+              name: str = "radio_cut", note: str = "placeholder pad (code-generated), not the film's music") -> dict:
+    """The radio cut (narration + music on black with subtitles). With `music_path` the same mix is
+    rendered with that track instead of the placeholder pad: the music auditions (Step 4)."""
     from rich.console import Console
 
     from . import music
@@ -172,25 +175,25 @@ def run_radio(*, dry_run: bool = False, sb: dict | None = None, timing: dict | N
     items = placements(sb, tl, timing)
     stem = CUTS / "narration_stem.wav"
     ffmpeg.run(stem_args(items, total, stem), dry_run=dry_run)
-    pad = music.placeholder(total, dry_run=dry_run)
+    pad = music_path or music.placeholder(total, dry_run=dry_run)
 
     m_voice, m_pad = measure(stem, dry_run=dry_run), measure(pad, dry_run=dry_run)
     g_voice = NARRATION_LUFS - float(m_voice["input_i"])
-    g_pad = PAD_LUFS - float(m_pad["input_i"])
+    g_pad = (music_lufs if music_lufs is not None else PAD_LUFS) - float(m_pad["input_i"])
     duck = (sb.get("music") or {}).get("duck") or {"threshold": 0.02, "ratio": 6, "attack_ms": 300, "release_ms": 1500}
-    premix = TMP / "radio_premix.wav"
+    premix = TMP / f"{name}_premix.wav"
     ffmpeg.run(["-i", rel(stem), "-i", rel(pad), "-filter_complex", mix_filter(duck, g_voice, g_pad, total),
                 "-map", "[mix]", "-c:a", "pcm_f32le", rel(premix)], dry_run=dry_run)
     m_mix = measure(premix, dry_run=dry_run)
 
-    out = CUTS / "radio_cut.mp4"
+    out = CUTS / f"{name}.mp4"
     vf = f"[0:v]subtitles={rel(srt_path)}:force_style='{SUB_STYLE}'[v]"
     af = f"[1:a]{loudnorm_filter(m_mix)},aresample=48000[a]"
     ffmpeg.run(["-f", "lavfi", "-i", f"color=c=black:s={RADIO_W}x{RADIO_H}:r={FPS}:d={total:.3f}",
                 "-i", rel(premix), "-filter_complex", f"{vf};{af}", "-map", "[v]", "-map", "[a]",
                 "-c:v", "libx264", "-preset", "medium", "-crf", "28", "-tune", "stillimage",
                 "-pix_fmt", "yuv420p", "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
-                "-movflags", "+faststart", "-metadata", "comment=Made with AI - radio cut (draft, placeholder music)",
+                "-movflags", "+faststart", "-metadata", f"comment=Made with AI - {name.replace('_', ' ')} (draft)",
                 "-shortest", rel(out)], dry_run=dry_run)
     if dry_run:
         return {"status": "dry_run", "total_s": total}
@@ -204,15 +207,15 @@ def run_radio(*, dry_run: bool = False, sb: dict | None = None, timing: dict | N
         "sources": {"narration_I": float(m_voice["input_i"]), "pad_I": float(m_pad["input_i"]),
                     "gain_voice_db": round(g_voice, 2), "gain_pad_db": round(g_pad, 2)},
         "cues": len(cues), "lines": len(items), "srt": rel(srt_path), "stem": rel(stem), "music": rel(pad),
-        "music_note": "placeholder pad (code-generated), not the film's music",
+        "music_note": note,
     }
     qc["ok"] = (abs(qc["loudness"]["I"] - TARGET["I"]) <= 1.0 and qc["loudness"]["TP"] <= TARGET["TP"] + 0.2
                 and sbm.validate(sb, timing=timing).ok)
-    atomic_write_json(CUTS / "radio_qc.json", qc)
+    atomic_write_json(CUTS / ("radio_qc.json" if name == "radio_cut" else f"{name}_qc.json"), qc)
     premix.unlink(missing_ok=True)
     console.print(f"radio cut: {qc['path']} ({qc['duration_s']:.1f}s, {qc['loudness']['I']:.1f} LUFS, "
                   f"TP {qc['loudness']['TP']:.1f} dBTP, {len(cues)} subtitle cues for {len(items)} lines)")
-    console.print(f"  subtitles {qc['srt']}; stem {qc['stem']}; music = placeholder pad {qc['music']}")
+    console.print(f"  subtitles {qc['srt']}; stem {qc['stem']}; music = {note}: {qc['music']}")
     return qc
 
 

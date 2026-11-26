@@ -1,22 +1,16 @@
-"""ACE-Step 1.5 on a Kaggle GPU kernel (batch-async). Implemented in Step 4."""
+"""ACE-Step 1.5 on a Kaggle GPU kernel (batch-async): `pipeline/kaggle/acestep_kernel/acestep_job.py`.
+
+Same round trip as the Wan adapter (kaggle_common.KaggleBatch); no input files, only jobs.json.
+The stage logic (candidates per cue, ingest, audition) is in pipeline/music.py.
+"""
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Sequence
-
-from ..common.retry import FatalError
-from .base import BaseAdapter, JobHandle, MediaJob, MusicResult
+from .base import BaseAdapter
+from .kaggle_common import KERNELS, KaggleBatch
 
 
-class KaggleAceStep(BaseAdapter):
+class KaggleAceStep(KaggleBatch, BaseAdapter):
     name = "kaggle_acestep"
-
-    def submit(self, jobs: Sequence[MediaJob]) -> JobHandle:
-        raise FatalError("kaggle_acestep is implemented in Step 4")
-
-    def status(self, handle: JobHandle) -> str:
-        raise FatalError("kaggle_acestep is implemented in Step 4")
-
-    def collect(self, handle: JobHandle, out_dir: Path) -> list[MusicResult]:
-        raise FatalError("kaggle_acestep is implemented in Step 4")
+    kaggle_stage = "music"
+    script = KERNELS / "acestep_kernel" / "acestep_job.py"

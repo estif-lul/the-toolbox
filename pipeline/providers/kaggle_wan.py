@@ -1,25 +1,17 @@
-"""Wan 2.2 TI2V-5B on a Kaggle GPU kernel (batch-async). Implemented in Step 4.
+"""Wan 2.2 TI2V-5B on a Kaggle GPU kernel (batch-async): `pipeline/kaggle/wan_kernel/wan_job.py`.
 
-The signatures are fixed now so the registry, config and fallback chain (Wan -> Ken Burns) are real.
+submit -> a private dataset (jobs.json + the keyframes) and a script kernel on T4 x2;
+status -> `kaggle kernels status`; collect -> `kaggle kernels output` + results.jsonl.
+The stage logic (which shots are stale, ingesting clips into the cache) is in pipeline/shots.py.
 """
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Sequence
-
-from ..common.retry import FatalError
-from .base import BaseAdapter, JobHandle, MediaJob, VideoResult
+from .base import BaseAdapter
+from .kaggle_common import KERNELS, KaggleBatch
 
 
-class KaggleWan(BaseAdapter):
+class KaggleWan(KaggleBatch, BaseAdapter):
     name = "kaggle_wan"
-
-    def submit(self, jobs: Sequence[MediaJob]) -> JobHandle:
-        raise FatalError("kaggle_wan is implemented in Step 4")
-
-    def status(self, handle: JobHandle) -> str:
-        raise FatalError("kaggle_wan is implemented in Step 4")
-
-    def collect(self, handle: JobHandle, out_dir: Path) -> list[VideoResult]:
-        raise FatalError("kaggle_wan is implemented in Step 4")
+    kaggle_stage = "wan"
+    script = KERNELS / "wan_kernel" / "wan_job.py"
