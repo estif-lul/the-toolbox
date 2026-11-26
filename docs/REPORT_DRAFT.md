@@ -45,7 +45,8 @@ Every call is logged and every output cached, so changing one line regenerates o
     carries it. Next time I'd ask one forced-choice question ("which shot would you cut?") and
     record every answer.
 - **From Dad:** he agreed to the story and to his three lines being said by a computer voice in a
-  cartoon (ETHICS.md §2). **[ME]** His reaction to hearing them.
+  cartoon (ETHICS.md §2). He watched the near-final film and was happy with it. **[ME]** In my
+  words: what that meant to me.
 
 ## 3. The hardest problem and how I solved it
 

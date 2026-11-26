@@ -277,7 +277,7 @@ only), and Dad if he wants to see it.
 **very good, given that it is made with free models.** Nobody reported confusion, a pacing
 problem, a character who stopped looking like himself, unreadable subtitles or a wrong detail, and
 nobody asked for a change. The answers were not recorded question by question; any I paste later go
-in the table verbatim.
+in the table verbatim. **Dad** watched it too and was happy with it (ETHICS.md §2).
 
 | Who (relationship) | Date / how | Q1 About | Q2 Moment | Q3 Confusing / pace | Q4 Feeling at the end | Q5 Same people? | Q6 Subtitles / sound | Q7 Our family? |
 |---|---|---|---|---|---|---|---|---|

@@ -68,7 +68,10 @@ out for user test 1; his reaction is recorded here and in DESIGN.md §4. If he w
 it changes in `storyboard.json` before anything else is generated.
 - 2026-11-25: the lines exist in their final form (stock voice **Algenib**, Gemini Flash TTS,
   `outputs/narration/s05`, `s08`, `s10`); a native speaker (me) judged all three natural
-  (EXPERIMENTS.md E18). The radio cut is ready to send to him. **His reaction: pending.**
+  (EXPERIMENTS.md E18). The radio cut is ready to send to him.
+- 2026-11-26: he watched the near-final film (the user test 2 cut) and **was happy with it**. He
+  asked for no change to his lines or to how he is shown. (Reported by me; his message stays on my
+  phone, as above.)
 
 What he was asked (the WhatsApp message, in English; we also talked it through):
 > I'm making a short animated film (about 75 seconds) for my course, about you and how you taught

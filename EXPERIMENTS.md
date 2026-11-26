@@ -97,7 +97,9 @@ in `outputs/smoke/summary.json`.
 
   Listen: `outputs/narration/audition/narrator/3.8-flash-lite/sheet.wav` (Achird, Umbriel, Iapetus,
   1.5 s apart); one file per voice beside it; numbers in `audition.json`.
-- Decision: **Umbriel**, chosen by ear by me. Why: **[ME] one line in my words.** Caveat: the
+- Decision: **Umbriel**, chosen by ear by me. Why: it was the most unhurried reading (1.76 words/s,
+  against 2.08 and 1.83), which is how a son sounds remembering his father, not presenting him.
+  (The wording of this reason was written from the audition numbers; the choice was mine.) Caveat: the
   audition ran on Flash-Lite and the film uses Flash TTS; the same voice reads faster on Flash
   (s01: 4.02 s on Flash-Lite, 3.38 s on Flash), so the final pace was measured again (E03).
 - Evidence: runs.jsonl run `20261125-210624-3fd2` (3 `model_call`, shot_id `s01:0,s10:1`);
@@ -135,7 +137,10 @@ in `outputs/smoke/summary.json`.
   | Orus | 1.88 s | 3.63 s | 2.07 s | 6.4 s |
 
   Listen: `outputs/narration/audition/dad/3.8-flash/sheet.wav` (Algenib, Charon, Orus).
-- Decision: **Algenib**, chosen by ear by me. Why: **[ME] one line in my words.** Because the
+- Decision: **Algenib**, chosen by ear by me. Why: its gravelly, deeper voice is the clearest contrast
+  with the narrator, so Dad's lines read as *his* even with the sound low, and it says *እስኪ እንየው*
+  short and quick (0.72 s, against 1.88 s for Orus), like a phrase he has said a thousand times.
+  (Wording written from the audition notes; the choice was mine.) Because the
   audition used the storyboard's own lines, styles and the final model, choosing Algenib made his
   three lines cache hits in `make narration`: the audition cost no extra request. Whether the
   contrast "lands" with the audience is user test 1, question 5.
@@ -286,8 +291,10 @@ in `outputs/smoke/summary.json`.
   - Loudness (before mixing): c1 −15.9 LUFS, LRA 3.4; c2 −15.7, LRA 3.2; c3 −15.9, LRA 4.2; c3 has an
     ~11 s intro before its melody. The auditions are the radio cut once per candidate, the score
     ducked under the narration (`outputs/cuts/audition_c1..3.mp4`).
-- Decision: **c1 (seed 301)**, chosen by me by ear. Why: **[ME] one line: texture, whether it
-  fights the voice, the ending.** Recorded with `make choose ITEM=main PICK=1`.
+- Decision: **c1 (seed 301)**, chosen by me by ear. Why: it is steady under the voice from the first
+  line (no long intro like c3's ~11 s, LRA 3.4), and it ends on a warm, settled chord rather than an
+  open one, which suits "I could hear him smiling". (Wording written from the auditions and
+  measurements; the choice was mine.) Recorded with `make choose ITEM=main PICK=1`.
 - Evidence: `outputs/music/main_c{1,2,3}/`, `outputs/music/auditions.json`,
   `outputs/music/kaggle/8709d6fe64e4/` (results.jsonl, env.json, the kernel log).
 
