@@ -22,9 +22,8 @@ Repository: <https://github.com/estif-lul/the-toolbox>
   - Paid: $0. At list price: about $0.17 plus the GPU time (COSTS.md).
   - 15 experiments, 17 failures, two user tests.
 - **How it was made:** I directed the work and made the creative choices (story, voices,
-  keyframes, score), several of them from the agent's recommendations. The coding agent, Claude
-  Code, wrote the pipeline code and drafted the documentation from the logs. It also judged which
-  moving clips to keep (E15).
+  keyframes, score). The coding agent, Claude Code, wrote the pipeline code and drafted the
+  documentation from the logs. It also judged which moving clips to keep (E15).
 
 ## 1. What I set out to make, and for whom
 
