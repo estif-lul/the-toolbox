@@ -1,18 +1,243 @@
 {
-  "s09": {
-    "cache_key": "9c7e8b1da7b6bc040c838a8eb9d717294c264440f88b76571736315a58b3652b",
-    "created_at": "2026-11-26T10:41:59+03:00",
+  "s01": {
+    "cache_key": "079b3646e049de4d628d8d03049b7b6f66917f5db5e5f7804712fb76435f43ab",
+    "created_at": "2026-11-26T12:50:13+03:00",
     "degraded": true,
     "gpu": "Tesla T4",
-    "jobs_sha": "45eece612b0b7cf9a032b9a68e36e363d9551acfb6d0b36e346a70af3281bf50",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
     "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
     "notes": [
-      "denoise OOM at 704x704x81",
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 207.3,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s01/079b3646e049de4d.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 396.6,
+    "seed": 2001,
+    "sha256": "23ea785f51ec1978cb0d7e3d80c3766650fd12b2353527507e51a9861558936a",
+    "status": "ok"
+  },
+  "s02": {
+    "cache_key": "4e79ba1e39c8123291b9d3f972ee61f06283e07db4aa833a2ea9f08633d01b1a",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 207.5,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s02/4e79ba1e39c81232.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 398.3,
+    "seed": 2002,
+    "sha256": "ec48e9abc47c332ec6512dcd75a5e4898cdeda2fb1aedf18f124dd30d75146bc",
+    "status": "ok"
+  },
+  "s03": {
+    "cache_key": "286699c8811e1e682dd392140ac3925ec2e0528cdbfbad497a13e831b8e896c3",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 208.2,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s03/286699c8811e1e68.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 397.3,
+    "seed": 2003,
+    "sha256": "702a193afbd7103a2ea4853379be4198be40293df79e937ef0c0bfdc0fb4aab0",
+    "status": "ok"
+  },
+  "s04": {
+    "cache_key": "190e8da9478a38852af4d54750f5cba194a72b8909746dc149dad4b6976c7aad",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 208.6,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s04/190e8da9478a3885.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 398.1,
+    "seed": 2004,
+    "sha256": "ac5b7000dc05fbf3da6a531859c6224d66d9a594514c6b1c98f50e99b7d1f5d8",
+    "status": "ok"
+  },
+  "s05": {
+    "cache_key": "378f078b1a1d35b7c220d617829de15de7f710b71bcf07f2ac202157b1927157",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM",
       "decode OOM (plain)"
     ],
     "params_used": {
+      "attention": "native",
       "decode": "tiling",
-      "denoise_s": 183.1,
+      "denoise_s": 187.0,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s05/378f078b1a1d35b7.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 380.1,
+    "seed": 2005,
+    "sha256": "62cdfbd8923e786b276fbff953f75683725eba268e0f8c2d2bf7a349223f7747",
+    "status": "ok"
+  },
+  "s06": {
+    "cache_key": "dc9324d875feaf81286a52c6ce7a00c5367bec1213fe30d844864d120e8aa20f",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 208.2,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s06/dc9324d875feaf81.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 398.5,
+    "seed": 2006,
+    "sha256": "4e3a2802078194b3437fde9ac4ed72e484ad9b9f984e3f1a081a85a24a0dc2b9",
+    "status": "ok"
+  },
+  "s07": {
+    "cache_key": "8c00b17e0ade83ded0a2ab5eba0683f769a51889c25ab5f7ae0bd47df07d93ea",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 208.0,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s07/8c00b17e0ade83de.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 398.9,
+    "seed": 2007,
+    "sha256": "c47128d456c75459180952c3a8544769050ffbfbd3bf794fa11c0c93911fdbef",
+    "status": "ok"
+  },
+  "s08": {
+    "cache_key": "4096cd12d819e740ccea53d480ddab57cc4d4e7af1a9551983617bf4a6e1658e",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 207.6,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s08/4096cd12d819e740.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 393.8,
+    "seed": 2008,
+    "sha256": "82bb7bb2bab48d0161222b891fc41ec4702ca4aeec6c369c6173a413bc9c6e45",
+    "status": "ok"
+  },
+  "s09": {
+    "cache_key": "9c7e8b1da7b6bc040c838a8eb9d717294c264440f88b76571736315a58b3652b",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 208.5,
       "fps": 24,
       "frames": 49,
       "guidance": 5.0,
@@ -22,25 +247,25 @@
     },
     "path": "outputs/shots/s09/9c7e8b1da7b6bc04.mp4",
     "provider": "kaggle_wan",
-    "seconds": 373.1,
+    "seconds": 397.7,
     "seed": 2009,
-    "sha256": "aa7dd0217368334ede61e988d3cfccb63e26809fcc47d350b113dd18e120cfb2",
+    "sha256": "087073eeb4fce8e4613c5c1e97f4634d9d2ed542a5b83d16cfd85a382927cbaa",
     "status": "ok"
   },
   "s10a": {
     "cache_key": "d6b5959716e639e9bd962ba0c98f867f9a2464229977d9e91661942c84c6a2f8",
-    "created_at": "2026-11-26T10:41:59+03:00",
+    "created_at": "2026-11-26T12:50:13+03:00",
     "degraded": true,
     "gpu": "Tesla T4",
-    "jobs_sha": "45eece612b0b7cf9a032b9a68e36e363d9551acfb6d0b36e346a70af3281bf50",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
     "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
     "notes": [
-      "denoise OOM at 704x704x81",
-      "decode OOM (plain)"
+      "denoise failed at 704x704x81 (_native_efficient): OOM"
     ],
     "params_used": {
-      "decode": "tiling",
-      "denoise_s": 199.3,
+      "attention": "native",
+      "decode": "plain",
+      "denoise_s": 219.3,
       "fps": 24,
       "frames": 49,
       "guidance": 5.0,
@@ -50,9 +275,38 @@
     },
     "path": "outputs/shots/s10a/d6b5959716e639e9.mp4",
     "provider": "kaggle_wan",
-    "seconds": 394.3,
+    "seconds": 414.4,
     "seed": 2101,
-    "sha256": "ccb08823264ad1f36b98daefd6e07581911fe23d13473900b571289e025c1420",
+    "sha256": "0439d860118507bba25380326c6949502f25a971ac38c25a3046f9bcb903308d",
+    "status": "ok"
+  },
+  "s10b": {
+    "cache_key": "3ef75b93aab1779fa902c42756549f01df1d49b1d1470da6d5143e96098e056d",
+    "created_at": "2026-11-26T12:50:13+03:00",
+    "degraded": true,
+    "gpu": "Tesla T4",
+    "jobs_sha": "75fd75d50d25fdac3d3552d1b1f69b9985fe5574d320acc9cf6182e593b524e8",
+    "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "notes": [
+      "denoise failed at 704x704x81 (_native_efficient): OOM",
+      "decode OOM (plain)"
+    ],
+    "params_used": {
+      "attention": "native",
+      "decode": "tiling",
+      "denoise_s": 211.3,
+      "fps": 24,
+      "frames": 49,
+      "guidance": 5.0,
+      "height": 576,
+      "steps": 30,
+      "width": 576
+    },
+    "path": "outputs/shots/s10b/3ef75b93aab1779f.mp4",
+    "provider": "kaggle_wan",
+    "seconds": 414.4,
+    "seed": 2102,
+    "sha256": "bfe62e346839859109cc8af72ce9dc92e6582da4f545d3b53129766d2ecf9bad",
     "status": "ok"
   }
 }
