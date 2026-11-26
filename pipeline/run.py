@@ -224,6 +224,12 @@ def main(argv: list[str] | None = None) -> int:
 
             run_final(profile=profile, dry_run=args.dry_run)
             return 0
+        if args.cmd == "costs":
+            from .costs import run_costs
+
+            run_costs()
+            print("costs: COSTS.md sections 1-3 regenerated from runs.jsonl")
+            return 0
         if args.cmd == "film":
             return run_film(profile, gpu=args.gpu, dry_run=args.dry_run)
         if args.cmd == "choose":

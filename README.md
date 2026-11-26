@@ -6,12 +6,11 @@ made by a small code pipeline: `storyboard.json` is the contract, and each stage
 moving shots, music, narration, assembly) reads it and writes its outputs. Only what changed
 gets regenerated.
 
-> **Status: Step 3 (the look + a rough film).** The narration is measured (75.7 s with the end
-> card) and the radio cut is out for the first user test. The style and the characters are
-> locked (reference sheets in `outputs/refs/`), 7 of 10 shots have a chosen keyframe, and a rough
-> Ken Burns film exists in both formats (`outputs/cuts/rough_kb_9x16.mp4`, `rough_kb_16x9.mp4`);
-> shots still waiting for a picture show a labelled card. Moving shots and music come next. This
-> README is completed in Step 6.
+> **Status: Steps 4-5 (moving shots, music, the final edit).** Every shot has a chosen keyframe;
+> the final edit runs end to end in both formats (`outputs/final/the_toolbox_{9x16,16x9}.mp4`,
+> QC in `outputs/final/qc.json`) with Ken Burns stills wherever no Wan clip exists yet. Wan 2.2
+> moving shots and ACE-Step score candidates run on Kaggle GPUs and are pulled into the cache as
+> they finish. This README is completed in Step 6.
 
 ## Quickstart
 
@@ -34,6 +33,14 @@ make choose ITEM=dad PICK=4   # record a pick in storyboard.json (style, a chara
 make revise ITEM=dad FROM=0 EDIT="remove the pencil"   # edit a chosen sheet (new candidates)
 make keyframes            # 3 candidates per shot, references attached, crop previews drawn
 make rough                # Ken Burns clips + the radio-cut sound -> outputs/cuts/rough_kb_{9x16,16x9}.mp4
+make shots-pilot          # Kaggle: the 2 highest-priority Wan jobs (measures minutes per clip)
+make shots-push           # Kaggle: every stale Wan job (a private dataset + a GPU kernel)
+make shots-pull           # pull finished clips into outputs/shots/ (one model_call each, with GPU seconds)
+make music-push           # Kaggle: 3 ACE-Step score candidates
+make music-pull           # pull them, then render the radio cut once per candidate (outputs/cuts/audition_cN.mp4)
+make choose ITEM=main PICK=2  # record the score you chose
+make assemble             # the final edit, both formats, QC -> outputs/final/
+make film                 # everything above in order, all cached (add FLAGS=--gpu to push stale Kaggle jobs)
 make help                 # every target
 ```
 
@@ -42,7 +49,8 @@ cache are sent several to a request and cut apart at the pauses; the whole film 
 Editing one line costs one request for that line. `make narration DRY_RUN=1` shows what a run would
 send and how much of today's quota runs.jsonl says is left.
 
-`make film` (Step 5) runs the whole pipeline end to end.
+Kaggle needs `KAGGLE_API_TOKEN` (and phone verification for GPU + internet). Without it, `make film`
+uses the clips and music already in `outputs/` and only reassembles.
 
 ## Where things are
 - `storyboard.json`: the contract every stage reads (shots, prompts, narration, voices, music) ·
