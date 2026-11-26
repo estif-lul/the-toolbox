@@ -223,6 +223,9 @@ def kaggle_round(adapter, jobs: list[dict], stage_dir, manifest: Manifest, *, st
         if handle is None:
             say(f"{stage}: no Kaggle job to pull (push first)")
             return res
+        if all(manifest.is_fresh(j["item"], j["cache_key"]) for j in handle["jobs"]):
+            say(f"{stage}: the last Kaggle run ({len(handle['jobs'])} job(s)) is already ingested")
+            return res
         status = kc.wait(adapter.kaggle_stage, say=say) if both else adapter.status(None)
         res["status"] = status
         if status in ("queued", "running"):

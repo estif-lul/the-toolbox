@@ -81,11 +81,50 @@ def _parser() -> argparse.ArgumentParser:
             sp.add_argument("--pull", action="store_true", help="only pull and ingest finished candidates")
             sp.add_argument("--audition", action="store_true",
                             help="only render the radio cut once per candidate (outputs/cuts/audition_cN.mp4)")
+        if name == "film":
+            sp.add_argument("--gpu", action="store_true",
+                            help="also push stale Wan / ACE-Step jobs to Kaggle (default: pull and ingest only)")
         if name == "shots":
             sp.add_argument("--push", action="store_true", help="only push stale jobs to Kaggle")
             sp.add_argument("--pull", action="store_true", help="only pull and ingest finished clips")
             sp.add_argument("--limit", type=int, default=None, help="push only the N highest-priority stale jobs (pilot)")
     return ap
+
+
+def run_film(profile: str | None, *, gpu: bool = False, dry_run: bool = False) -> int:
+    """The whole pipeline in order. Every stage is cached, so a clean clone with the committed
+    outputs/ makes no model call at all and only reassembles. A stale stage that needs a key stops
+    with a message naming the stage and the key (MissingKeyError)."""
+    from rich.console import Console
+
+    from . import keyframes, narration
+    from .assemble import run_final
+    from .common import storyboard as sbm
+    from .music import run_music
+    from .providers.kaggle_common import KaggleError
+    from .shots import run_kenburns, run_shots
+
+    console = Console()
+    sb = sbm.load_storyboard()
+    rep = sbm.validate(sb, timing=sbm.load_timing())
+    if not rep.ok:
+        console.print("[red]film: storyboard.json does not validate[/red]\n  " + "\n  ".join(rep.errors))
+        return 1
+    console.rule("narration")
+    narration.run_narration(profile=profile, dry_run=dry_run)
+    console.rule("keyframes")
+    keyframes.run_keyframes(profile, dry_run=dry_run)
+    console.rule("ken burns")
+    run_kenburns(profile, dry_run=dry_run, console=console)
+    for name, fn in (("moving shots (Wan, Kaggle)", run_shots), ("music (ACE-Step, Kaggle)", run_music)):
+        console.rule(name)
+        try:
+            fn(profile, push=gpu, pull=not gpu, dry_run=dry_run, console=console)
+        except (KaggleError, env.MissingKeyError) as exc:
+            console.print(f"[yellow]{name}: skipped ({str(exc).splitlines()[0]}); the cached outputs are used[/yellow]")
+    console.rule("final edit")
+    run_final(profile=profile, dry_run=dry_run, console=console)
+    return 0
 
 
 def cmd_validate(args) -> int:
@@ -180,6 +219,13 @@ def main(argv: list[str] | None = None) -> int:
 
             run_rough(profile=profile, dry_run=args.dry_run)
             return 0
+        if args.cmd == "assemble":
+            from .assemble import run_final
+
+            run_final(profile=profile, dry_run=args.dry_run)
+            return 0
+        if args.cmd == "film":
+            return run_film(profile, gpu=args.gpu, dry_run=args.dry_run)
         if args.cmd == "choose":
             from .choose import choose
 

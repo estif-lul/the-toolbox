@@ -184,3 +184,13 @@ def test_rough_cut_frames_match_the_timeline():
     graph, n = assemble.segment_filters(segs, "9x16")
     assert n == 3 and "vstack=inputs=2" in graph and "scale=720:640" in graph and "trim=end_frame=72" in graph
     assert "hstack=inputs=2" in assemble.segment_filters(segs, "16x9")[0]
+
+
+def test_choose_a_music_candidate(tmp_path):
+    sb = minimal_storyboard()
+    path = tmp_path / "storyboard.json"
+    path.write_text(json.dumps(sb, indent=2), encoding="utf-8")
+    assert choose("main", 2, path) == "main: main = 2"
+    assert json.loads(path.read_text(encoding="utf-8"))["music"]["chosen"] == {"main": 2}
+    choose("main", None, path)
+    assert json.loads(path.read_text(encoding="utf-8"))["music"]["chosen"] == {"main": None}

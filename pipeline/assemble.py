@@ -267,7 +267,8 @@ def segment_filters(segments: list[dict], export: str) -> tuple[str, int]:
                 halves.append(f"[s{k}h{j}]")
                 idx += 1
             stack = "vstack" if export == "9x16" else "hstack"
-            parts.append(f"{''.join(halves)}{stack}=inputs=2,{tail(n)}[s{k}]")
+            line = ("drawbox=x=0:y=ih/2-2:w=iw:h=4" if export == "9x16" else "drawbox=x=iw/2-2:y=0:w=4:h=ih")
+            parts.append(f"{''.join(halves)}{stack}=inputs=2,{line}:color=0xF4ECDE:t=fill,{tail(n)}[s{k}]")
         else:  # a still card (placeholder or end card), already W x H
             parts.append(f"[{idx}:v]scale={W}:{H},{tail(n)}[s{k}]")
             idx += 1
@@ -357,3 +358,359 @@ def run_rough(*, profile: str | None = None, dry_run: bool = False, console=None
     if not dry_run:
         atomic_write_json(CUTS / "rough_qc.json", {"timeline_s": tl["total_s"], "exports": results})
     return results
+
+
+# ---------------------------------------------------------------------------------------------
+# Step 5: the final edit, both exports
+
+FINAL = OUTPUTS / "final"
+MASTERS = "masters"            # stage: one 1024x1024 clip per image at the shot's exact length
+MASTER_VERSION = 1
+MUSIC_FINAL_LUFS = -22.0       # the score before ducking, under -16 LUFS narration (E16 tunes it)
+FINAL_TARGET = {"I": -14.0, "TP": -1.5, "LRA": 11.0}   # TP aimed below -1 (the radio cut landed at -0.86)
+QC_TOL = {"I": 1.0, "TP_max": -1.0, "min_s": 60.0, "max_s": 90.0}
+CROSSFADE_S = 0.5
+DIP_S = 0.4
+FADE_FIRST_S = 0.8
+FONT_DIR = "assets/fonts"
+FONT_NAME = "Atkinson Hyperlegible"
+FINAL_SUB_STYLES = {k: v.replace("FontName=Arial", f"FontName={FONT_NAME}") for k, v in SUB_STYLES.items()}
+FINAL_SUB_STYLES["9x16"] = FINAL_SUB_STYLES["9x16"].replace("FontSize=40", "FontSize=46")   # phones: a little larger
+
+
+def export_cues(cues: list, sb: dict, tl: dict, export: str) -> list:
+    """In 9:16 a split-screen shot puts its subtitles on the divider ({\\an5}: middle of the frame),
+    not over the lower half's face; 16:9 keeps them at the bottom."""
+    from dataclasses import replace
+
+    if export != "9x16":
+        return cues
+    split = [(s["start_s"], s["start_s"] + s["duration_s"]) for s, shot in zip(tl["shots"], sb["shots"])
+             if shot.get("layers")]
+    out = []
+    for c in cues:
+        if any(a - 0.01 <= c.start < b for a, b in split):
+            c = replace(c, rows=["{\\an5}" + c.rows[0], *c.rows[1:]])
+        out.append(c)
+    return out
+
+
+def hold_amount(hold_s: float) -> float:
+    """How far the hold drifts (push in): gentle, ~1.2% per second, at most 6%."""
+    return round(min(0.06, 0.012 * max(hold_s, 0.0)), 4)
+
+
+def wan_masters_plan(sb: dict, tl: dict, profile: str | None = None) -> dict[str, dict]:
+    """item -> {wan: path, key} for every image whose Wan clip is fresh (its key matches the current
+    keyframe, motion prompt and params) and whose shot still says motion: wan."""
+    from .common.cache import Manifest
+    from .providers import registry
+    from .shots import WAN_STAGE, wan_jobs
+
+    wan = registry.get_provider("video", profile).primary
+    jobs, _ = wan_jobs(sb, wan.model, wan.params, wan.name)
+    manifest = Manifest(WAN_STAGE)
+    out = {}
+    for j in jobs:
+        if manifest.is_fresh(j["item"], j["cache_key"]):
+            out[j["item"]] = {"wan": ROOT / manifest.get(j["item"])["path"], "key": j["cache_key"]}
+    return out
+
+
+def master_clip(item: str, wan_clip: Path, duration_s: float, *, dry_run: bool = False) -> Path:
+    """The Wan clip at the master size, then 'hold and drift': its last frame continues with a slow
+    push-in (the Ken Burns renderer) for the rest of the shot. Cached by the clip's bytes + length."""
+    from .common.cache import Manifest, artifact_path, cache_key, file_sha256
+    from .providers.kenburns import KenBurns
+
+    size = 1024
+    total = max(int(round(duration_s * FPS)), 1)
+    info = ffmpeg.probe(wan_clip)
+    wan_frames = min(int(round(info["duration"] * FPS)), total)
+    hold = total - wan_frames
+    params = {"size": size, "fps": FPS, "frames": total, "wan_frames": wan_frames,
+              "hold_move": "push_in", "hold_amount": hold_amount(hold / FPS)}
+    key = cache_key(stage=MASTERS, stage_version=MASTER_VERSION, provider="ffmpeg", model="hold-and-drift",
+                    params=params, upstream_hashes={"wan": file_sha256(wan_clip)})
+    manifest = Manifest(MASTERS)
+    out = artifact_path(MASTERS, item, key, "mp4")
+    if manifest.is_fresh(item, key):
+        return out
+    TMP.mkdir(parents=True, exist_ok=True)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    head = TMP / f"{item}_wan_{size}.mp4"
+    ffmpeg.run(["-i", rel(wan_clip), "-vf", f"scale={size}:{size}:flags=lanczos,fps={FPS},setsar=1,format=yuv420p",
+                "-frames:v", str(wan_frames), "-an", "-c:v", "libx264", "-crf", "16", "-preset", "medium", rel(head)],
+               dry_run=dry_run)
+    if hold <= 0:
+        if not dry_run:
+            head.replace(out)
+    else:
+        last = TMP / f"{item}_last.png"
+        ffmpeg.run(["-i", rel(head), "-vf", "reverse", "-frames:v", "1", rel(last)], dry_run=dry_run)
+        tail = TMP / f"{item}_hold.mp4"
+        KenBurns("ffmpeg-zoompan", fps=FPS, size=size).render(last, tail, duration_s=hold / FPS, move="push_in",
+                                                              amount=params["hold_amount"], dry_run=dry_run)
+        ffmpeg.run(["-i", rel(head), "-i", rel(tail), "-filter_complex",
+                    "[0:v][1:v]concat=n=2:v=1:a=0,setsar=1,format=yuv420p[v]", "-map", "[v]",
+                    "-frames:v", str(total), "-c:v", "libx264", "-crf", "16", "-preset", "medium", rel(out)],
+                   dry_run=dry_run)
+    if not dry_run:
+        manifest.put(item, cache_key=key, path=out, provider="ffmpeg", model="hold-and-drift",
+                     wan=rel(wan_clip), **params)
+    return out
+
+
+def final_sources(sb: dict, tl: dict, profile: str | None = None, *, dry_run: bool = False) -> dict[str, dict]:
+    """item -> {path, source: wan|kenburns} for every image of the film."""
+    from .common.cache import Manifest
+    from .keyframes import keyframe_items
+
+    durations = {s["shot_id"]: s["duration_s"] for s in tl["shots"]}
+    wan = wan_masters_plan(sb, tl, profile)
+    kb = Manifest("kenburns").entries
+    out = {}
+    for it in keyframe_items(sb):
+        if it["id"] in wan:
+            path = master_clip(it["id"], wan[it["id"]]["wan"], durations[it["shot"]], dry_run=dry_run)
+            out[it["id"]] = {"path": rel(path), "source": "wan"}
+        elif kb.get(it["id"]):
+            out[it["id"]] = {"path": kb[it["id"]]["path"], "source": "kenburns"}
+    return out
+
+
+def transitions(sb: dict, counts: list[int]) -> list[dict]:
+    """Per segment (shots, then the end card): fade in/out seconds and whether it is joined to the
+    previous segment by a crossfade. A crossfade lengthens the outgoing segment by its duration,
+    so every shot still starts at its timeline time (the subtitles and the narration agree)."""
+    kinds = [s.get("transition_in", "cut") for s in sb["shots"]] + ["dip_to_black"]   # into the end card
+    xf = int(round(CROSSFADE_S * FPS))
+    segs = [{"fade_in": 0.0, "fade_out": 0.0, "xfade": False, "extra": 0} for _ in counts]
+    for k, kind in enumerate(kinds):
+        if kind == "fade_from_black":
+            segs[k]["fade_in"] = FADE_FIRST_S
+        elif kind == "dip_to_black" and k > 0:
+            segs[k]["fade_in"] = DIP_S
+            segs[k - 1]["fade_out"] = DIP_S
+        elif kind == "crossfade" and k > 0 and counts[k] > xf:
+            segs[k]["xfade"] = True
+            segs[k - 1]["extra"] = xf
+    return segs
+
+
+def final_segments(sb: dict, tl: dict, sources: dict[str, dict], export: str) -> list[dict]:
+    from .common import endcard
+    from .common.crops import FULL
+    from .keyframes import keyframe_items
+
+    counts = frame_counts(tl)
+    by_shot: dict[str, list[dict]] = {}
+    for it in keyframe_items(sb):
+        by_shot.setdefault(it["shot"], []).append(it)
+    W, H = FULL[export]
+    segs = []
+    for st, n in zip(tl["shots"], counts):
+        items = by_shot[st["shot_id"]]
+        missing = [it["id"] for it in items if it["id"] not in sources]
+        if missing:
+            raise AssemblyError(f"{st['shot_id']}: no clip for {', '.join(missing)} (run `make kenburns` / choose a keyframe)")
+        segs.append({"kind": "split" if len(items) == 2 else "clip", "inputs": [sources[it["id"]]["path"] for it in items],
+                     "focus": [it["crop_focus"] for it in items], "frames": n, "shot": st["shot_id"],
+                     "source": "+".join(sorted({sources[it["id"]]["source"] for it in items}))})
+    ec = TMP / f"final_endcard_{export}.png"
+    endcard.card(list((sb.get("end_card") or {}).get("lines") or ["Made with AI"]), W, H, ec)
+    segs.append({"kind": "card", "inputs": [rel(ec)], "focus": [], "frames": counts[-1], "shot": "end_card",
+                 "source": "card"})
+    for seg, tr in zip(segs, transitions(sb, counts)):
+        seg.update(tr)
+    return segs
+
+
+def join_filters(segs: list[dict]) -> str:
+    """[s0]..[sN] -> [cat]: hard cuts by concat, crossfades by xfade at the next shot's start."""
+    parts, acc, t = [], "[s0]", segs[0]["frames"]
+    for k in range(1, len(segs)):
+        out = f"[j{k}]" if k < len(segs) - 1 else "[cat]"
+        if segs[k].get("xfade"):
+            parts.append(f"{acc}[s{k}]xfade=transition=fade:duration={CROSSFADE_S}:offset={t / FPS:.4f},settb=AVTB{out}")
+        else:
+            parts.append(f"{acc}[s{k}]concat=n=2:v=1:a=0,settb=AVTB{out}")
+        acc, t = out, t + segs[k]["frames"]
+    return ";".join(parts) if parts else "[s0]null[cat]"
+
+
+def final_video_graph(segs: list[dict], export: str, srt: Path) -> tuple[str, int]:
+    """Segment chains (crop/scale/length as in the rough cut, plus fades and crossfade overlap),
+    the joins, and the burned-in subtitles."""
+    grown = [{**s, "frames": s["frames"] + s.get("extra", 0)} for s in segs]
+    chains, n_inputs = segment_filters(grown, export)
+    chains = chains.split(";")
+    out = []
+    for c in chains:
+        m = re.search(r"\[s(\d+)\]$", c)
+        if m:
+            seg = grown[int(m.group(1))]
+            fades = ",settb=AVTB"
+            if seg.get("fade_in"):
+                fades += f",fade=t=in:st=0:d={seg['fade_in']}"
+            if seg.get("fade_out"):
+                fades += f",fade=t=out:st={seg['frames'] / FPS - seg['fade_out']:.4f}:d={seg['fade_out']}"
+            c = c[: m.start()] + fades + c[m.start():]
+        out.append(c)
+    sub = (f"[cat]subtitles={rel(srt)}:fontsdir={FONT_DIR}:force_style='{FINAL_SUB_STYLES[export]}',"
+           f"format=yuv420p[v]")
+    return ";".join(out) + ";" + join_filters(segs) + ";" + sub, n_inputs
+
+
+def final_mix_filter(duck: dict, gain_voice_db: float, gain_music_db: float, total_s: float) -> str:
+    """Narration + the score: the score faded in (1 s) and out (3 s, under the end card), ducked
+    under the voice, mixed. The loudness pass comes after."""
+    return (f"[0:a]aresample=48000,aformat=channel_layouts=stereo,volume={gain_voice_db:.2f}dB,asplit=2[v][sc];"
+            f"[1:a]aresample=48000,aformat=channel_layouts=stereo,volume={gain_music_db:.2f}dB,"
+            f"apad=whole_dur={total_s:.3f},atrim=0:{total_s:.3f},afade=t=in:d=1,"
+            f"afade=t=out:st={max(total_s - 3, 0):.3f}:d=3[mus];"
+            f"[mus][sc]sidechaincompress=threshold={duck['threshold']}:ratio={duck['ratio']}:"
+            f"attack={duck['attack_ms']}:release={duck['release_ms']}[ducked];"
+            f"[ducked][v]amix=inputs=2:normalize=0:duration=first[mix]")
+
+
+def final_loudnorm(measured: dict | None = None) -> str:
+    base = f"loudnorm=I={FINAL_TARGET['I']}:TP={FINAL_TARGET['TP']}:LRA={FINAL_TARGET['LRA']}"
+    if measured is None:
+        return base + ":print_format=json"
+    return (base + f":measured_I={measured['input_i']}:measured_TP={measured['input_tp']}"
+            f":measured_LRA={measured['input_lra']}:measured_thresh={measured['input_thresh']}"
+            f":offset={measured['target_offset']}:linear=true:print_format=json")
+
+
+def chosen_music(sb: dict) -> tuple[Path | None, str]:
+    """The chosen score candidate of the main cue, else (None, why)."""
+    from .common.cache import Manifest
+
+    music_cfg = sb.get("music") or {}
+    cue = ((music_cfg.get("cues") or [{}])[0]).get("id", "main")
+    n = (music_cfg.get("chosen") or {}).get(cue)
+    if n is None:
+        return None, "no score chosen yet (music.chosen): the placeholder pad is used"
+    e = Manifest("music").get(f"{cue}_c{n}")
+    if not e or e.get("status") != "ok" or not (ROOT / e["path"]).exists():
+        return None, f"candidate {cue}_c{n} is not in outputs/music: the placeholder pad is used"
+    return ROOT / e["path"], f"ACE-Step candidate {cue}_c{n} (seed {e.get('seed')})"
+
+
+def final_audio(sb: dict, tl: dict, timing: dict, *, dry_run: bool = False) -> tuple[Path, dict]:
+    """The film's sound: narration stem + the chosen score, ducked, then two-pass loudnorm."""
+    from . import music
+
+    total = tl["total_s"]
+    FINAL.mkdir(parents=True, exist_ok=True)
+    stem = FINAL / "narration_stem.wav"
+    ffmpeg.run(stem_args(placements(sb, tl, timing), total, stem), dry_run=dry_run)
+    score, note = chosen_music(sb)
+    if score is None:
+        score, lufs = music.placeholder(total, dry_run=dry_run), PAD_LUFS
+    else:
+        lufs = MUSIC_FINAL_LUFS
+    if dry_run:
+        return FINAL / "film_mix.wav", {"music": note}
+    m_voice, m_music = measure(stem), measure(score)
+    g_voice, g_music = NARRATION_LUFS - float(m_voice["input_i"]), lufs - float(m_music["input_i"])
+    duck = (sb.get("music") or {}).get("duck") or {"threshold": 0.02, "ratio": 6, "attack_ms": 300, "release_ms": 1500}
+    premix = TMP / "final_premix.wav"
+    ffmpeg.run(["-i", rel(stem), "-i", rel(score), "-filter_complex", final_mix_filter(duck, g_voice, g_music, total),
+                "-map", "[mix]", "-c:a", "pcm_f32le", rel(premix)])
+    proc = ffmpeg.run(["-i", rel(premix), "-af", final_loudnorm(), "-f", "null", "-"])
+    first = parse_loudnorm(proc.stderr)
+    mix = FINAL / "film_mix.wav"
+    ffmpeg.run(["-i", rel(premix), "-af", final_loudnorm(first) + ",aresample=48000", "-ar", "48000",
+                "-c:a", "pcm_s16le", rel(mix)])
+    premix.unlink(missing_ok=True)
+    return mix, {"music": note, "music_path": rel(score), "narration_I": float(m_voice["input_i"]),
+                 "music_I": float(m_music["input_i"]), "gain_voice_db": round(g_voice, 2),
+                 "gain_music_db": round(g_music, 2), "music_target_lufs": lufs, "first_pass": first}
+
+
+def qc_export(path: Path, export: str, tl: dict) -> dict:
+    from .common.crops import FULL
+
+    p = ffmpeg.probe(path)
+    m = measure(path)
+    W, H = FULL[export]
+    loud = {"I": float(m["input_i"]), "TP": float(m["input_tp"]), "LRA": float(m["input_lra"])}
+    checks = {
+        "duration": QC_TOL["min_s"] <= p["duration"] <= QC_TOL["max_s"] and abs(p["duration"] - tl["total_s"]) < 0.2,
+        "fps": abs((p.get("video") or {}).get("fps", 0) - FPS) < 0.01,
+        "resolution": ((p.get("video") or {}).get("w"), (p.get("video") or {}).get("h")) == (W, H),
+        "audio": bool(p.get("audio")),
+        "loudness_I": abs(loud["I"] - FINAL_TARGET["I"]) <= QC_TOL["I"],
+        "true_peak": loud["TP"] <= QC_TOL["TP_max"],
+    }
+    from .common.cache import file_sha256
+
+    return {"path": rel(path), "duration_s": round(p["duration"], 3), "video": p.get("video"), "audio": p.get("audio"),
+            "loudness": loud, "checks": checks, "ok": all(checks.values()), "sha256": file_sha256(path)}
+
+
+def run_final(*, profile: str | None = None, dry_run: bool = False, console=None) -> dict:
+    """Wan clips (or Ken Burns where there is none), transitions, the score ducked under the
+    narration, burned-in subtitles, the AI end card; 9:16 and 16:9; QC that fails the run."""
+    from rich.console import Console
+
+    from .shots import run_kenburns
+
+    console = console or Console()
+    sb = sbm.load_storyboard()
+    timing = sbm.load_timing()
+    if timing is None:
+        raise AssemblyError("no outputs/narration/timing.json yet: run `make narration` first")
+    report = sbm.validate(sb, timing=timing)
+    if not report.ok:
+        raise AssemblyError("storyboard does not validate with the measured timing:\n  " + "\n  ".join(report.errors))
+    tl = sbm.timeline(sb, timing)
+    TMP.mkdir(parents=True, exist_ok=True)
+    FINAL.mkdir(parents=True, exist_ok=True)
+    run_kenburns(profile, sb=sb, dry_run=dry_run, console=console)
+    sources = final_sources(sb, tl, profile, dry_run=dry_run)
+    cues = subtitles.build_cues(sb, tl, line_pauses(timing))
+    srt = FINAL / "film.srt"
+    atomic_write_text(srt, subtitles.to_srt(cues))
+    mix, audio = final_audio(sb, tl, timing, dry_run=dry_run)
+    results = {}
+    for export in ("9x16", "16x9"):
+        segs = final_segments(sb, tl, sources, export)
+        args: list[str] = []
+        for seg in segs:
+            for p in seg["inputs"]:
+                if seg["kind"] == "card":
+                    args += ["-loop", "1", "-framerate", str(FPS), "-t", f"{seg['frames'] / FPS + 2:.3f}"]
+                args += ["-i", p]
+        srt_x = TMP / f"film_{export}.srt"
+        atomic_write_text(srt_x, subtitles.to_srt(export_cues(cues, sb, tl, export)))
+        graph, n_inputs = final_video_graph(segs, export, srt_x)
+        out = FINAL / f"the_toolbox_{export}.mp4"
+        ffmpeg.run(args + ["-i", rel(mix), "-filter_complex", graph, "-map", "[v]", "-map", f"{n_inputs}:a",
+                           "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-r", str(FPS),
+                           "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", "-movflags", "+faststart",
+                           "-metadata", "comment=Made with AI — see end card", "-metadata", "title=The Toolbox",
+                           "-frames:v", str(sum(s["frames"] for s in segs)), "-shortest", rel(out)], dry_run=dry_run)
+        if not dry_run:
+            results[export] = qc_export(out, export, tl)
+            results[export]["segments"] = [{"shot": s["shot"], "source": s["source"], "frames": s["frames"],
+                                            "xfade": s.get("xfade", False)} for s in segs]
+    if dry_run:
+        return {"status": "dry_run"}
+    n_lines = len(placements(sb, tl, timing))
+    qc = {"timeline_s": tl["total_s"], "audio": audio, "subtitles": {"srt": rel(srt), "cues": len(cues),
+          "narration_lines": n_lines, "ok": len(cues) >= n_lines},
+          "sources": sources, "exports": results}
+    qc["ok"] = all(r["ok"] for r in results.values()) and qc["subtitles"]["ok"]
+    atomic_write_json(FINAL / "qc.json", qc)
+    for export, r in results.items():
+        bad = [k for k, v in r["checks"].items() if not v]
+        console.print(f"final {export}: {r['path']} ({r['duration_s']:.1f}s, {r['loudness']['I']:.1f} LUFS, "
+                      f"TP {r['loudness']['TP']:.1f}) " + ("[green]QC ok[/green]" if not bad else f"[red]QC failed: {bad}[/red]"))
+    wan_n = sum(1 for s in sources.values() if s["source"] == "wan")
+    console.print(f"  {wan_n} of {len(sources)} images moving (Wan), the rest Ken Burns; music: {audio['music']}")
+    if not qc["ok"]:
+        raise AssemblyError("final QC failed: see outputs/final/qc.json")
+    return qc

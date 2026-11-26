@@ -4,8 +4,8 @@ The storyboard is hand-formatted, so it is never rewritten with json.dump. The o
 `*_choice` value is replaced in the text, the file is parsed again, and the edit is kept only if
 exactly that field changed (anything else is a bug and nothing is written).
 
-Items: `style`, a character id (`dad`, `me_child`, ...), a shot id (`s05`), or a split-screen
-layer (`s10a`, `s10b`).
+Items: `style`, a character id (`dad`, `me_child`, ...), a shot id (`s05`), a split-screen
+layer (`s10a`, `s10b`), or a music cue (`main`: the candidate number, 1-3, in music.chosen).
 """
 
 from __future__ import annotations
@@ -23,6 +23,9 @@ def _target(sb: dict, item: str) -> tuple[list, str]:
     """(path of keys to the object, field name) for an item."""
     if item == "style":
         return ["style"], "reference_choice"
+    for c in (sb.get("music") or {}).get("cues") or []:
+        if c["id"] == item:
+            return ["music", "chosen"], item
     for i, c in enumerate(sb.get("characters") or []):
         if c["id"] == item:
             return ["characters", i], "reference_choice"
@@ -42,6 +45,8 @@ def _anchor(sb: dict, path: list) -> list[str]:
     """Text anchors that lead to the object in the file, in order."""
     if path == ["style"]:
         return ['"style": {']
+    if path == ["music", "chosen"]:
+        return ['"music": {', '"chosen": {']
     obj = sb[path[0]][path[1]]
     anchors = [f'"id": "{obj["id"]}"']
     if len(path) > 2:
