@@ -47,37 +47,37 @@
         {
           "frames": 115,
           "shot": "s01",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": false
         },
         {
           "frames": 153,
           "shot": "s02",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": true
         },
         {
           "frames": 180,
           "shot": "s03",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": true
         },
         {
           "frames": 116,
           "shot": "s04",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": false
         },
         {
           "frames": 187,
           "shot": "s05",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": false
         },
         {
           "frames": 84,
           "shot": "s06",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": false
         },
         {
@@ -95,13 +95,13 @@
         {
           "frames": 262,
           "shot": "s09",
-          "source": "wan",
+          "source": "kenburns",
           "xfade": true
         },
         {
           "frames": 225,
           "shot": "s10",
-          "source": "kenburns+wan",
+          "source": "wan",
           "xfade": false
         },
         {
@@ -111,7 +111,7 @@
           "xfade": false
         }
       ],
-      "sha256": "39fdabb0d8c934403cfca2472b93aefe7ed9b0b7f9a8d55f5e64e17066ddcf46",
+      "sha256": "edbff72617aa86a32c73c09a28fecf7150cf3e9363f8002d2914dba48b530870",
       "video": {
         "codec": "h264",
         "fps": 24.0,
@@ -146,37 +146,37 @@
         {
           "frames": 115,
           "shot": "s01",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": false
         },
         {
           "frames": 153,
           "shot": "s02",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": true
         },
         {
           "frames": 180,
           "shot": "s03",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": true
         },
         {
           "frames": 116,
           "shot": "s04",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": false
         },
         {
           "frames": 187,
           "shot": "s05",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": false
         },
         {
           "frames": 84,
           "shot": "s06",
-          "source": "kenburns",
+          "source": "wan",
           "xfade": false
         },
         {
@@ -194,13 +194,13 @@
         {
           "frames": 262,
           "shot": "s09",
-          "source": "wan",
+          "source": "kenburns",
           "xfade": true
         },
         {
           "frames": 225,
           "shot": "s10",
-          "source": "kenburns+wan",
+          "source": "wan",
           "xfade": false
         },
         {
@@ -210,7 +210,7 @@
           "xfade": false
         }
       ],
-      "sha256": "7c02ae08a839e12488ad46ce34d390b13c79e612ce2ce1ab7a4b5825ba4f2283",
+      "sha256": "ae0de63daf13b6ecb5c85566efa8d8c74fc9ccd03c685c0c08c921d526d382b2",
       "video": {
         "codec": "h264",
         "fps": 24.0,
@@ -223,28 +223,28 @@
   "ok": true,
   "sources": {
     "s01": {
-      "path": "outputs/kenburns/s01/b39898205b368a36.mp4",
-      "source": "kenburns"
+      "path": "outputs/masters/s01/a39cea7287bb3c39.mp4",
+      "source": "wan"
     },
     "s02": {
-      "path": "outputs/kenburns/s02/c147b9394a26aa6d.mp4",
-      "source": "kenburns"
+      "path": "outputs/masters/s02/3faae87011706e90.mp4",
+      "source": "wan"
     },
     "s03": {
-      "path": "outputs/kenburns/s03/e4d11f94bb157fbf.mp4",
-      "source": "kenburns"
+      "path": "outputs/masters/s03/ccd05c59aba11333.mp4",
+      "source": "wan"
     },
     "s04": {
-      "path": "outputs/kenburns/s04/79b97e9f9a2bc3e7.mp4",
-      "source": "kenburns"
+      "path": "outputs/masters/s04/b5b283ac3172f69c.mp4",
+      "source": "wan"
     },
     "s05": {
-      "path": "outputs/kenburns/s05/a6fc56bb48529e03.mp4",
-      "source": "kenburns"
+      "path": "outputs/masters/s05/516a6a6ce4c9ab16.mp4",
+      "source": "wan"
     },
     "s06": {
-      "path": "outputs/kenburns/s06/bb607c5f3e5bb1d5.mp4",
-      "source": "kenburns"
+      "path": "outputs/masters/s06/111a6d7fdc240420.mp4",
+      "source": "wan"
     },
     "s07": {
       "path": "outputs/kenburns/s07/20970c047ae331b4.mp4",
@@ -255,16 +255,16 @@
       "source": "kenburns"
     },
     "s09": {
-      "path": "outputs/masters/s09/e56179ca5d8b24da.mp4",
-      "source": "wan"
+      "path": "outputs/kenburns/s09/1b2f16e648aeec8f.mp4",
+      "source": "kenburns"
     },
     "s10a": {
-      "path": "outputs/masters/s10a/90e6d5d73ae9f8c0.mp4",
+      "path": "outputs/masters/s10a/fadcc1a47b7bcfc9.mp4",
       "source": "wan"
     },
     "s10b": {
-      "path": "outputs/kenburns/s10b/67bec865e97517b2.mp4",
-      "source": "kenburns"
+      "path": "outputs/masters/s10b/183ab8048cac71c4.mp4",
+      "source": "wan"
     }
   },
   "subtitles": {
