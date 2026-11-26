@@ -170,6 +170,22 @@ Free tier. "Used" is the peak shown for the last 28 days, i.e. today's Step 0 sm
   ("GPU T4 x2") or `machine_shape` in kernel-metadata.json. **P100 is retired**: a request for it
   silently runs on a T4 instead, so the video kernel always runs on T4s.
 
+- **Step 4 (2026-11-26, measured).** Each kernel run has a fixed setup cost before any job, plus
+  the queue wait. Both kernels ran at the same time (two GPU sessions allowed). A kernel's outputs can
+  only be pulled once it ends, so a pilot is the fast way to learn the real numbers.
+
+  | Run | Queued | Setup before the first job | Jobs (GPU time each) | Wall time |
+  |---|---|---|---|---|
+  | `toolbox-music` v1, 3 ACE-Step candidates | 10:15 → 10:28 (13 min) | 1.5 min `uv sync` (torch 2.10 + cu128) + weights download | 6.6 s per 80 s candidate (turbo, 8 steps; peak 7.8 GB) | 3.5 min |
+  | `toolbox-wan` v1, pilot: s09 + s10a, one per T4 | 10:14 → 10:27 (13 min) | 1.3 min pip + 2.6 min weights (34 GB) + 54 s prompt encoding + ~1.5 min to load each GPU's pipeline | 373 s and 394 s (both fell back to 576×576×49 after an OOM at 704×704×81, F16) | 14.5 min |
+  | `toolbox-wan` v2, 9 missing clips + 2 redone | 10:45 → 11:00 (15 min) | as above | *(filled in when it ends)* | |
+
+  - GPU time is logged per job as `gpu_s` (one T4 per job), and `make costs` sums it. The setup minutes
+    are not in `gpu_s`, but they do count against the weekly 30 h quota. `kaggle quota` shows the
+    total used.
+  - The weights are downloaded again on every run. Attaching a Kaggle model or dataset copy of the
+    weights would cut ~3 min per run.
+
 ### Local
 - FFmpeg 9.0.1 (gyan.dev full build): the Ken Burns smoke clip (2 s, 1024², 24 fps, 4× upscale)
   rendered in 1.31 s.
